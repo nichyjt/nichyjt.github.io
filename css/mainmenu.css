@@ -1,0 +1,218 @@
+/*MENU FONTS*/
+.menu-item-text, .home-text{
+  font-family: MenuFont, Helvetica, sans-serif;
+}
+/*Prevent Overlap*/
+main {
+  padding-inline: 4rem;
+  display: flex;
+  flex-direction: column;
+  height:min-content;
+}
+/*Global Transition params*/
+.navbar {
+  position: fixed;
+  display: flex;
+  background-color: var(--color-accent);
+  transition: width 250ms ease;
+}
+/*Sidebar Params*/
+.navbar-large{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+/*Mobile-Compatable Topbar Params*/
+.navbar-mobile{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+.menu-item, .home-link{
+  color: var(--color-menuicon);
+} 
+/*Menu (Desktop) Hover Animation Logic*/
+.nav-item:hover, .home-item:hover{
+  background: var(--color-accent-active);
+}
+
+/* SMALL SCREEN CSS FOR MOBILE-COMPATIBLE MENU */
+@media only screen and (max-width: 650px) {
+  main{
+    padding-top: 0;
+    padding-inline: 1rem;
+  }
+  .navcontainer{
+    height: 2rem;
+  }
+  body{
+    display: flex;
+    flex-direction: column;
+  }
+  .bodycontainer{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .navbar{
+    top: 0;
+    width: 100vw;
+    height: 2rem;
+  }
+  /*toggle sidebar off*/ 
+  .navbar-large{
+    display: none;
+  }
+  /*Home Button: Mobile-Specific Params*/
+  .home-item{
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+    align-items: center;
+  }
+  .home-link{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .home-link svg{
+    height: 1rem;
+    width: 1rem;
+  }
+  .home-text{
+    display: none;
+  }
+  /*Hamburger Menu Item Params*/
+  .navbar-mobile{
+    margin-left: auto;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 2rem;
+    width: 2rem;
+  }
+  .hamburg-btn{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+  .hamburg-btn svg{
+    height:1rem;
+    width: 1rem;
+    align-self: center;
+    cursor: pointer;
+    color: var(--color-menuicon);
+  }
+  .navbar-hamburg-items{
+    list-style: none;
+    padding: 0;
+    margin-top:0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all --var(--transition-speed);
+  }
+  .navbar-hamburg-items svg{
+    width: 1rem;
+    min-width: 1rem;
+    margin: 0.5rem;
+  }
+  .menu-item svg{
+    height: 1rem;
+    width: 1rem;
+    margin: 0.5rem;
+  }
+  /*Click animation*/
+  .hamburg-btn:focus + .navbar-hamburg-items{
+    opacity: 1;
+    pointer-events: all;
+    transition: var(--transition-speed);
+  }
+  .navbar-hamburg-items:focus-within{
+    pointer-events:visible;
+  }
+  
+  /* Smooth border */
+  .nav-item:first-child{
+    border-top-left-radius: 8px;
+  }
+  .nav-item:last-child{
+    border-bottom-left-radius: 8px;
+  }
+  .nav-item{
+    width: 14rem;
+    margin-right: 0.5rem;
+    background-color: var(--color-accent-mobilemenu);
+  }
+  .menu-item{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 2rem;
+  }
+  .menu-item-text{
+    font-size: 12px;
+    margin-left: 0.4rem;
+    display: block;
+  }
+
+}
+
+/* LARGE SCREEN PARAMS*/
+@media only screen and (min-width: 650px) {
+  main, .footer{
+    margin-left: 4rem;
+  }
+  .navbar{
+    width: 4rem;
+    height: 100vh;
+    flex-direction: column;
+  }
+  .navbar-mobile{
+    display: none;
+  }
+  .navbar:hover{
+    width: 12rem;
+  }
+  /*Show text when it is hovering*/
+  .navbar:hover .menu-item-text, .navbar:hover .home-text{
+    display: block;
+  }
+  .menu-item-text, .home-text{
+    display: none;
+    font-size: 1rem;
+    margin-left: 1rem;
+  }
+  .menu-item svg, .home-item svg{
+    width: 1.5rem;
+    min-width: 1.5rem;
+    margin: 1.25rem;
+  }
+  .menu-item, .home-link {
+    display: flex;
+    align-items: center;
+    height: 4rem;
+    width: 100%;
+    transition: var(--transition-speed);
+  }
+  .nav-item, .home-item{
+    width: 100%;
+  }
+  .nav-item:last-child{
+    margin-top: auto;
+  }
+}

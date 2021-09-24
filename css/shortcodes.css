@@ -1,0 +1,62 @@
+.abtwrapper{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+}
+.abttext{
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+    justify-content: space-around;
+}
+.abtimg{
+    border-radius: 50%;
+    height: 15rem;
+    width: 15rem;
+    border:0.2rem solid var(--color-accent);
+    align-self: center;
+}
+.abttitle{
+    width: fit-content;   
+}
+.abttagline{
+    width: fit-content;
+}
+.badgebanner{
+    width: fit-content;
+    display: flex;
+    border-radius: 10px;
+    width: 80vw;
+    flex-wrap: wrap;
+    align-items:center;
+    justify-content: space-evenly;
+    background-color: var(--color-banner);
+}
+.badgeitem{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    text-decoration: none;
+    margin-top: 1rem;
+    margin-bottom:1rem;
+    margin-inline: 1rem;
+}
+.badgeicon{
+    height:3rem;
+    width: 3rem;
+}
+
+@media only screen and (max-width:650px){
+    .abtimg{
+        height: 7rem;
+        width: 7rem;
+    }
+    .badgebanner{
+        width: 90vw;
+    }
+    .badgeicon{
+        height: 2rem;
+        width: 2rem;
+    }
+}

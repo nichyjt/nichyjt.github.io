@@ -1,0 +1,59 @@
+/*Style specifications for pagenav*/
+.paginatorinternal{
+    display:flex;
+    margin-top: auto;
+    margin-bottom: 1rem;
+}
+.pagenav{
+    display: flex;
+    padding: 0;
+    margin: 0;
+    font-size: 28px;
+    font-family: MainMonospace, Consolas, monospace;
+    color: var(--color-text);
+    justify-content: center;
+    align-content: center;
+    margin-top: auto;
+    width: 100vw;
+}
+.pagenavitem{
+    display: flex;
+    border-radius: 100%;
+    margin-inline: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+    float:inline-start;
+    text-decoration: none;
+    color: var(--color-text);
+    justify-content: center;
+    align-items:center;
+}
+.pagenavitem:hover, .pagenav_current:hover{
+    background-color: var(--color-accent-active);
+}
+.pagenav_current{
+    display: flex;
+    margin-inline: 0.5rem;
+    border-radius: 100%;
+    width: 3rem;
+    height: 3rem;
+    text-decoration: underline;
+    color: var(--color-text);
+    background-color: var(--color-accent);
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 650px){
+    .pagenav{
+        font-size: 14px;
+    }
+    .pagenav_current{
+        width:2rem;
+        height:2rem;
+    }
+    .pagenavitem{
+        width: 2rem;
+        height:2rem;
+    }
+}

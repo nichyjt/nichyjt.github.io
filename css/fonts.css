@@ -1,0 +1,92 @@
+/*FONT SPECIFICATIONS*/
+/*CHANGE THE URL TO SERVE YOUR OWN CUSTOM FONTS*/
+@font-face {
+    font-family: MenuFont;
+    src: url("/fonts/Ubuntu-Bold.ttf");
+}
+@font-face {
+    font-family: MainTitle;
+    src: url("/fonts/Ubuntu-Regular.ttf");
+}
+@font-face {
+    font-family: MainBody;
+    src: url("/fonts/NotoSans-Regular.ttf"),
+    url("/fonts/NotoSans-Bold.ttf"),
+    url("/fonts/NotoSans-BoldItalic.ttf"),
+    url("/fonts/NotoSans-Italic.ttf");
+
+}
+@font-face {
+    font-family: MainMonospace;
+    src: local("UbuntuMono-Regular"), url("theme");
+}
+
+/*Do not edit --- Global Declaration of Fonts*/
+p, ol, li, em{
+    text-align: justify;
+    font-family: MainBody, sans-serif;
+    font-size: 20px;
+}
+/*For use in list.html templates*/
+.plistitem{
+    text-align: justify;
+    font-family: MainBody, sans-serif;
+    font-size: 16px;
+}
+h1{
+    font-family: MainTitle, Georgia, 'Times New Roman', serif;
+    font-size: 38px;
+    margin-bottom: 0.5rem;
+}
+h2, summary{
+    font-family: MainTitle, Georgia, 'Times New Roman', serif;
+    font-size: 26px;
+}
+h3{
+    font-family: MainTitle, Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+}
+h4{
+    font-family: MainTitle, Georgia, 'Times New Roman', serif;
+    font-size: 22px;
+}
+/*Support up to 4 headers, add more if necessary*/
+code{
+    font-family: MainMonospace, Consolas, monospace;
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 650px) {
+    p, ol, li, em{
+        text-align: justify;
+        font-family: MainBody, sans-serif;
+        font-size: 14px;
+    }
+    /*For use in list.html templates*/
+    .plistitem{
+        text-align: justify;
+        font-family: MainBody, sans-serif;
+        font-size: 16px;
+    }
+    h1{
+        font-family: MainTitle, Georgia, 'Times New Roman', serif;
+        font-size: 20px;
+    }
+    h2, summary{
+        font-family: MainTitle, Georgia, 'Times New Roman', serif;
+        font-size: 18px;
+    }
+    h3{
+        font-family: MainTitle, Georgia, 'Times New Roman', serif;
+        font-size: 16px;
+    }
+    h4{
+        font-family: MainTitle, Georgia, 'Times New Roman', serif;
+        font-size: 14px;
+    }
+    /*Support up to 4 headers, add more if necessary*/
+    code{
+        font-family: MainMonospace, Consolas, monospace;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,32 @@
+/*Theme Color Logic*/
+:root{
+  --color-accent: #f2a365;
+  --color-accent-dark: #e1701a;
+  --color-accent-mobilemenu: #ffd56b;
+  --color-accent-active: #fd7014;
+  --color-homepage-accent: #0F4C75;
+  --color-menuicon: #0f4c75;
+  --color-menuicon-active: #3282b8;
+  --color-link: #ff7f50;
+  --transition-speed: 350ms;
+}
+/*TODO LINK COLORS*/
+.lightmode{
+    --color-primary: #FDFDFD;
+    --color-text: #000000;
+    --color-blockquote: #ececec;
+    --color-listitem: #faf1e6; 
+    --color-link-title: #3282b8;
+    --color-banner: #ececec;  
+}
+.darkmode{
+    --color-primary: #30475e;
+    --color-text: #FDFDFD;
+    --color-blockquote:#0f4c75;
+    --color-listitem: #41607F;
+    --color-link-title: #f2a365;  
+    --color-banner:#435560;
+}
+a{
+  color: var(--color-link);
+}

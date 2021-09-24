@@ -1,0 +1,41 @@
+.featuredArticles{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    list-style: none;
+    padding:0;
+}
+.featuredCard{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    width:20rem;
+    min-height: 12rem;
+    height: max-content;
+    margin: 1rem;
+    background-color: var(--color-listitem);
+}
+.featuredLink{
+    color: var(--color-link-title);
+}
+.featuredTitle{
+    justify-content: center;
+}
+.featuredDescription{
+    margin-top: 0rem;
+    max-width: 18rem;
+    margin-inline: 1rem;
+}
+
+@media only screen and (max-width:650px){
+    .featuredCard{
+        width:14rem;
+        min-height:8rem;
+        height: min-content;
+        max-height: 16rem;
+    }
+    .featuredDescription{
+        max-width: 12rem;
+    }
+}
