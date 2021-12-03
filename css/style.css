@@ -42,6 +42,7 @@ body {
 blockquote{
     background: var(--color-blockquote);
     padding-left: 1.5rem;
+    padding-right: 1.5rem;
     padding-top: 1px;
     padding-bottom: 1px;
     border-left: .25rem solid var(--color-accent-dark); 
