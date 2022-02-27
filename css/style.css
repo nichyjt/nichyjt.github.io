@@ -110,7 +110,7 @@ hr{
     justify-content: center;
 }
 img{
-    width:60vw;
+    max-width: 50vw;
 }
 @media only screen and (max-width: 650px){
     .footertext{
