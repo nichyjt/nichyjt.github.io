@@ -7,7 +7,8 @@
   --color-homepage-accent: #0F4C75;
   --color-menuicon: #0f4c75;
   --color-menuicon-active: #3282b8;
-  --color-link: #ff7f50;
+  /* --color-link: #ff7f50; */
+  --color-link:#ff6026;
   --transition-speed: 350ms;
 }
 /*TODO LINK COLORS*/

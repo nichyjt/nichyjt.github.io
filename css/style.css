@@ -45,6 +45,7 @@ blockquote{
     padding-right: 1.5rem;
     padding-top: 1px;
     padding-bottom: 1px;
+    word-wrap:break-word;
     border-left: .25rem solid var(--color-accent-dark); 
 }
 footer{
@@ -59,6 +60,12 @@ hr{
     border-top:none;
     border-bottom: 1px solid var(--color-accent-active);
 }
+/*Table/Code block*/
+tbody{
+    overflow-x: auto;
+    word-wrap: break-word;
+}
+
 .listitem{
     display: flex;
     flex-direction: column;
