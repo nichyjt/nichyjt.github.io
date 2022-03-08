@@ -61,11 +61,13 @@ hr{
     border-bottom: 1px solid var(--color-accent-active);
 }
 /*Table/Code block*/
-tbody{
-    overflow-x: auto;
+/* tbody{
+    overflow-x:auto;
     word-wrap: break-word;
+} */
+table{
+    overflow-x: auto !important;
 }
-
 .listitem{
     display: flex;
     flex-direction: column;
