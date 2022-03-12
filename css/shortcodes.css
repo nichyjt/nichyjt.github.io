@@ -51,6 +51,8 @@
     .abtimg{
         height: 7rem;
         width: 7rem;
+        margin-top: 1rem;
+        align-self: flex-start;
     }
     .badgebanner{
         width: 90vw;
