@@ -23,11 +23,16 @@
     src: local("UbuntuMono-Regular"), url("theme");
 }
 
+/*Preload menu font to avoid ugly loading delay*/
+.fontloader{
+    font-family: MenuFont;
+}
+
 /*Do not edit --- Global Declaration of Fonts*/
 p, ol, li, em{
     text-align: justify;
     font-family: MainBody, sans-serif;
-    font-size: 17px;
+    font-size: 18px;
     word-wrap: break-word;
 }
 /*For use in list.html templates*/
