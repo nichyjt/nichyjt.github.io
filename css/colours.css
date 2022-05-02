@@ -4,6 +4,7 @@
   --color-accent-dark: #e1701a;
   --color-accent-mobilemenu: #ffd56b;
   --color-accent-active: #fd7014;
+  /* Chatham's Blue */
   --color-homepage-accent: #0F4C75;
   --color-menuicon: #0f4c75;
   --color-menuicon-active: #3282b8;
@@ -21,10 +22,11 @@
     --color-banner: #cccccc;  
 }
 .darkmode{
-    --color-primary: #30475e;
+    /* --color-primary: #2b3d4f; */
+    --color-primary: #10212f;
     --color-text: #FDFDFD;
-    --color-blockquote: #385570;
-    --color-listitem: #41607F;
+    --color-blockquote: #2b3d4f;
+    --color-listitem: #3d5770;
     --color-link-title: #f2a365;  
     --color-banner:#435560;
 }
