@@ -174,7 +174,8 @@ main {
 
 /* LARGE SCREEN PARAMS*/
 @media only screen and (min-width: 650px) {
-  main, .footer{
+  /* main,  */
+  .footer{
     margin-left: 4rem;
   }
   .navbar{

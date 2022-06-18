@@ -28,8 +28,11 @@
     --color-blockquote: #2b3d4f;
     --color-listitem: #3d5770;
     --color-link-title: #f2a365;  
-    --color-banner:#435560;
+    --color-banner:#545454;
 }
 a{
   color: var(--color-link);
+}
+.shadow{
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }

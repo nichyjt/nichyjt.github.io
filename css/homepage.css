@@ -3,6 +3,7 @@
     padding: 0;
     flex-direction: column;
     min-height: max-content;
+    margin-left: 4rem;
 }
 .homepageTop{
     margin-top: 1rem;

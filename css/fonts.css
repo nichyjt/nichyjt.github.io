@@ -108,4 +108,7 @@ figcaption{
     .menu-item-text, .home-text{
         font-size: 12px;
     }
+    .footertext{
+        font-size: 10px;
+    }
 }

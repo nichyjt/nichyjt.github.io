@@ -70,7 +70,7 @@ table{
     display: flex;
     flex-direction: column;
     background-color: var(--color-listitem);
-    margin: 1rem;
+    margin: 2rem;
     border-radius: 10px;
 }
 .listTitleLink{
@@ -106,6 +106,8 @@ table{
     margin-inline: 0.2rem;
 }
 .section{
+    align-self: center;
+    max-width: 60vw;
     margin-bottom: 4rem;
 }
 /*Default shortcode*/
@@ -129,6 +131,9 @@ img{
     }
     img{
         max-width: 80vw;
+    }
+    .section{
+        max-width: 90vw;
     }
 }
 
