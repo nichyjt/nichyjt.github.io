@@ -4,28 +4,45 @@
     justify-content: space-evenly;
     list-style: none;
     padding:0;
+    margin: 0;
 }
 .featuredCard{
     display:flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 5px;
     width:20rem;
     min-height: 12rem;
     height: max-content;
     margin: 1rem;
     background-color: var(--color-listitem);
+    border: 3px transparent solid;
+}
+.featuredCard:hover {
+    transform: scale(1.025);
+    border: 3px var(--color-accent) solid;
+    -webkit-transition: transform 0.2s ease-in-out;
+    -moz-transition:transform 0.2s ease-in-out;
+    -ms-transition:transform 0.2s ease-in-out;
 }
 .featuredLink{
     color: var(--color-link-title);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
 }
 .featuredTitle{
     justify-content: center;
+    text-decoration: underline;
+    color: var(--color-link-title);
 }
 .featuredDescription{
     margin-top: 0rem;
     max-width: 18rem;
     margin-inline: 1rem;
+    color: var(--color-text);
+    text-decoration: none;
 }
 
 @media only screen and (max-width:650px){

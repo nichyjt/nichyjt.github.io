@@ -47,7 +47,7 @@
         border:0.2rem solid var(--color-accent);
     }
     .homepage{
-        margin-left: 0;
+        margin: 0
     }
     .homepageTopText{
         margin-right: 0.2rem;

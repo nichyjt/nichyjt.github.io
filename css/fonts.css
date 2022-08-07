@@ -72,6 +72,9 @@ figcaption{
 .menu-item-text, .home-text{
     font-size: 17px;
 }
+.experienceSummary {
+        font-size: 22px;
+}
 @media only screen and (max-width: 650px) {
     p, ol, li, em{
         text-align: justify;
@@ -110,5 +113,8 @@ figcaption{
     }
     .footertext{
         font-size: 10px;
+    }
+    .experienceSummary {
+        font-size: 16px;
     }
 }
