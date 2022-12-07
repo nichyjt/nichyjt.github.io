@@ -93,15 +93,26 @@ table{
     width:50vw;
 }
 .taglist{
-    display: flexbox;
+    display: flex;
     flex-wrap: wrap;
+    width: fit-content;
+    justify-content: space-around;
 }
 .tagitem{
     display:inline-flex;
     background-color: var(--color-listitem);
-    margin: 1rem;
-    margin-inline: 1rem;
-    border-radius: 10px;
+    border: 1px transparent solid;
+    margin: 20px;
+    margin-inline: 20px;
+    border-radius: 5px;
+    height: 60px;
+}
+.tagitem:hover {
+    transform: scale(1.05);
+    border: 1px var(--color-accent) solid;
+    -webkit-transition: transform 0.2s ease-in-out;
+    -moz-transition:transform 0.2s ease-in-out;
+    -ms-transition:transform 0.2s ease-in-out;
 }
 .tagitemlink{
     text-decoration: none;

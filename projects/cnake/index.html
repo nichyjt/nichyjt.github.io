@@ -58,7 +58,7 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#999;font-style:italic>// Populate the linked list
 </span></span></span><span style=display:flex><span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>while</span>(initialSize-- &gt; <span style=color:#3677a9>1</span>){
-</span></span><span style=display:flex><span>        <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell* newcell = malloc(<span style=color:#6ab825;font-weight:700>sizeof</span>(<span style=color:#6ab825;font-weight:700>struct</span> SnakeCell));
+</span></span><span style=display:flex><span>        <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell* newcell = <span style=color:#447fcf>malloc</span>(<span style=color:#6ab825;font-weight:700>sizeof</span>(<span style=color:#6ab825;font-weight:700>struct</span> SnakeCell));
 </span></span><span style=display:flex><span>        cell-&gt;prev = newcell;
 </span></span><span style=display:flex><span>        newcell-&gt;next = cell;
 </span></span><span style=display:flex><span>        newcell-&gt;x = cell-&gt;x-<span style=color:#3677a9>1</span>;
@@ -73,10 +73,10 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#999;font-style:italic>// Populate the game window (ncurses)
 </span></span></span><span style=display:flex><span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>while</span>(cell != <span style=color:#24909d>NULL</span>){
-</span></span><span style=display:flex><span>        mvwaddch(window, cell-&gt;y, cell-&gt;x, <span style=color:#ed9d13>&#39;#&#39;</span>);
+</span></span><span style=display:flex><span>        <span style=color:#447fcf>mvwaddch</span>(window, cell-&gt;y, cell-&gt;x, <span style=color:#ed9d13>&#39;#&#39;</span>);
 </span></span><span style=display:flex><span>        cell = cell-&gt;next;
 </span></span><span style=display:flex><span>    }
-</span></span><span style=display:flex><span>    wrefresh(window);
+</span></span><span style=display:flex><span>    <span style=color:#447fcf>wrefresh</span>(window);
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> tail;
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></td></tr></table></div></div><h2 id=how-do-i-handle-input-and-movement>How do I handle input and movement?</h2><p>The snake moves in 4 directions. The directions can be mapped to WASD/Arrow keys. I need to scan for these inputs and ignore any invalid key inputs. There&rsquo;s also a potential issue where the user accidentally makes the snake go &lsquo;backwards&rsquo;. Meaning, when the snake is moving up, the user inputs down, when the snake is moving left, the user inputs right. These inputs are also invalid as the snake will collide with itself and should be ignored.</p><p>To handle movement logic, I have two variables that deal with direction. <code>inertia</code> and <code>input</code>. The latter is the raw stdin input from the user and the former the Snake&rsquo;s last moved direction.</p><p>Parsing input: If we get a bad input, we ignore it and let the snake carry on with its current direction of motion (inertia!). Else, we update the snake&rsquo;s inertia.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
@@ -171,7 +171,7 @@ In the context of Snake, when the snake needs to grow, it grows from the head in
 </span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#6ab825;font-weight:700>struct</span> SnakeCell* <span style=color:#447fcf>add_snake_cell</span>(WINDOW* window, <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell *head, <span style=color:#6ab825;font-weight:700>int</span> inertia){
 </span></span><span style=display:flex><span>    <span style=color:#999;font-style:italic>// Returns the new head
-</span></span></span><span style=display:flex><span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell *newhead = malloc(<span style=color:#6ab825;font-weight:700>sizeof</span>(<span style=color:#6ab825;font-weight:700>struct</span> SnakeCell));
+</span></span></span><span style=display:flex><span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell *newhead = <span style=color:#447fcf>malloc</span>(<span style=color:#6ab825;font-weight:700>sizeof</span>(<span style=color:#6ab825;font-weight:700>struct</span> SnakeCell));
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>int</span> newx, newy;
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>if</span>(inertia == DXN_UP){
 </span></span><span style=display:flex><span>        newhead-&gt;x = head-&gt;x;
@@ -188,8 +188,8 @@ In the context of Snake, when the snake needs to grow, it grows from the head in
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>    head-&gt;next = newhead;
 </span></span><span style=display:flex><span>    newhead-&gt;prev = head;
-</span></span><span style=display:flex><span>    mvwaddch(window, newhead-&gt;y, newhead-&gt;x, <span style=color:#ed9d13>&#39;#&#39;</span>);
-</span></span><span style=display:flex><span>    wrefresh(window);
+</span></span><span style=display:flex><span>    <span style=color:#447fcf>mvwaddch</span>(window, newhead-&gt;y, newhead-&gt;x, <span style=color:#ed9d13>&#39;#&#39;</span>);
+</span></span><span style=display:flex><span>    <span style=color:#447fcf>wrefresh</span>(window);
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> newhead;
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></td></tr></table></div></div><p>These are just some parts of the code I feel are interesting in relation to the usage of Linked Lists. If you know C/C++ and are interested in building GUI-like terminal applications, do give <code>ncurses</code> a try! It allowed this snake game to be made, and has birthed many utilities such a <code>htop</code> and <code>nano</code>.</p></div></div></section></main></div><footer class=footer><div><p class=footertext style=color:#f0f8ff;font-family:MainTitle;align-self:center>Powered by
