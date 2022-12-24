@@ -53,7 +53,7 @@ footer{
     display: flex;
     flex-wrap: wrap;
     flex-grow: inherit;
-    justify-content: space-evenly;
+    justify-content: center;
     margin-top: auto;
 }
 hr{
@@ -122,7 +122,7 @@ table{
     padding-inline: 1rem;
 }
 .footertext{
-    margin-inline: 0.2rem;
+    margin-inline: 4rem;
 }
 .section{
     align-self: center;
@@ -136,6 +136,13 @@ table{
     align-items: center;
     justify-content: center;
 }
+/* figsmall is usually used for less technical/entertainment pictures */
+.figsmall{
+    width: 30vw;
+}
+.fignormal{
+    width: max-content;
+}
 img{
     max-width: 55vw;
     max-height: 95vh;
@@ -143,6 +150,7 @@ img{
 @media only screen and (max-width: 650px){
     .footertext{
         font-size: 12px;
+        margin-inline: 1rem;
     }
     blockquote{
         margin:0;
@@ -155,6 +163,13 @@ img{
     }
     .section{
         max-width: 90vw;
+    }
+    .figsmall{
+        width: max-content;
+    }
+    /* Redundancy */
+    .fignormal{
+        width: max-content;
     }
 }
 
