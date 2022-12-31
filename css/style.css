@@ -1,10 +1,11 @@
+html{
+    scroll-behavior: smooth;
+}
+
 :root {
-  
   /*FFOX COMPAT*/
   scrollbar-width: thin;
   scrollbar-color: #bbe1fa #30475e;
-  /*light-darkmode*/
-
 }
 *::-webkit-scrollbar{
     width:0.25rem;
@@ -36,6 +37,9 @@ body {
     padding: 0;
     background-color: var(--color-primary);
 }
+sup{
+    scroll-margin-top: 2rem;
+}
 .footnote-ref, .footnote-backref{
     color: var(--color-link);
 }
@@ -55,6 +59,7 @@ footer{
     flex-grow: inherit;
     justify-content: center;
     margin-top: auto;
+    bottom: 0;
 }
 hr{
     border-top:none;
@@ -175,6 +180,8 @@ img{
 
 details {
     padding-bottom: 1rem;
+    height: max-content;
+    /* transition: height 500ms; */
 }
 
 details summary:before {
@@ -184,6 +191,22 @@ details summary:before {
 }
 details[open] summary:before{
     content: "▾";
+    transform-origin: center;
+    transition: 200ms linear;
+}
+details[open] summary ~ * {
+  animation: reveal 0.2s ease-in-out;
+}
+details.hiding summary ~ * {
+    animation: hiding 0.2s ease-in-out;
+}
+@keyframes reveal {
+  0%    {opacity: 0; transform: translateY(-10px)}
+  100%  {opacity: 1; transform: translateY(0)}
+}
+@keyframes hiding {
+  0%    {opacity: 1; transform: translateY(0);}
+  100%  {opacity: 0; transform: translateY(-10px);}
 }
 summary{
     color: var(--color-link-title);
