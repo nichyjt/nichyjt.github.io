@@ -12,24 +12,24 @@
 <a class=menu-item , style=text-decoration:underline><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="adjust" class="svg-inline--fa fa-adjust fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705.0 184 82.311 184 184 0 101.705-82.311 184-184 184z"></path></svg><span class=menu-item-text>DARKMODE</span></a></button>
 <script>function changetheme(){document.body.className.includes("darkmode")?(document.body.classList.replace("darkmode","lightmode"),localStorage.setItem("theme","lightmode")):(document.body.classList.replace("lightmode","darkmode"),localStorage.setItem("theme","darkmode")),document.activeElement.blur()}</script></li></ul></div></nav></body></div><div class=bodycontainer><main><section class=section><div class=frontmatter><h1 class="title, listTitleLink">Sudoku.py</h1><div class=subtitle><p><time>📆 May 30, 2021</time>
 | ⌛ 16 minutes read</p></div><p class=tags>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/python>Python</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/algorithms>Algorithms</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/data-analytics>Data Analytics</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/project>Project</a></p></div><hr><div class=content><h3 id=sudoku-squares-are-elegant-and-frankly-magical1>Sudoku Squares are elegant, and frankly, magical.<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup></h3><p>With pockets of time being freed up with work from home orders during the COVID-19 pandemic, I picked up Sudoku to fill in the gaps. And man, it&rsquo;s fun solving them - it&rsquo;s cathartic seeing the numbers fall nicely into place.</p><p>It&rsquo;s one thing to solve Sudokus, but another to create one.</p><p>Out of curiosity, I decided to try and make a fully filled Sudoku Grid by hand. I gave up after a few attempts. It&rsquo;s surprisingly tedious and difficult to build one off the cuff.</p><p>Wouldn&rsquo;t it be much <em>much</em> easier for a computer to do all the tedious comparisons and checks rather than relying on my error-prone brain?</p><p>Since I was quite free waiting to enroll into University&mldr; one thing led to another, which led to <a href=https://github.com/nichyjt/Sudoku_py>this</a> homemade Sudoku game being born. This is how I made it.</p><h1 id=a-lazy-approach>A Lazy Approach</h1><p>The first approach that came to my mind was basically building the board similar to how I would try doing it by hand.
-The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p><h2 id=the-algorithm->The Algorithm ⚙️</h2><ol><li><p>Fill up the grid row by row randomly with valid (unused) numbers that comply with Sudoku <a href=https://sudoku.com/how-to-play/sudoku-rules-for-complete-beginners/>rules</a></p></li><li><p>If the row can&rsquo;t be built, try making the row again from scratch</p></li><li><p>If the row cannot be built multiple times, give up on the current row and build the <em>previous</em> row from scratch again</p></li><li><p>Repeat until all 9 rows of the Sudoku grid fall into place</p></li></ol><p>This is, admittedly, a very lazy way of building the Sudoku board. It does not keep track of the values that were picked and failed (which means that there is a chance that the row can choose a failed number again). It even &lsquo;gives up&rsquo; prematurely, even though a solution to building a row can be found.</p><p>But before we work on making the approach more rigorous, let&rsquo;s make the code work first.</p><h2 id=making-the-grid>Making the Grid</h2><p>First things first, we need to set up a empty sudoku grid so that we can fill it in.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p><h2 id=the-algorithm->The Algorithm ⚙️</h2><ol><li><p>Fill up the grid row by row randomly with valid (unused) numbers that comply with Sudoku <a href=https://sudoku.com/how-to-play/sudoku-rules-for-complete-beginners/>rules</a></p></li><li><p>If the row can&rsquo;t be built, try making the row again from scratch</p></li><li><p>If the row cannot be built multiple times, give up on the current row and build the <em>previous</em> row from scratch again</p></li><li><p>Repeat until all 9 rows of the Sudoku grid fall into place</p></li></ol><p>This is, admittedly, a very lazy way of building the Sudoku board. It does not keep track of the values that were picked and failed (which means that there is a chance that the row can choose a failed number again). It even &lsquo;gives up&rsquo; prematurely, even though a solution to building a row can be found.</p><p>But before we work on making the approach more rigorous, let&rsquo;s make the code work first.</p><h2 id=making-the-grid>Making the Grid</h2><p>First things first, we need to set up a empty sudoku grid so that we can fill it in.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateSudoku</span>():
 </span></span><span style=display:flex><span>    <span style=color:#999;font-style:italic># A more elegant way of building the grid</span>
 </span></span><span style=display:flex><span>    grid = [[<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)] <span style=color:#6ab825;font-weight:700>for</span> j <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
@@ -48,17 +48,17 @@ The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p><h
 </span></span><span style=display:flex><span>    ]
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> grid
 </span></span><span style=display:flex><span><span style=color:#999;font-style:italic># In the source code, the latter approach was used</span>
-</span></span></code></pre></td></tr></table></div></div><p>The next thing we need to do is to build the row. To fill in the cells in the row, we need to find out what the possible (unused) values can be placed in each cell.</p><h3 id=searching-the-rows-columns-and-squares>Searching the Rows, Columns and Squares</h3><p>To find the <code>unused</code> numbers that can be inserted, we must search and find out which numbers have appeared in the position&rsquo;s row, column and square. This is essentially how one would check if their Sudoku answer is correct.</p><p>An intuitive approach is to search the row/column/square and check which values already exist, which will implicitly give us the unused values.</p><p>This is one way we can implement this if we just checked the row:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span></span></code></pre></td></tr></table></div></div><p>The next thing we need to do is to build the row. To fill in the cells in the row, we need to find out what the possible (unused) values can be placed in each cell.</p><h3 id=searching-the-rows-columns-and-squares>Searching the Rows, Columns and Squares</h3><p>To find the <code>unused</code> numbers that can be inserted, we must search and find out which numbers have appeared in the position&rsquo;s row, column and square. This is essentially how one would check if their Sudoku answer is correct.</p><p>An intuitive approach is to search the row/column/square and check which values already exist, which will implicitly give us the unused values.</p><p>This is one way we can implement this if we just checked the row:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#999;font-style:italic># For a given position (rowIdx, colIdx) on the grid...</span>
 </span></span><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
 </span></span><span style=display:flex><span>    unused = [n <span style=color:#6ab825;font-weight:700>for</span> n <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>1</span>,<span style=color:#3677a9>10</span>)]
@@ -70,19 +70,19 @@ The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p><h
 </span></span><span style=display:flex><span>                unused.pop(value)
 </span></span><span style=display:flex><span>                <span style=color:#6ab825;font-weight:700>break</span>
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> unused
-</span></span></code></pre></td></tr></table></div></div><p>This approach is slow. Its worst case time complexity is O(n^2).</p><p>This slowness adds up over time when building the Sudoku. This function is the workhorse of the algorithm, as it is called for every position of the Sudoku grid, which means that at least 81 calls need to be made!</p><p>So what I did was implement a counting sort.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span></span></code></pre></td></tr></table></div></div><p>This approach is slow. Its worst case time complexity is O(n^2).</p><p>This slowness adds up over time when building the Sudoku. This function is the workhorse of the algorithm, as it is called for every position of the Sudoku grid, which means that at least 81 calls need to be made!</p><p>So what I did was implement a counting sort.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
 </span></span><span style=display:flex><span>    vmap = [<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)]
 </span></span><span style=display:flex><span>    <span style=color:#999;font-style:italic># Logs occurences in row</span>
@@ -96,25 +96,25 @@ The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p><h
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#999;font-style:italic># NOTE: It is entirely possible to range(9) instead.</span>
 </span></span><span style=display:flex><span><span style=color:#999;font-style:italic># range(1,10) was used for clarity&#39;s sake </span>
-</span></span></code></pre></td></tr></table></div></div><p>This allows us to map the values that have been used when scanning through the row, col & squares of the grid. We can then check for a value&rsquo;s occurence with a O(1) list access to <code>vmap</code>. For example, to find how many times &lsquo;1&rsquo; has appeared, I simply need to call <code>vmap[1]</code>.</p><p>This reduces our time complexity to O(n)<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>.</p><p>We can implement this trivially for rows and columns, since we can access a row/column using <code>rowIndex</code>/<code>colIndex</code>. But finding the 3x3 squares is a little harder. First, we need to know where the square starts and stops for the position being queried.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span></span></code></pre></td></tr></table></div></div><p>This allows us to map the values that have been used when scanning through the row, col & squares of the grid. We can then check for a value&rsquo;s occurence with a O(1) list access to <code>vmap</code>. For example, to find how many times &lsquo;1&rsquo; has appeared, I simply need to call <code>vmap[1]</code>.</p><p>This reduces our time complexity to O(n)<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>.</p><p>We can implement this trivially for rows and columns, since we can access a row/column using <code>rowIndex</code>/<code>colIndex</code>. But finding the 3x3 squares is a little harder. First, we need to know where the square starts and stops for the position being queried.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#999;font-style:italic># Returns the row/col limits for the cell&#39;s square</span>
 </span></span><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getSquareLimits</span>(rowIndex, colIndex):
 </span></span><span style=display:flex><span>    rowLimits, colLimits = [],[]
@@ -134,17 +134,17 @@ The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p><h
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>else</span>:
 </span></span><span style=display:flex><span>        rowLimits = [<span style=color:#3677a9>6</span>,rowIndex+<span style=color:#3677a9>1</span>]
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> (rowLimits, colLimits)
-</span></span></code></pre></td></tr></table></div></div><p>With these limits, we can then implement our counting sort for a 3x3 square in the Sudoku:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span></span></code></pre></td></tr></table></div></div><p>With these limits, we can then implement our counting sort for a 3x3 square in the Sudoku:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#999;font-style:italic># Get the unused values for the square only</span>
 </span></span><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
 </span></span><span style=display:flex><span>    <span style=color:#999;font-style:italic># Get the square limits</span>
@@ -156,31 +156,31 @@ The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p><h
 </span></span><span style=display:flex><span>        <span style=color:#6ab825;font-weight:700>if</span> vmap[i] == <span style=color:#3677a9>0</span>:
 </span></span><span style=display:flex><span>            unused.append(i)
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> unused
-</span></span></code></pre></td></tr></table></div></div><p>We can then finally build our overall function that checks for row, column and square:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
+</span></span></code></pre></td></tr></table></div></div><p>We can then finally build our overall function that checks for row, column and square:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#999;font-style:italic># Main logic for sifting through usable values</span>
 </span></span><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
 </span></span><span style=display:flex><span>    <span style=color:#999;font-style:italic># Mapping of number of values that appear</span>
@@ -207,26 +207,26 @@ The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p><h
 </span></span><span style=display:flex><span>            unused.append(i)
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> unused
 </span></span></code></pre></td></tr></table></div></div><h3 id=building-row-by-row>Building Row by Row</h3><p>Let&rsquo;s start building the grid row by row. From columns 1 to 9, we randomly choose one of the unused values to insert into the grid.</p><p>In the likely event that there is no solution where <code>getAvailValues</code> returns an empty list, we execute step 2 of the algorithm: Discard the row and start it again through a recursive call.
-There is a possibility that the arrangement of previous rows make it such that no permutation of numbers can give a valid Sudoku row. The function will then loop forever in recursion purgatory.</p><p>To prevent this, we can keep track of the number of recursions the function has gone through and break it if it passes a certain threshold.<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup></p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
+There is a possibility that the arrangement of previous rows make it such that no permutation of numbers can give a valid Sudoku row. The function will then loop forever in recursion purgatory.</p><p>To prevent this, we can keep track of the number of recursions the function has gone through and break it if it passes a certain threshold.<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup></p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#999;font-style:italic># Generate the sudoku board row in accordance with sdku rules</span>
 </span></span><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateRow</span>(rowIndex, sudokuGrid):
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>global</span> __recursionCounter
@@ -247,30 +247,30 @@ There is a possibility that the arrangement of previous rows make it such that n
 </span></span><span style=display:flex><span>            <span style=color:#6ab825;font-weight:700>if</span> rdi &gt;= <span style=color:#24909d>len</span>(pool):
 </span></span><span style=display:flex><span>                rdi = rdi%<span style=color:#24909d>len</span>(pool)
 </span></span><span style=display:flex><span>            sudokuGrid[rowIndex][i] = pool[rdi]
-</span></span></code></pre></td></tr></table></div></div><p>We can then wrap it up with additional logic to control row generation:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
+</span></span></code></pre></td></tr></table></div></div><p>We can then wrap it up with additional logic to control row generation:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateSudoku</span>():
 </span></span><span style=display:flex><span>    grid = [
 </span></span><span style=display:flex><span>    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
@@ -295,27 +295,27 @@ There is a possibility that the arrangement of previous rows make it such that n
 </span></span><span style=display:flex><span>            generateRow(i,grid)
 </span></span><span style=display:flex><span>            i+=<span style=color:#3677a9>1</span>
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> grid
-</span></span></code></pre></td></tr></table></div></div><p>A purely recursive approach (getting <code>generateRow</code> to call itself to build the next row) was dropped in favor of a iterative approach for ease of debugging. Python also tended to just stop going into deeper levels of recursion even when setting the system variable for recursion depth limit to the max.</p><p>Running the code with a simple script to print every row, the grid generator works!<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup></p><p>At this point, I was ready to wrap up. Mission accomplished, after all. But then a friend of mine who knew I was working on this project showed me this <a href=https://www.101computing.net/backtracking-algorithm-sudoku-solver/>Sudoku backtracking solver</a>.</p><h1 id=a-simple-backtrack>A Simple Backtrack</h1><p>I ran the code in the link. It looked very, <strong>very</strong> impressive, with all the numbers flickering about as the algorithm methodically worked its way to solve the puzzle.</p><p>Although my script builds the full board rather than a puzzle with blanks to be solved, perhaps there is a way to implement a backtracking algorithm in the code myself?</p><h2 id=the-algorithm--1>The Algorithm ⚙️</h2><p>A backtracking algorithm essentially tries all possible permutations of a solution and discards the failed attempts. It is typically done through recursion.</p><ol><li><p>Build row by row from the leftmost to rightmost cells with randomly chosen values from the set of unused, valid values</p></li><li><p>If a value cannot be found, go back a cell. Blacklist the cell&rsquo;s previously selected value and proceed with another valid one</p></li><li><p>If no valid value exists for the returned cell after a backtrack, go back another cell. If the cell is the first of the row, go back to the previous row instead and rebuild it from scratch randomly</p></li><li><p>Repeat until the grid is formed</p></li></ol><p>I implemented the &lsquo;backtrack&rsquo; non-recursively, using a simple blacklist for a single row:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
+</span></span></code></pre></td></tr></table></div></div><p>A purely recursive approach (getting <code>generateRow</code> to call itself to build the next row) was dropped in favor of a iterative approach for ease of debugging. Python also tended to just stop going into deeper levels of recursion even when setting the system variable for recursion depth limit to the max.</p><p>Running the code with a simple script to print every row, the grid generator works!<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup></p><p>At this point, I was ready to wrap up. Mission accomplished, after all. But then a friend of mine who knew I was working on this project showed me this <a href=https://www.101computing.net/backtracking-algorithm-sudoku-solver/>Sudoku backtracking solver</a>.</p><h1 id=a-simple-backtrack>A Simple Backtrack</h1><p>I ran the code in the link. It looked very, <strong>very</strong> impressive, with all the numbers flickering about as the algorithm methodically worked its way to solve the puzzle.</p><p>Although my script builds the full board rather than a puzzle with blanks to be solved, perhaps there is a way to implement a backtracking algorithm in the code myself?</p><h2 id=the-algorithm--1>The Algorithm ⚙️</h2><p>A backtracking algorithm essentially tries all possible permutations of a solution and discards the failed attempts. It is typically done through recursion.</p><ol><li><p>Build row by row from the leftmost to rightmost cells with randomly chosen values from the set of unused, valid values</p></li><li><p>If a value cannot be found, go back a cell. Blacklist the cell&rsquo;s previously selected value and proceed with another valid one</p></li><li><p>If no valid value exists for the returned cell after a backtrack, go back another cell. If the cell is the first of the row, go back to the previous row instead and rebuild it from scratch randomly</p></li><li><p>Repeat until the grid is formed</p></li></ol><p>I implemented the &lsquo;backtrack&rsquo; non-recursively, using a simple blacklist for a single row:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span> __blacklistedVals = [[<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)] <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
-</span></span></code></pre></td></tr></table></div></div><p>For every column index, failed values get logged into the blacklist and are excluded when <code>getAvailValues()</code> is being called in the event of a backtrack:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span></span></code></pre></td></tr></table></div></div><p>For every column index, failed values get logged into the blacklist and are excluded when <code>getAvailValues()</code> is being called in the event of a backtrack:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>global</span> __blacklistedVals
 </span></span><span style=display:flex><span>    vmap = [<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)] <span style=color:#999;font-style:italic>#0-9 so 10 vals</span>
@@ -335,46 +335,46 @@ There is a possibility that the arrangement of previous rows make it such that n
 </span></span><span style=display:flex><span>        <span style=color:#6ab825;font-weight:700>if</span> vmap[i] == <span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>and</span> __blacklistedVals[colIndex][i]==<span style=color:#3677a9>0</span>:
 </span></span><span style=display:flex><span>            unused.append(i)
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> unused
-</span></span></code></pre></td></tr></table></div></div><p>The row generating logic dropped the recursion in favor of an iterative approach which is somewhat easier to debug:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">27
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">28
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">29
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">30
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">31
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">32
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">33
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">34
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">35
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">36
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">37
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">38
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">39
+</span></span></code></pre></td></tr></table></div></div><p>The row generating logic dropped the recursion in favor of an iterative approach which is somewhat easier to debug:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">39
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateRow</span>(rowIndex, grid):
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>global</span> __blacklistedVals
 </span></span><span style=display:flex><span>    i = <span style=color:#3677a9>0</span>
@@ -415,61 +415,61 @@ There is a possibility that the arrangement of previous rows make it such that n
 </span></span><span style=display:flex><span>        <span style=color:#6ab825;font-weight:700>else</span>:
 </span></span><span style=display:flex><span>            i+=<span style=color:#3677a9>1</span>
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> grid
-</span></span></code></pre></td></tr></table></div></div><p>Running the script, it works! But what if we were more rigorous with the depth of the blacklist?</p><h1 id=mother-of-all-backtracks-moab>Mother Of All Backtracks (MOAB)</h1><p>Instead of keeping track of a row&rsquo;s worth of failed solutions, how about we extend it to the <strong>whole grid</strong>?</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
+</span></span></code></pre></td></tr></table></div></div><p>Running the script, it works! But what if we were more rigorous with the depth of the blacklist?</p><h1 id=mother-of-all-backtracks-moab>Mother Of All Backtracks (MOAB)</h1><p>Instead of keeping track of a row&rsquo;s worth of failed solutions, how about we extend it to the <strong>whole grid</strong>?</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span> __blacklistedVals = [[[<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)]<span style=color:#6ab825;font-weight:700>for</span> y <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]<span style=color:#6ab825;font-weight:700>for</span> z <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
 </span></span></code></pre></td></tr></table></div></div><p>This particular implementation was pretty hairy, with the backtracking logic extending out to 2 seperate functions.
-In the repo, this is <code>sudogen3</code> if you are interested in the full implementation code.</p><h2 id=the-algorithm--2>The Algorithm ⚙️</h2><ol><li><p>Build row by row from the leftmost to rightmost cells with randomly chosen values from the set of unused, valid values</p></li><li><p>If a value cannot be found, go back a cell. Blacklist the cell&rsquo;s previously selected value and proceed with another valid one</p></li><li><p>If no valid value exists for the returned cell after a backtrack, go back until we reach a cell with valid values</p></li><li><p>Repeat until the grid is formed</p></li></ol><p>This was a can of worms. Additional flags and conditions needed to be added to catch perculiar edge cases, such as infinite loops<sup id=fnref:5><a href=#fn:5 class=footnote-ref role=doc-noteref>5</a></sup> that the algorithm could get stuck in.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">27
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">28
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">29
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">30
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">31
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">32
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">33
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">34
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">35
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">36
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">37
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">38
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">39
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">40
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">41
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">42
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">43
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">44
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">45
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">46
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">47
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">48
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">49
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">50
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">51
+In the repo, this is <code>sudogen3</code> if you are interested in the full implementation code.</p><h2 id=the-algorithm--2>The Algorithm ⚙️</h2><ol><li><p>Build row by row from the leftmost to rightmost cells with randomly chosen values from the set of unused, valid values</p></li><li><p>If a value cannot be found, go back a cell. Blacklist the cell&rsquo;s previously selected value and proceed with another valid one</p></li><li><p>If no valid value exists for the returned cell after a backtrack, go back until we reach a cell with valid values</p></li><li><p>Repeat until the grid is formed</p></li></ol><p>This was a can of worms. Additional flags and conditions needed to be added to catch perculiar edge cases, such as infinite loops<sup id=fnref:5><a href=#fn:5 class=footnote-ref role=doc-noteref>5</a></sup> that the algorithm could get stuck in.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">50
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">51
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#999;font-style:italic># A quick showcase of the additional functions</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>backtrackRow</span>(rowIndex):
@@ -523,9 +523,9 @@ In the repo, this is <code>sudogen3</code> if you are interested in the full imp
 </span></span><span style=display:flex><span>    __blacklistedVals = make_new_blacklist()
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> grid
 </span></span></code></pre></td></tr></table></div></div><h1 id=visualising-efficiency>Visualising Efficiency</h1><p>The fun part comes when we take a look at the data we can get from the algorithms.</p><p>To check the efficiency of the 3 different generators, I created a counter variable <code>__timesCalled</code> that records the amount of times <code>getAvailValues()</code> is being called. This is because <code>getAvailValues()</code> is indicative of the algorithm&rsquo;s efficiency since it is called for every single cell input.</p><p>All the effort into making a thorough, methodical Sudoku generator <em><strong>must</strong></em> pay off in terms of efficiency, right?</p><p>After all, it intuitively makes sense that with a proper backtracking algorithm, we can systematically search through values and quickly converge to a valid sudoku square. It should at least be better than randomly re-building rows, leaving it up to chance.</p><h3 id=well-no>Well, no.</h3><p>It was kind of obvious while debugging the three algorithms that the <strong>MOAB</strong> and <strong>Simple Blacklist</strong> algorithms were slow.</p><p>For each of the 3 Sudoku algorithms discussed, 1000 puzzles were generated and the number of lookup calls to <code>getAvailValues()</code> were recorded down.</p><p>Here&rsquo;s the scatter plot of the Lazy Approach, Simple Backtrack and MOAB.</p><figure class=figmd><img src=https://raw.githubusercontent.com/nichyjt/Sudoku_py/main/sudogen_graphs/Sudogen_Scatter.png></figure><p>There&rsquo;s a lot of noise, but it is abundantly clear that the blacklisting approaches are generally less efficient than the Lazy Approach.</p><p>Let&rsquo;s plot a Box & Whisker diagram to get a cleaner look into the stats.</p><figure class=figmd><img src=https://raw.githubusercontent.com/nichyjt/Sudoku_py/main/sudogen_graphs/Sudogen_Box.png></figure><p>With this, it is clear that on average, the Lazy Approach takes much fewer lookups than the Simple Blacklist and MOAB. But why?</p><p>Perhaps its because it&rsquo;s more likely for the algo to stumble onto the &lsquo;correct&rsquo; sequence of values randomly for any given row rather than be going through all the possible permutations using the backtracking algo. Especially at the later rows where there may only be one &lsquo;valid&rsquo; sequence of values that exists and will naturally converge to a solution, but many wrong values to choose from and permutate through.</p><h2 id=on-efficiency>On Efficiency</h2><p>To begin with, backtracking is a naiive approach to solving problems, at least in the case of Sudoku. Backtracking is a form of brute forcing, which is inefficient from the get-go.</p><p>There are opportunities for more elegant ways to build the grid using the properties of Sudoku, such as reflections, rotations & group-theory. There are a wide range of papers and studies for Sudoku that go into detail on finding all sorts of permutations for valid Sudoku grids which can further advise Sudoku generating algorithms. The perfect build case for my scripts are 81 lookup calls, but it is entirely possible to go below 81 lookups and reach really high levels of efficiency.</p><p>Of course, I&rsquo;m pretty sure that out there in the wild, people have already created Sudoku generating algorithms that exploit its mathematical properties to dizzying levels of efficiency.</p><h1 id=puzzle-making-and-tkinter>Puzzle-Making and Tkinter</h1><p>At this point I&rsquo;ve spent a considerable amount of time building and debugging this program. Why not just make it into a proper game?
-To wrap this project up, I made the UI using Tkinter and made it into a fully functional game with varying difficulty.</p><p>The puzzle is formed by calling the sudoku grid generator, then popping off random positions from the grid. The higher the difficulty, the more positions popped.</p><p>This is a naiive approach to accessing difficulty. A true reflection of difficulty not only scales with the number of blanks, but also takes into account the techniques that a player needs to use to solve the puzzles. But for my intents and purposes, the naiive approach should still get the job done for a vast majority of the time.</p><p>If you&rsquo;re interested to try my homemade Sudoku out, <a href=https://github.com/nichyjt/Sudoku_py>download my project here</a> and enjoy! 🍻</p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>Sudokus are not actually magic squares, but are similar insofar as the rows and columns add up to the same number. Sudokus are specifically, a special type of latin squares.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>Alternatively, we can achieve a similar reduction of time complexity by using a dictionary.&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:3><p>I used an evil global variable to track the recursion depth. It would be better if the counter was passed in as an argument in the function. However, to keep things simple, I went with the evil option 😈&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:4><p>If you are coding along, you can see the grid on terminal by putting the following under your script&rsquo;s driver function:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">2
+To wrap this project up, I made the UI using Tkinter and made it into a fully functional game with varying difficulty.</p><p>The puzzle is formed by calling the sudoku grid generator, then popping off random positions from the grid. The higher the difficulty, the more positions popped.</p><p>This is a naiive approach to accessing difficulty. A true reflection of difficulty not only scales with the number of blanks, but also takes into account the techniques that a player needs to use to solve the puzzles. But for my intents and purposes, the naiive approach should still get the job done for a vast majority of the time.</p><p>If you&rsquo;re interested to try my homemade Sudoku out, <a href=https://github.com/nichyjt/Sudoku_py>download my project here</a> and enjoy! 🍻</p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>Sudokus are not actually magic squares, but are similar insofar as the rows and columns add up to the same number. Sudokus are specifically, a special type of latin squares.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>Alternatively, we can achieve a similar reduction of time complexity by using a dictionary.&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:3><p>I used an evil global variable to track the recursion depth. It would be better if the counter was passed in as an argument in the function. However, to keep things simple, I went with the evil option 😈&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:4><p>If you are coding along, you can see the grid on terminal by putting the following under your script&rsquo;s driver function:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">2
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>sudoku = generateSudoku()
 </span></span><span style=display:flex><span><span style=color:#6ab825;font-weight:700>for</span> row <span style=color:#6ab825;font-weight:700>in</span> sudoku:
 </span></span><span style=display:flex><span>    <span style=color:#24909d>print</span>(row)

@@ -212,3 +212,6 @@ summary{
     color: var(--color-link-title);
     font-weight: 500;
 }
+.katex .base{
+    z-index: -1;
+}

@@ -48,19 +48,19 @@ Even worse are writing unit tests for functions tightly coupled to external serv
 like Databases or 3rd party APIs.</p><p>Careful thought needs to be put into designing
 the tests to not pollute the databases/apis (even for staging environments, because things will break!).
 Not to mention the many testing frameworks that exist out there.</p><p>This is why I like Golang. Writing unit tests for it and integrating it into CICD tools is simple(r).</p><p>I&rsquo;m sure that there exist some unit testing frameworks for other languages out there
-that make things seamless and efficient. But in particular, building Unit tests is <strong>a language feature</strong> for Go and is quite easy to pick up.</p><p>A very non-production ready trivial golang unit test example:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+that make things seamless and efficient. But in particular, building Unit tests is <strong>a language feature</strong> for Go and is quite easy to pick up.</p><p>A very non-production ready trivial golang unit test example:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=display:flex><span><span style=color:#999;font-style:italic>// foo.go
 </span></span></span><span style=display:flex><span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>func</span> <span style=color:#447fcf>Add</span>(x <span style=color:#6ab825;font-weight:700>int</span>, y <span style=color:#6ab825;font-weight:700>int</span>){
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> x+y;
@@ -74,7 +74,7 @@ that make things seamless and efficient. But in particular, building Unit tests 
 </span></span><span style=display:flex><span>        t.<span style=color:#447fcf>Fail</span>()
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></td></tr></table></div></div><p>To test the <code>Add</code> function, just</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
+</span></span></code></pre></td></tr></table></div></div><p>To test the <code>Add</code> function, just</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span> $ go <span style=color:#24909d>test</span> foo.go foo_test.go
 </span></span></code></pre></td></tr></table></div></div><p>Clean. 🤌 Go will output the PASS/FAIL status for each test that was defined in
 the <code>*_test.go</code> files. It also integrates well with Github Actions which makes automated testing simple and dare I say, fun.</p><p>The one thing I learnt about Unit Testing is that its payoffs is <strong>unbelievably</strong> good.
@@ -82,39 +82,39 @@ It probably saved hours of my time from reactively dealing with bugs.
 It&rsquo;s a nice early warning system and makes you think carefully about
 how to design your functions detect errors and handle them. 10/10 would do it again.</p><h2 id=api-documentation---a-necessary-chore>API Documentation - A Necessary Chore</h2><p>When embarking on this project, I was really interested in trying to get industry-standard level of endpoint API documentation for FindNUS&rsquo;s backend. I settled on <a href=https://swagger.io/specification/>OpenAPI3</a> specs because its interoperable with vendors that can process a OpenAPI3 <code>yaml</code> spec file and give really nice documentation.</p><p>However, most of these vendors cost $$$ so I opted to parse the <code>yaml</code> specs with a
 open-source tool <a href=https://github.com/openapi-contrib/openapi3-generator>openapi3-generator</a>
-to help generate nice, human-readable formatted markdown docs from the spec file. In case you&rsquo;re wondering, the yaml/json formats are not particularly nice to for a human.</p><p>Imagine digging through 500+ lines of this:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
+to help generate nice, human-readable formatted markdown docs from the spec file. In case you&rsquo;re wondering, the yaml/json formats are not particularly nice to for a human.</p><p>Imagine digging through 500+ lines of this:</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#999;font-style:italic># One of many endpoint definitions using OpenAPI3 specs</span><span style=color:#666>
 </span></span></span><span style=display:flex><span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>paths</span>:<span style=color:#666>
 </span></span></span><span style=display:flex><span><span style=color:#666>  </span><span style=color:#6ab825;font-weight:700>/item</span>:<span style=color:#666>
 </span></span></span><span style=display:flex><span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>post</span>:<span style=color:#666>
 </span></span></span><span style=display:flex><span><span style=color:#666>      </span><span style=color:#6ab825;font-weight:700>description</span>:<span style=color:#666> </span>|<span style=color:#ed9d13>
-</span></span></span><span style=display:flex><span><span style=color:#ed9d13>        </span><span style=color:#666>        </span>Add new Lost item to be put on Lookout on the database.<span style=color:#666>
+</span></span></span><span style=display:flex><span><span style=color:#ed9d13>        Add new Lost item to be put on Lookout on the database.</span><span style=color:#666>        
 </span></span></span><span style=display:flex><span><span style=color:#666>      </span><span style=color:#6ab825;font-weight:700>parameters</span>:<span style=color:#666>
 </span></span></span><span style=display:flex><span><span style=color:#666>      </span>- <span style=color:#6ab825;font-weight:700>in</span>:<span style=color:#666> </span>header<span style=color:#666>
 </span></span></span><span style=display:flex><span><span style=color:#666>        </span><span style=color:#6ab825;font-weight:700>name</span>:<span style=color:#666> </span>Authorization<span style=color:#666>

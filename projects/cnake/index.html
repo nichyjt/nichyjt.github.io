@@ -11,13 +11,13 @@
 <a href=/tags , class=menu-item><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tags" class="svg-inline--fa fa-tags fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentcolor" d="M497.941 225.941 286.059 14.059A48 48 0 00252.118.0H48C21.49.0.0 21.49.0 48v204.118a48 48 0 0014.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882.0l204.118-204.118c18.745-18.745 18.745-49.137.0-67.882zM112 160c-26.51.0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882.0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397.0h48.721a48 48 0 0133.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137.0 67.882z"></path></svg><span class=menu-item-text>TAGS</span></a></button></li><li class=nav-item><button id=darkmode-toggle , style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item , onclick=changetheme()>
 <a class=menu-item , style=text-decoration:underline><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="adjust" class="svg-inline--fa fa-adjust fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705.0 184 82.311 184 184 0 101.705-82.311 184-184 184z"></path></svg><span class=menu-item-text>DARKMODE</span></a></button>
 <script>function changetheme(){document.body.className.includes("darkmode")?(document.body.classList.replace("darkmode","lightmode"),localStorage.setItem("theme","lightmode")):(document.body.classList.replace("lightmode","darkmode"),localStorage.setItem("theme","darkmode")),document.activeElement.blur()}</script></li></ul></div></nav></body></div><div class=bodycontainer><main><section class=section><div class=frontmatter><h1 class="title, listTitleLink">Cnake 🐍</h1><div class=subtitle><p><time>📆 August 6, 2021</time>
-| ⌛ 5 minutes read</p></div><p class=tags>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/c/c++>C/C++</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/linux>Linux</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/data-structures>Data Structures</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/project>Project</a></p></div><hr><div class=content><p>I thought it would be fun to make a one-shot snake game project to familiarise myself with the <code>ncurses</code> library and play around with some data structures, which led to this <a href=https://github.com/nichyjt/cnake>ripoff snake game</a> you can find on my GitHub.</p><figure class=figmd><img src=https://raw.githubusercontent.com/nichyjt/cnake/master/images/demo.gif alt class=figsmall></figure><p>If you&rsquo;re interested, you can take a look and perhaps give it a go!</p><p>The following sections of this post are just some code discussions for the nerds.</p><h1 id=building-cnake>Building Cnake</h1><p>I won&rsquo;t talk too much about the ncurses library and will be writing more about the things I found interesting while building this project, mainly, these questions I had to answer while making the game.</p><p>How can I track where the snake is?<br>How do I handle input and movement?<br>How do I increase the length of the snake?</p><h2 id=how-can-i-track-where-the-snake-is>How can I track where the snake is?</h2><p>The first thing that came to mind is to use a 2D matrix (<code>int[N][M]</code>) that corresponds to the x,y coodinates of the playing field. We can assign numbers to each array element to represent <em>something</em> such as 0 for empty, 1 for snake, 2 for food, 3 for border, etc.</p><p>On second thought, that&rsquo;s not the fastest way of doing things. If I were to try and figure out where all the &lsquo;Snake&rsquo; cells are, I would have to iterate through the ENTIRE matrix. If not that, I would have to conjure up some overcomplicated way of finding all the coordinates using a matrix.</p><p>Enter: Linked Lists. I don&rsquo;t need to know where everything is. I just need to know where the important things are. Linked Lists would be the most intuitive way to track the snake. Conveniently, the linked list nodes can hold data (x,y coordinates) as well as references to the adjacent nodes. So, instead of having to iterate through N*M cells of the playing field, I just need to iterate through the length of the Snake to figure out where all the pieces are.</p><p>What this looks like&mldr;</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">6
+| ⌛ 5 minutes read</p></div><p class=tags>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/c/c++>C/C++</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/linux>Linux</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/data-structures>Data Structures</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/project>Project</a></p></div><hr><div class=content><p>I thought it would be fun to make a one-shot snake game project to familiarise myself with the <code>ncurses</code> library and play around with some data structures, which led to this <a href=https://github.com/nichyjt/cnake>ripoff snake game</a> you can find on my GitHub.</p><figure class=figmd><img src=https://raw.githubusercontent.com/nichyjt/cnake/master/images/demo.gif alt class=figsmall></figure><p>If you&rsquo;re interested, you can take a look and perhaps give it a go!</p><p>The following sections of this post are just some code discussions for the nerds.</p><h1 id=building-cnake>Building Cnake</h1><p>I won&rsquo;t talk too much about the ncurses library and will be writing more about the things I found interesting while building this project, mainly, these questions I had to answer while making the game.</p><p>How can I track where the snake is?<br>How do I handle input and movement?<br>How do I increase the length of the snake?</p><h2 id=how-can-i-track-where-the-snake-is>How can I track where the snake is?</h2><p>The first thing that came to mind is to use a 2D matrix (<code>int[N][M]</code>) that corresponds to the x,y coodinates of the playing field. We can assign numbers to each array element to represent <em>something</em> such as 0 for empty, 1 for snake, 2 for food, 3 for border, etc.</p><p>On second thought, that&rsquo;s not the fastest way of doing things. If I were to try and figure out where all the &lsquo;Snake&rsquo; cells are, I would have to iterate through the ENTIRE matrix. If not that, I would have to conjure up some overcomplicated way of finding all the coordinates using a matrix.</p><p>Enter: Linked Lists. I don&rsquo;t need to know where everything is. I just need to know where the important things are. Linked Lists would be the most intuitive way to track the snake. Conveniently, the linked list nodes can hold data (x,y coordinates) as well as references to the adjacent nodes. So, instead of having to iterate through N*M cells of the playing field, I just need to iterate through the length of the Snake to figure out where all the pieces are.</p><p>What this looks like&mldr;</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">6
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#999;font-style:italic>// Doubly Linked List
 </span></span></span><span style=display:flex><span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>struct</span> SnakeCell{
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>int</span> x;
@@ -25,33 +25,33 @@
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell* next;
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell* prev;
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></td></tr></table></div></div><p>Displaying the Snake is as trivial as iterating through the linked list and using each node&rsquo;s x,y data to populate a ncurses window. The following code describes how I initialised the Snake linked-list with an initial length of <code>initialSize</code>.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
+</span></span></code></pre></td></tr></table></div></div><p>Displaying the Snake is as trivial as iterating through the linked list and using each node&rsquo;s x,y data to populate a ncurses window. The following code describes how I initialised the Snake linked-list with an initial length of <code>initialSize</code>.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#999;font-style:italic>// Snake&#39;s head has been instantitated earlier on
 </span></span></span><span style=display:flex><span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>struct</span> SnakeCell* <span style=color:#447fcf>init_snake</span>(WINDOW* window, <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell *head, <span style=color:#6ab825;font-weight:700>int</span> initialSize){
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell *cell = head;
@@ -79,39 +79,39 @@
 </span></span><span style=display:flex><span>    <span style=color:#447fcf>wrefresh</span>(window);
 </span></span><span style=display:flex><span>    <span style=color:#6ab825;font-weight:700>return</span> tail;
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></td></tr></table></div></div><h2 id=how-do-i-handle-input-and-movement>How do I handle input and movement?</h2><p>The snake moves in 4 directions. The directions can be mapped to WASD/Arrow keys. I need to scan for these inputs and ignore any invalid key inputs. There&rsquo;s also a potential issue where the user accidentally makes the snake go &lsquo;backwards&rsquo;. Meaning, when the snake is moving up, the user inputs down, when the snake is moving left, the user inputs right. These inputs are also invalid as the snake will collide with itself and should be ignored.</p><p>To handle movement logic, I have two variables that deal with direction. <code>inertia</code> and <code>input</code>. The latter is the raw stdin input from the user and the former the Snake&rsquo;s last moved direction.</p><p>Parsing input: If we get a bad input, we ignore it and let the snake carry on with its current direction of motion (inertia!). Else, we update the snake&rsquo;s inertia.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">27
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">28
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">29
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">30
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">31
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">32
+</span></span></code></pre></td></tr></table></div></div><h2 id=how-do-i-handle-input-and-movement>How do I handle input and movement?</h2><p>The snake moves in 4 directions. The directions can be mapped to WASD/Arrow keys. I need to scan for these inputs and ignore any invalid key inputs. There&rsquo;s also a potential issue where the user accidentally makes the snake go &lsquo;backwards&rsquo;. Meaning, when the snake is moving up, the user inputs down, when the snake is moving left, the user inputs right. These inputs are also invalid as the snake will collide with itself and should be ignored.</p><p>To handle movement logic, I have two variables that deal with direction. <code>inertia</code> and <code>input</code>. The latter is the raw stdin input from the user and the former the Snake&rsquo;s last moved direction.</p><p>Parsing input: If we get a bad input, we ignore it and let the snake carry on with its current direction of motion (inertia!). Else, we update the snake&rsquo;s inertia.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">32
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#6ab825;font-weight:700>const</span> <span style=color:#6ab825;font-weight:700>int</span> DXN_UP = <span style=color:#3677a9>3</span>, DXN_DOWN = <span style=color:#3677a9>5</span>, DXN_LEFT = <span style=color:#3677a9>2</span>, DXN_RIGHT = <span style=color:#3677a9>4</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#999;font-style:italic>// inertia = parseInput(...);
@@ -146,29 +146,29 @@
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></td></tr></table></div></div><h2 id=how-do-i-increase-the-length-of-the-snake>How do I increase the length of the snake?</h2><p>This is a classic Linked List question. I need to create a new node and return it as a head.
-In the context of Snake, when the snake needs to grow, it grows from the head in the direction of its inertia. I just allocate memory for the head, instantiate it and append it to the old head.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
+In the context of Snake, when the snake needs to grow, it grows from the head in the direction of its inertia. I just allocate memory for the head, instantiate it and append it to the old head.</p><div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#686868">22
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#6ab825;font-weight:700>struct</span> SnakeCell* <span style=color:#447fcf>add_snake_cell</span>(WINDOW* window, <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell *head, <span style=color:#6ab825;font-weight:700>int</span> inertia){
 </span></span><span style=display:flex><span>    <span style=color:#999;font-style:italic>// Returns the new head
 </span></span></span><span style=display:flex><span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>struct</span> SnakeCell *newhead = <span style=color:#447fcf>malloc</span>(<span style=color:#6ab825;font-weight:700>sizeof</span>(<span style=color:#6ab825;font-weight:700>struct</span> SnakeCell));
