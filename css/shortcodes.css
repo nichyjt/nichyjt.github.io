@@ -7,23 +7,24 @@
 .abttext{
     display: flex;
     flex-direction: column;
-    margin-left: 2rem;
+    margin-left: 4rem;
     justify-content: space-evenly;
 }
 .abtimg{
     border-radius: 50%;
-    height: 15rem;
-    width: 15rem;
-    border:0.2rem solid var(--color-accent);
+    height: 14rem;
+    width: 14rem;
+    border: 0.2rem solid var(--color-accent);
     align-self: center;
 }
 .abttitle{
     width: fit-content;
-    margin-bottom: 16px;   
+margin-bottom: 0.5rem;   
 }
 .abttagline{
+    height: fit-content;
     width: fit-content;
-    margin-top: 0;
+    margin: 0;
 }
 .badgebanner{
     width: inherit;
@@ -55,12 +56,16 @@
 .experienceBlockquote{
     margin-inline: 0;
 }
+
 @media only screen and (max-width:650px){
     .abtimg{
         height: 7rem;
         width: 7rem;
         margin-top: 1rem;
         align-self: flex-start;
+    }
+    .abttext{
+        margin-left: 1rem;
     }
     .badgebanner{
         width: inherit;

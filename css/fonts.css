@@ -32,31 +32,31 @@
 p, ol, li, em{
     text-align: justify;
     font-family: MainBody, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     word-wrap: break-word;
 }
 /*For use in list.html templates*/
 .plistitem{
     text-align: justify;
     font-family: MainBody, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
 }
 h1{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
-    font-size: 34px;
+    font-size: 26px;
     margin-bottom: 0.5rem;
 }
 h2, summary{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
-    font-size: 26px;
+    font-size: 22px;
 }
 h3{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
-    font-size: 22px;
+    font-size: 20px;
 }
 h4{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
-    font-size: 22px;
+    font-size: 18px;
 }
 /*Support up to 4 headers, add more if necessary*/
 code{

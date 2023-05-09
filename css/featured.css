@@ -36,6 +36,8 @@
     justify-content: center;
     text-decoration: underline;
     color: var(--color-link-title);
+    margin-inline: 1rem;
+    text-align: left;
 }
 .featuredDescription{
     margin-top: 0rem;
