@@ -23,7 +23,7 @@ I also explain some intuition behind recursion trees. Probably useful for my CS2
 \text{Find } O(T(n)), \text{where} ~ T(n) = 3T(\frac{2}{3}n)
 $</p><p>This was derived from pseudocode where 3 recursive calls are made per function call,
 each splitting the subproblem into (2/3) N.</p><p>Nevermind the practicality, its a DSA course after all.</p><p>It doesn&rsquo;t fit any of the <a href=https://users.cs.duke.edu/~ola/ap/recurrence.html>common recurrence relations</a>, so the convo went something like this:</p><blockquote><p>> &ldquo;Oh, just use the <strong>Master Method</strong>&rdquo;<br>> &ldquo;The what?&rdquo;<br>> &ldquo;ah.&rdquo;</p></blockquote><p>Therein lies the problem. For most non-CS and non-math people, exposure and familiarity with math tools like the master method are not taught at entry level DSA classes (or even bootcamps)! Yet tricky non-standard recurrence relations are tested 💦</p><p>So, there is a general-<em>ish</em> way to solve recurrence relations without using master method.</p><h2 id=tn--atb--ok-formula>T(n) + a(T/b) + O(k) Formula</h2><p>$
-\text{Let } T(n) = aT(\frac{n}{b}) + O(k), \\ ~\\
+\text{Let } T(n) = aT(\frac{n}{b}) + O(k), \\ ~ \\
 O(T(n)) = \begin{cases}
 O(k * n^{\log_{b}a}), ~~~ k \ne 1 \\
 O(\log_b(n)), ~~~ k = 1
@@ -36,12 +36,12 @@ $</p><p>From the recursion tree, we can see that</p><p>$
 \sum\limits_{\text{Cost}} = (k)\frac{(3^{\log_{\frac{3}{2}}n} - 1)}{3-1} \\
 \sum\limits_{\text{Cost}} = \frac{k}{2} (3^{\log_{\frac{3}{2}}n} - 1) \\ ~ \\
 O(T(n)) = O(\frac{k}{2} (3^{\log_{\frac{3}{2}}n} - 1)) \\ ~ \\
-O(T(n)) = O(3^{\log_{\frac{3}{2}}n}) \text{ ignore k as O(k) = O(1)}\\ ~ \\
+O(T(n)) = O(3^{\log_{\frac{3}{2}}n}) \text{ , ignore k as O(k) = O(1)}\\ ~ \\
 \because a^{\log_{b}(c)} = c^{\log_{b}(a)}, \\ ~ \\
 O(T(n)) = O(n^{\log_{\frac{3}{2}}3}) ~ \square
-$</p><p>Nice. Let&rsquo;s generalise this.</p><h2 id=general-form->General Form 💫</h2><p>Generalising $T(n) = aT(n/b) + O(k)$,</p><p>$
+$</p><p>Nice. Let&rsquo;s generalise this, and account for cases where $O(k) \ne O(1)$.</p><h2 id=general-form->General Form 💫</h2><p>Generalising $T(n) = aT(n/b) + O(k)$,</p><p>$
 \sum\limits_{\text{Cost}} = k(a^0 + a^1 + a^2 + &mldr; + a^{\log_{b}n}) \\
-\sum\limits_{\text{Cost}} = k\frac{(a^{\log_{b}n} - 1)}{a-1} \\ ~ \\
+\sum\limits_{\text{Cost}} = k\frac{(a^{\log_{b}n} - 1)}{a-1} \\
 \therefore O(T(n)) = O(k\frac{(a^{\log_{b}n} - 1)}{a-1}) = O(k* n^{\log_{b}a}) ~ \square
 $</p><p>Oh, but there is a sneaky edge case. What happens when $a=1$?<br>The sum of the costs will be undefined and the universe will implode.</p><p>For that, we can use L&rsquo;Hopital&rsquo;s rule.</p><p>$
 \lim\limits_{a \rarr 1} k\frac{(a^{\log_{b}n} - 1)}{a-1}
@@ -61,14 +61,14 @@ and has a recurrence relation of $T(n) = 2T(n/2) + O(n)$</p><p>$
 O(k) = O(n), b = 2, a = 2 \\
 O(T(n)) = O(n\log_{2}(n))
 $ ✅</p><p>It works! At least for these cases + my own testing. You can plug and play this in your exams or whatever – it SHOULD work but I’m not a math major so yea 🙃</p><h2 id=proof---max-level-of-recursive-tree>Proof - Max level of recursive tree</h2><p>Proof, done hand-wavily (once again, I&rsquo;m not a math major or computer scientist 💀 ):</p><p><strong>Intuition</strong>: The max levels of the tree with starting size N is how much N can be divided by the subproblem size.</p><p>Formally,</p><p>$b = 2$</p><ul><li>Consider $T(n/2)$</li><li>Assume that the tree stops growing at base case $n/2 = 1$</li><li>By observation, maximum number of levels = number of times n can be divided by 2.</li><li>This follows the definition of logarithms<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup></li><li>So the number of levels is $\log_{2}(n)$</li></ul><p>$b = 3$</p><ul><li>Consider $T(n/3)$</li><li>Similarly, max levels = number of times n can be divided by 3</li><li>Following the definition of logarithms, max levels = $\log_{3}(n)$</li></ul><p>Let&rsquo;s generalise b to a integer variable k.</p><p>$b = k$</p><ul><li>Consider $T(n/k)$</li><li>Max levels = $\log_{k}(n)$ with the same reasoning</li></ul><p>$b = k+1$</p><ul><li>Consider $T(n/(k+1))$</li><li>Max levels = $\log_{k+1}(n)$</li></ul><p>By induction, we have $\log_{b}(n) \text{ levels}$</p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>Consider the numerator.<br>$
-\text{Let } y = a^{\log_{b}n}, ~~
+\text{Let } y = a^{\log_{b}n}, \\
 \ln y = \ln a * \log_{b}n \\ ~ \\
 \frac{1}{y} \frac{\partial{y}}{\partial{a}} = \frac{1}{a} \log_{b}n \\ ~\\
-\frac{\partial{y}}{\partial{a}} = \frac{y}{a} \log_{b}n \\ ~\\
+\frac{\partial{y}}{\partial{a}} = \frac{y}{a} \log_{b}n \\ ~ \\
 \frac{\partial{y}}{\partial{a}} = a^{\log_b n -1} \log_{b}n ~~ \text{(sub in y)}
 $<br><br>So,<br>$
 \lim\limits_{a \rarr1} ~ k \frac{\frac{\partial}{\partial a}(a^{\log_{b}n} - 1)}{\frac{\partial}{\partial a}(a-1)}
-= \lim\limits_{a \rarr1} ~ k\frac{a^{\log_b n -1} \log_{b}n}{1} \\ ~\\
+= \lim\limits_{a \rarr1} ~ k\frac{a^{\log_b n -1} \log_{b}n}{1} \\ ~ \\
 \text{When a = 1, it evaluates to } \log_{b}(n) ~ \square
 $&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li><li id=fn:2><p>The logarithm is the inverse function to exponentiation. Exponentiation, $a = b^n$ can be interpreted as <strong>multiplying</strong> b by n times. Since log is its inverse, we can think of $\log_{b}a = n$ as the number of times a can be divided by b (n times!).&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></div></div></section></main></div><footer class=footer><div><p class=footertext style=color:#f0f8ff;font-family:MainTitle;align-self:center>Powered by
 <a href=https://gohugo.io/ target=_blank style=color:var(--color-link)><span>Hugo</span></a></p></div><div class=footertext style=font-family:MainTitle;align-self:center><a href=https://nichyjt.github.io/attributions/ style=color:var(--color-link)><span>Attributions++</span></a></div><div><p class=footertext class=footertext style=color:#f0f8ff;font-family:MainTitle;align-items:center>Made with ❤️ - <a href=https://github.com/nichyjt/ target=_blank , style=color:var(--color-link)>nichyjt</a></p></div><div class=footertext style=color:#f0f8ff;font-family:MainTitle;align-self:center>© 2021 - 2023 Nicholas Yek</div><div class=fontloader></div></footer></body><script>document.body.classList.add(localStorage.getItem("theme"))</script></html>
