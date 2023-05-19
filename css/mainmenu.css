@@ -15,6 +15,7 @@ main {
   display: flex;
   background-color: var(--color-accent);
   transition: width 250ms ease;
+  z-index: 1;
 }
 /*Sidebar Params*/
 .navbar-large{

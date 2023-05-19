@@ -1,13 +1,12 @@
 .abtwrapper{
     display: flex;
     flex-direction: row;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
 .abttext{
     display: flex;
     flex-direction: column;
-    margin-left: 4rem;
     justify-content: space-evenly;
 }
 .abtimg{
@@ -19,7 +18,6 @@
 }
 .abttitle{
     width: fit-content;
-margin-bottom: 0.5rem;   
 }
 .abttagline{
     height: fit-content;
@@ -63,9 +61,6 @@ margin-bottom: 0.5rem;
         width: 7rem;
         margin-top: 1rem;
         align-self: flex-start;
-    }
-    .abttext{
-        margin-left: 1rem;
     }
     .badgebanner{
         width: inherit;
