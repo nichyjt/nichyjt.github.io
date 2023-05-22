@@ -10,6 +10,7 @@
     border-right: 20rem solid var(--color-primary);
     margin-right: -20rem;
     animation: animate 4s steps(12) infinite;
+    overflow: hidden;
 }
 @keyframes animate{
     40%, 60%{

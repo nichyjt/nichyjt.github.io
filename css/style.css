@@ -1,20 +1,29 @@
 html{
     scroll-behavior: smooth;
 }
-
 :root {
   /*FFOX COMPAT*/
-  scrollbar-width: thin;
-  scrollbar-color: #bbe1fa #30475e;
+  scrollbar-width: thin !important;
+  /* scrollbar-color: gray; */
 }
 *::-webkit-scrollbar{
     width:0.25rem;
+    height: 4px;
 }
 *::-webkit-scrollbar-track{
-    background: #30475e;
+    background: none;
 }
 *::-webkit-scrollbar-thumb{
-    background: #bbe1fa;
+    background: darkgray;
+}
+/* Styling the thumb of the horizontal scroll bar */
+::-moz-scrollbar-thumb-horizontal {
+  border-radius: 5px;
+  width: 4px;
+}
+/* Styling the buttons of the horizontal scroll bar */
+::-moz-scrollbar-button {
+  display: none; /* Hide the buttons */
 }
 summary{
     cursor: pointer;

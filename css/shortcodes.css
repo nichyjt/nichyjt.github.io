@@ -1,71 +1,85 @@
-.abtwrapper{
+.abtwrapper {
     display: flex;
     flex-direction: row;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
 }
-.abttext{
+
+.abttext {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 }
-.abtimg{
+
+.abtimg {
     border-radius: 50%;
     height: 14rem;
     width: 14rem;
     border: 0.2rem solid var(--color-accent);
     align-self: center;
 }
-.abttitle{
+
+.abttitle {
     width: fit-content;
 }
-.abttagline{
+
+.abttagline {
     height: fit-content;
     width: fit-content;
     margin: 0;
 }
-.badgebanner{
+
+.badgebanner {
     width: inherit;
     display: flex;
     border-radius: 5px;
-    flex-wrap: wrap;
-    align-items:center;
-    justify-content: space-evenly;
+    overflow-x: auto;
+    align-items: center;
+    justify-content: space-around;
     align-self: center;
     margin-bottom: 2rem;
     background-color: var(--color-banner);
     /* background-color: transparent; */
     border: 2px var(--color-text) solid;
 }
-.badgeitem{
+
+.banner-scroll {
+    justify-content: start !important;
+}
+
+.badgeitem {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
     text-decoration: none;
     margin-top: 1rem;
-    margin-bottom:1rem;
-    margin-inline: 1rem;
+    margin-bottom: 1rem;
+    margin-inline: 12px;
 }
-.badgeicon{
-    height:3rem;
+
+.badgeicon {
+    height: 3rem;
     width: 3rem;
 }
-.experienceBlockquote{
+
+.experienceBlockquote {
     margin-inline: 0;
 }
 
-@media only screen and (max-width:650px){
-    .abtimg{
+@media only screen and (max-width:650px) {
+    .abtimg {
         height: 7rem;
         width: 7rem;
         margin-top: 1rem;
         align-self: flex-start;
     }
-    .badgebanner{
+
+    .badgebanner {
         width: inherit;
     }
-    .badgeicon{
+
+    .badgeicon {
         height: 2rem;
         width: 2rem;
     }

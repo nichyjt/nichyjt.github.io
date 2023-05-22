@@ -58,6 +58,9 @@ h4{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
     font-size: 18px;
 }
+ul{
+    padding-left: 16px;
+}
 /*Support up to 4 headers, add more if necessary*/
 code{
     font-family: MainMonospace, Consolas, monospace;

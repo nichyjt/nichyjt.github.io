@@ -1,0 +1,58 @@
+.badge-overflow {
+    display: inline-block;
+}
+
+.badge-cont {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    margin-left: 1rem;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+}
+
+.svg-holder {
+    position: relative;
+    height: 32px;
+    width: 32px;
+    color: var(--color-text);
+    touch-action: manipulation;
+}
+
+.badge-tooltip-cont {
+    display: inline-block;
+}
+
+.svg-label-tooltip {
+    margin-top: 6px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0s linear 0.3s;
+}
+
+.badge-cont:hover .svg-label-tooltip {
+    visibility: visible;
+    opacity: 1;
+    overflow: hidden;
+    transition-delay: 0s;
+}
+
+.badge-cont:active .svg-label-tooltip {
+    visibility: visible;
+    opacity: 1;
+    overflow: hidden;
+    transition-delay: 0s;
+}
+
+@media only screen and (max-width:650px) {
+    .badge-cont {
+        width: 24px;
+        height: 24px;
+    }
+
+    .svg-holder {
+        height: 24px;
+        width: 24px;
+    }
+}
