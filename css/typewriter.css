@@ -1,27 +1,26 @@
-.typewriter:before{
+.typewriter-cursor{
     content: "";
     position: relative;
     top: 0;
     left: 0;
-    height: 100%;
-    width: 100%;
     background-color: var(--color-primary);
-    border-left: 6px solid var(--color-text);
-    border-right: 20rem solid var(--color-primary);
-    margin-right: -20rem;
-    animation: animate 4s steps(12) infinite;
+    border-left: 5px solid var(--color-text);
     overflow: hidden;
 }
-@keyframes animate{
-    40%, 60%{
-        left: calc(100% + 6px);
-    }
-    100%{
-        left: 0%;
-    }
+.typewriter-container {
+    font-size: 22px;
+    display: flex;
+}
+.blink-animation {
+  animation: blink 0.5s infinite;
 }
 
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }

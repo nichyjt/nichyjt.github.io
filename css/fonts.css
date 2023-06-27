@@ -45,14 +45,17 @@ h1{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
     font-size: 26px;
     margin-bottom: 0.5rem;
+    font-weight: normal;
 }
 h2, summary{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
     font-size: 22px;
+    font-weight: normal;
 }
 h3{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
     font-size: 20px;
+    font-weight: normal;
 }
 h4{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;

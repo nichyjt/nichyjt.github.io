@@ -24,7 +24,7 @@
     flex: 1;
     display:flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     background-color: var(--color-homepage-accent);
 }
 .aboutimg{
