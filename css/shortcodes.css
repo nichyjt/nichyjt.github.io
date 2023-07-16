@@ -123,7 +123,7 @@
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    border-width: 16px;
+    border-width: 12px;
     border-style: solid;
     border-color:  lightgray transparent transparent transparent;
 }
@@ -146,6 +146,6 @@
     }
 
     .tooltip-text {
-            max-width: 100px;
+        max-width: 100px !important;
     }
 }
