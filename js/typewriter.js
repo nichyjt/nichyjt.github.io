@@ -8,11 +8,12 @@ const colorSelect = (index) => {
 }
 
 let taglines = [
-    "Computer Engineer.",
-    "local Linux shill.",
-    "Backend dude.",
+    "Linux shill.",
     "Cat enthusiast.",
-    "guy that knows Docker.",
+    "Fullstack dev.",
+    "'Let's Docker it' dude.",
+    "Coffee addict.",
+    "Computer Engineer.",
 ];
 
 const textElement = document.querySelector(".typewriter");

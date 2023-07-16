@@ -71,6 +71,11 @@ code{
 }
 figcaption{
     text-decoration: underline;
+    font-style: italic;
+    font-family: MainBody, sans-serif;
+    font-size: 16px;
+    word-wrap: break-word;
+    text-align: left;
 }
 .footertext{
     font-size: 15px;
@@ -112,6 +117,9 @@ figcaption{
     /*Support up to 4 headers, add more if necessary*/
     code{
         font-family: MainMonospace, Consolas, monospace;
+        font-size: 12px;
+    }
+    figcaption{
         font-size: 12px;
     }
     .menu-item-text, .home-text{

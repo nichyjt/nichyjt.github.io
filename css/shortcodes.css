@@ -67,6 +67,67 @@
     margin-inline: 0;
 }
 
+.spoiler-hidden {
+    background-color: #5A5A5A;
+    display: inline;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.spoiler-visible {
+    background-color: transparent;
+    display: inline;
+    cursor: auto;
+}
+
+.spoiler-text {
+    visibility: hidden;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: max-content;
+    max-width: 300px; /* Adjust the width based on the content */
+    background-color: lightgray;
+    color: black;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    text-align: center;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    padding-inline: 1rem;
+    transition: visibility 0s, opacity 0.8s; 
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 2px dotted var(--color-text);
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
+.tooltip .tooltip-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 16px;
+    border-style: solid;
+    border-color:  lightgray transparent transparent transparent;
+}
+
 @media only screen and (max-width:650px) {
     .abtimg {
         height: 7rem;
@@ -82,5 +143,9 @@
     .badgeicon {
         height: 2rem;
         width: 2rem;
+    }
+
+    .tooltip-text {
+            max-width: 100px;
     }
 }
