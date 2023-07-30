@@ -63,6 +63,22 @@
     width: 3rem;
 }
 
+.contactreel-cont { 
+    margin-top: 14px;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+}
+
+.contactreel-item {
+    margin: 0 12px 0px 0px;
+}
+
+.contactreel-icon{
+    height: 24px;
+    width: 24px;
+}
+
 .experienceBlockquote {
     margin-inline: 0;
 }
@@ -143,6 +159,11 @@
     .badgeicon {
         height: 2rem;
         width: 2rem;
+    }
+
+    .contactreel-icon{
+        height: 18px;
+        width: 18px;
     }
 
     .tooltip-text {

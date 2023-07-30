@@ -27,12 +27,20 @@
     justify-content: start;
     background-color: var(--color-homepage-accent);
 }
+.aboutimg-contact-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+    margin-right: 3rem;
+}
 .aboutimg{
     border-radius: 50%;
     max-width: 18rem;
     max-height: 18rem;
-    margin-left: 0.5rem;;
-    margin-right: 3rem;
+    /* margin-left: 0.5rem;;
+    margin-right: 3rem; */
     border: 0.3rem solid var(--color-accent);
     justify-self: center;
     align-self: center;
@@ -52,5 +60,13 @@
     .homepageTopText{
         margin-right: 0.2rem;
         width:55%;
+    }
+    .aboutimg-contact-cont {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0.5rem;
+        margin-right: 1rem;
+        justify-content: center;
     }
 }
