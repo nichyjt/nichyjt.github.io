@@ -10,9 +10,9 @@ const colorSelect = (index) => {
 let taglines = [
     "Linux shill.",
     "Cat enthusiast.",
-    "Fullstack dev.",
-    "'Let's Docker it' dude.",
     "Coffee addict.",
+    "Fullstack dev.",
+    "Docker dude.",
     "Computer Engineer.",
 ];
 
