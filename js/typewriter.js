@@ -8,12 +8,11 @@ const colorSelect = (index) => {
 }
 
 let taglines = [
-    "Linux shill.",
-    "Cat enthusiast.",
-    "Coffee addict.",
-    "Fullstack dev.",
-    "Docker dude.",
     "Computer Engineer.",
+    "Cat enthusiast.",
+    "Fullstack dev.",
+    "Linux shill.",
+    "Coffee addict.",
 ];
 
 const textElement = document.querySelector(".typewriter");
