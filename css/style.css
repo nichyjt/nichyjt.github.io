@@ -224,3 +224,16 @@ summary{
 .katex .base{
     z-index: -1;
 }
+
+/* Markdown table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid var(--color-text);
+    padding: 5px;
+    font-family: MainMonospace, Consolas, monospace;
+    font-size: 16px;
+}
