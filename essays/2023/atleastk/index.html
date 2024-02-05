@@ -2,9 +2,9 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>General CNF for "At Least k, given n variables" constraint | Nicholas Yek</title>
-<meta name=description content="Formula and a questionable eyeball proof to shortcut &#34;at least k&#34; constraints to a more manageable CNF form.
-Useful for decomposing constraints quickly to CNF to apply the resolution algorithm.
+<title>Generalized CNF for "At Least k, given n variables" | Nicholas Yek</title>
+<meta name=description content="Formula & questionable eyeball proof to convert &#34;at least k&#34; constraints to CNF
+for easier use with the resolution algorithm.
 ">
 <link rel=canonical href=https://nichyjt.github.io/essays/2023/atleastk/>
 <link rel=stylesheet href=/css/style.css>
@@ -22,9 +22,9 @@ Useful for decomposing constraints quickly to CNF to apply the resolution algori
 <script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js integrity=sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja crossorigin=anonymous></script>
 <script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script>
 <script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}]})})</script>
-<meta property="og:title" content="General CNF for &#34;At Least k, given n variables&#34; constraint">
-<meta property="og:description" content="Formula and a questionable eyeball proof to shortcut &#34;at least k&#34; constraints to a more manageable CNF form.
-Useful for decomposing constraints quickly to CNF to apply the resolution algorithm.
+<meta property="og:title" content="Generalized CNF for &#34;At Least k, given n variables&#34;">
+<meta property="og:description" content="Formula & questionable eyeball proof to convert &#34;at least k&#34; constraints to CNF
+for easier use with the resolution algorithm.
 ">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://nichyjt.github.io/essays/2023/atleastk/"><meta property="article:section" content="essays">
@@ -32,9 +32,9 @@ Useful for decomposing constraints quickly to CNF to apply the resolution algori
 <meta property="article:modified_time" content="2023-12-28T00:00:00+00:00">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="General CNF for &#34;At Least k, given n variables&#34; constraint">
-<meta name=twitter:description content="Formula and a questionable eyeball proof to shortcut &#34;at least k&#34; constraints to a more manageable CNF form.
-Useful for decomposing constraints quickly to CNF to apply the resolution algorithm.
+<meta name=twitter:title content="Generalized CNF for &#34;At Least k, given n variables&#34;">
+<meta name=twitter:description content="Formula & questionable eyeball proof to convert &#34;at least k&#34; constraints to CNF
+for easier use with the resolution algorithm.
 ">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
@@ -145,7 +145,7 @@ Useful for decomposing constraints quickly to CNF to apply the resolution algori
 <main>
 <section class=section>
 <div class=frontmatter>
-<h1 class="title, listTitleLink">General CNF for "At Least k, given n variables" constraint</h1>
+<h1 class="title, listTitleLink">Generalized CNF for "At Least k, given n variables"</h1>
 <div class=subtitle>
 <p>
 <time>📆 December 28, 2023</time>

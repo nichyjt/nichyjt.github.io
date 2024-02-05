@@ -2,9 +2,9 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Caching makes things fast - an embedded case study in CG2271 | Nicholas Yek</title>
-<meta name=description content="We built a race car for an operating systems course.
-We made it pretty responsive with trivial caching.
+<title>Caching makes things fast - an embedded example (CG2271) | Nicholas Yek</title>
+<meta name=description content="We built a race car for a RTOS course.
+We made it pretty responsive with some trivial state caching.
 ">
 <link rel=canonical href=https://nichyjt.github.io/essays/2024/caching/>
 <link rel=stylesheet href=/css/style.css>
@@ -18,9 +18,9 @@ We made it pretty responsive with trivial caching.
 <link rel=stylesheet href=/css/badgeicon.css>
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
-<meta property="og:title" content="Caching makes things fast - an embedded case study in CG2271">
-<meta property="og:description" content="We built a race car for an operating systems course.
-We made it pretty responsive with trivial caching.
+<meta property="og:title" content="Caching makes things fast - an embedded example (CG2271)">
+<meta property="og:description" content="We built a race car for a RTOS course.
+We made it pretty responsive with some trivial state caching.
 ">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://nichyjt.github.io/essays/2024/caching/"><meta property="article:section" content="essays">
@@ -28,9 +28,9 @@ We made it pretty responsive with trivial caching.
 <meta property="article:modified_time" content="2024-02-01T00:00:00+00:00">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Caching makes things fast - an embedded case study in CG2271">
-<meta name=twitter:description content="We built a race car for an operating systems course.
-We made it pretty responsive with trivial caching.
+<meta name=twitter:title content="Caching makes things fast - an embedded example (CG2271)">
+<meta name=twitter:description content="We built a race car for a RTOS course.
+We made it pretty responsive with some trivial state caching.
 ">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
@@ -141,7 +141,7 @@ We made it pretty responsive with trivial caching.
 <main>
 <section class=section>
 <div class=frontmatter>
-<h1 class="title, listTitleLink">Caching makes things fast - an embedded case study in CG2271</h1>
+<h1 class="title, listTitleLink">Caching makes things fast - an embedded example (CG2271)</h1>
 <div class=subtitle>
 <p>
 <time>📆 February 1, 2024</time>
@@ -325,8 +325,8 @@ Then, just compare the previous state <code>prev</code> with the current state <
 <p>This is admittedly pretty trivial in the example but the impact was notable<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p>
 <p>The upper bound of messages being sent is now O(how fast your fingers go)<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> 😏
 It would be impossible to flood our message queue now.</p>
-<p>We got much better reliability and the responsiveness improved from some lag (that feels like milliseconds) to virtually real-time with almost no latency.</p>
-<p>Why this happens is because:</p>
+<p>We got much better reliability and the responsiveness improved from some lag (that feels like 100s of milliseconds) to virtually real-time with almost no latency.</p>
+<p>Why this happens<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup> is because:</p>
 <ol>
 <li>
 <p><strong>No packet loss</strong><br>
@@ -341,14 +341,15 @@ In our RTOS application, the message handler thread is not active as often, givi
 <figure class=figmd>
 <img src=demo.gif alt class=fignormal>
 <figcaption>
-Speedy loop the loop! (One of our early iterations with the optimization)
+Speedy loop the loop! (An early iteration with the caching)
 </figcaption>
 </figure>
+<p><em>Not pictured is our dear gamer friend button-mashing the controller</em> 😉</p>
 <p>Caching works, I guess.</p>
 <h3 id=notes-for-observant-people>Notes for observant people</h3>
 <p>The code snippets were heavily redacted and abridged to make it more &lsquo;toy&rsquo;-like for ease of reading.</p>
-<p>We used a global variable here. Evil, but the program is single-threaded and state was well controlled enough to make it a non-issue for our specific usecase :).</p>
-<p>If > 1 button was pressed, the ordering of the if statements matter. But this is not an issue for us as we decided that certain directions SHOULD take precedence if multiple actions were pressed (left/right more important as these are evasive movements).</p>
+<p>We used a global variable. Evil, but the program is single-threaded and state was well controlled enough to make it a non-issue for our specific usecase :).</p>
+<p>If > 1 button was pressed on the PS4 controller, the ordering of the if statements matter. But this is not an issue for us as we decided that certain directions SHOULD take precedence if multiple actions were pressed (left/right more important as these are evasive movements).</p>
 <section class=footnotes role=doc-endnotes>
 <hr>
 <ol>
@@ -357,6 +358,9 @@ Speedy loop the loop! (One of our early iterations with the optimization)
 </li>
 <li id=fn:2 role=doc-endnote>
 <p>To make the optimization useless you&rsquo;d need to spam buttons at 80MHz thereabouts :D&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:3 role=doc-endnote>
+<p>My own postulation, other explanations may be plausible too!&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>
