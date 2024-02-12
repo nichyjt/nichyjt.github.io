@@ -95,6 +95,9 @@ table{
     -moz-transition:transform 0.2s ease-in-out;
     -ms-transition:transform 0.2s ease-in-out;
 }
+.listitem-cont {
+    margin-inline: 2rem;
+}
 .listTitleLink{
     color: var(--color-link-title);
     text-decoration: none;
@@ -184,6 +187,12 @@ img{
     /* Redundancy */
     .fignormal{
         width: max-content;
+    }
+    .listitem {
+        margin: 1rem;
+    }
+    .listitem-cont {
+        margin-inline: 1rem;
     }
 }
 
