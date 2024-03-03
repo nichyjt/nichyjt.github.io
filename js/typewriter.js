@@ -9,18 +9,19 @@ const colorSelect = (index) => {
 
 let taglines = [
     "Computer Engineer.",
-    "cat enthusiast.",
+    "cat enthusiast 🐱 ",
     "average docker enjoyer.",
-    "Linux shill.",
+    "\{software\} engineer.",
+    "Linux shill 🐧 ",
     "\"dang, did we short it?\"",
-    "coffee addict.",
+    "coffee addict ☕ ",
     "\"{framework}\ is bloated!\"",
     "not so smooth operator...",
     "\"what does this wire do?\"",
-    "breadboard supplier...",
+    "butter on breadboard 🍞 ",
     "\"{text}\ is unreadable!\"",
     "A+ waffler!",
-    "\"{cloud} is too expensive!\"",
+    "\"{☁️} is too expensive!\"",
 ];
 
 const textElement = document.querySelector(".typewriter");

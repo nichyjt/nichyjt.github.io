@@ -10,6 +10,10 @@
 .typewriter-container {
     font-size: 22px;
     display: flex;
+    height: 22px;
+}
+.typewriter {
+    line-height: 1.0;
 }
 .blink-animation {
   animation: blink 0.5s infinite;
@@ -28,5 +32,6 @@
 @media only screen and (max-width: 650px){
     .typewriter-container {
         font-size: 14px;
+        height: 14px;
     }
 }
