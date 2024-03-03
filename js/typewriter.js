@@ -17,12 +17,10 @@ let taglines = [
     "\"{framework}\ is bloated!\"",
     "not so smooth operator...",
     "\"what does this wire do?\"",
-    "person u goto for breadboards.",
-    "\"{philosopher}\ is unreadable!\"",
+    "breadboard supplier...",
+    "\"{text}\ is unreadable!\"",
     "A+ waffler!",
     "\"{cloud} is too expensive!\"",
-    "summa lumma dooma lumma...",
-    "stop reading this."
 ];
 
 const textElement = document.querySelector(".typewriter");
