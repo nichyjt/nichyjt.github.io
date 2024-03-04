@@ -39,5 +39,6 @@
     }
     .typewriter-cursor{
         border-left: 3px solid var(--color-text);
+        height: 15px;
     }
 }
