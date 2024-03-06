@@ -18,7 +18,7 @@ let taglines = [
     "not so smooth operator...",
     "\"what does this wire do?\"",
     "buttered breadboard 🍞",
-    "\"{text}\ is unreadable!\"",
+    "\"{book}\ is unreadable!\"",
     "A+ waffler!",
     "\"{☁️} is too expensive!\"",
 ];
