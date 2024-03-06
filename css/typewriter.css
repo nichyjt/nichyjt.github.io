@@ -31,10 +31,8 @@
         font-size: 14px;
         height: 14px;
     }
-    .typewriter {
-        line-height: normal;
-    }
     .typewriter-cursor{
         border-left: 3px solid var(--color-text);
+        height: 16px;
     }
 }
