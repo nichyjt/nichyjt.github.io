@@ -14,6 +14,10 @@
     justify-content: center;
     background-color: var(--color-primary);
 }
+.homepage-top-cont {
+    margin-inline: 1rem;
+    display: flex;
+}
 .homepageTopText{
     width: 40%;
     margin-left: 0.5rem;
@@ -56,6 +60,9 @@
     }
     .homepage{
         margin: 0
+    }
+    .homepage-top-cont {
+        margin-inline: 1rem;
     }
     .homepageTopText{
         margin-right: 0.2rem;
