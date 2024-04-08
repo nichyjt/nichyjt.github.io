@@ -5,12 +5,10 @@
     margin-left: 3px;
 }
 .typewriter-container {
-    /* font-size: 22px; */
     display: flex;
-    /* height: 22px; */
 }
-.typewriter-text {
-    font-size:22px;
+.typewriter-text{
+    font-size: 22px;
 }
 .typewriter {
     /* line-height: 1.0; */
@@ -32,11 +30,18 @@
 
 @media only screen and (max-width: 650px){
     .typewriter-container {
-        font-size: 14px;
+        /* font-size: 14px; */
         height: 14px;
     }
     .typewriter-cursor{
         border-left: 3px solid var(--color-text);
-        height: 16px;
+        height: 14px;
+    }
+    .typewriter {
+        /* line-height: 1.0; */
+        font-size: 14px;
+    }
+    .typewriter-text{
+        font-size: 14px;
     }
 }
