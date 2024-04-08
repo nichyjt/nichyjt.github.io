@@ -5,12 +5,16 @@
     margin-left: 3px;
 }
 .typewriter-container {
-    font-size: 22px;
+    /* font-size: 22px; */
     display: flex;
-    height: 22px;
+    /* height: 22px; */
+}
+.typewriter-text {
+    font-size:22px;
 }
 .typewriter {
-    line-height: 1.0;
+    /* line-height: 1.0; */
+    font-size: 22px;
 }
 .blink-animation {
   animation: blink 0.5s infinite;
