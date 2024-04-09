@@ -12,15 +12,8 @@ let taglines = [
     "cat enthusiast 🐱",
     "\{software\} engineer.",
     "Linux shill 🐧",
-    "\"oops, did it short?\"",
     "coffee addict ☕",
-    "\"{framework}\ is bloated!\"",
-    "not so smooth operator...",
-    "\"what does this wire do?\"",
-    "buttered breadboard 🍞",
-    "\"{book}\ is unreadable!\"",
     "A+ waffler!",
-    "\"{☁️} is too expensive!\"",
 ];
 
 const textElement = document.querySelector(".typewriter");
