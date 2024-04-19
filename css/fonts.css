@@ -32,103 +32,102 @@
 p, ol, li, em{
     text-align: justify;
     font-family: MainBody, sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
     word-wrap: break-word;
 }
 /*For use in list.html templates*/
 .plistitem{
-    text-align: justify;
     font-family: MainBody, sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
 }
 h1{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
-    font-size: 26px;
+    font-size: 1.625rem;
     margin-bottom: 0.5rem;
     font-weight: normal;
 }
 h2, summary{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
-    font-size: 22px;
+    font-size: 1.375rem;
     font-weight: normal;
 }
 h3{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: normal;
 }
 h4{
     font-family: MainTitle, Georgia, 'Times New Roman', serif;
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 ul{
-    padding-left: 16px;
+    padding-left: 1rem;
 }
 /*Support up to 4 headers, add more if necessary*/
 code{
     font-family: MainMonospace, Consolas, monospace;
-    font-size: 16px;
+    font-size: 1rem;
 }
 figcaption{
     text-decoration: underline;
     font-style: italic;
     font-family: MainBody, sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
     word-wrap: break-word;
     text-align: left;
 }
 .footertext{
-    font-size: 15px;
+    font-size: 0.875rem;
 }
 .menu-item-text, .home-text{
-    font-size: 17px;
+    font-size: 1rem;
 }
 .experienceSummary {
-        font-size: 22px;
+        font-size: 1.25rem;
 }
 @media only screen and (max-width: 650px) {
     p, ol, li, em{
         text-align: justify;
         font-family: MainBody, sans-serif;
-        font-size: 12px;
+        font-size: 0.75rem;
     }
     /*For use in list.html templates*/
     .plistitem{
         text-align: justify;
         font-family: MainBody, sans-serif;
-        font-size: 16px;
+        font-size: 1rem;
     }
     h1{
         font-family: MainTitle, Georgia, 'Times New Roman', serif;
-        font-size: 20px;
+        font-size: 1.25rem;
     }
     h2, summary{
         font-family: MainTitle, Georgia, 'Times New Roman', serif;
-        font-size: 18px;
+        font-size: 1.125rem;
     }
     h3{
         font-family: MainTitle, Georgia, 'Times New Roman', serif;
-        font-size: 16px;
+        font-size: 1rem;
     }
     h4{
         font-family: MainTitle, Georgia, 'Times New Roman', serif;
-        font-size: 14px;
+        font-size: 0.875rem;
     }
     /*Support up to 4 headers, add more if necessary*/
     code{
         font-family: MainMonospace, Consolas, monospace;
-        font-size: 12px;
+        font-size: 0.75rem;
     }
     figcaption{
-        font-size: 12px;
+        font-size: 0.75rem;
     }
     .menu-item-text, .home-text{
-        font-size: 12px;
+        font-size: 0.75rem;
     }
     .footertext{
-        font-size: 10px;
+        font-size: 0.625rem;
     }
     .experienceSummary {
-        font-size: 16px;
+        font-size: 1rem;
     }
 }

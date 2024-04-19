@@ -8,14 +8,14 @@
     cursor: pointer;
     margin-left: 1rem;
     align-items: center;
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
 }
 
 .svg-holder {
     position: relative;
-    height: 32px;
-    width: 32px;
+    height: 2rem;
+    width: 2rem;
     color: var(--color-text);
     touch-action: manipulation;
 }
@@ -25,7 +25,7 @@
 }
 
 .svg-label-tooltip {
-    margin-top: 6px;
+    margin-top: 0.375rem;
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s, visibility 0s linear 0.3s;
@@ -45,14 +45,29 @@
     transition-delay: 0s;
 }
 
+.badge-icon-belt {
+    display: flex;
+    overflow-x: auto;
+    justify-content: start;
+    padding-top: 16px;
+    padding-bottom: 22px;
+    padding-right: 16px;
+}
+
 @media only screen and (max-width:650px) {
     .badge-cont {
-        width: 24px;
-        height: 24px;
+        width: 1.5rem;
+        height: 1.5rem;
     }
 
     .svg-holder {
-        height: 24px;
-        width: 24px;
+        height: 1.5rem;
+        width: 1.5rem;
     }
+
+    .badge-icon-belt {
+        padding-top: 0px;
+        padding-right: 16px;
+    }
+    
 }
