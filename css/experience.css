@@ -127,11 +127,8 @@
     }
 
     .circle {
-        border-radius: 50em;
         width: 10px;
         height: 10px;
-        background-color: var(--color-primary);
-        border: 2px solid var(--color-text);
         align-self: center;
         margin-right: 14px;
         margin-left: -7px;
