@@ -8,11 +8,11 @@
     display: flex;
 }
 .typewriter-text{
-    font-size: 22px;
+    font-size: 1.375rem;
 }
 .typewriter {
     line-height: 1.0;
-    font-size: 22px;
+    font-size: 1.375rem;
 }
 .blink-animation {
   animation: blink 0.5s infinite;
@@ -31,17 +31,17 @@
 @media only screen and (max-width: 650px){
     .typewriter-container {
         /* font-size: 14px; */
-        height: 14px;
+        height: 0.875rem;
     }
     .typewriter-cursor{
         border-left: 3px solid var(--color-text);
-        height: 14px;
+        height: 0.875rem;
     }
     .typewriter {
         /* line-height: 1.0; */
-        font-size: 14px;
+        font-size: 0.875rem;
     }
     .typewriter-text{
-        font-size: 14px;
+        font-size: 0.875rem;
     }
 }
