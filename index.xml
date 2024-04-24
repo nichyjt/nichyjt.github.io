@@ -3,8 +3,8 @@ Embedded systems have limited resources. We need to carefully manage how message
 In this writeup (and personal reflection), I highlight a real exampleBut greatly simplified &amp;#8203; to show how caching state can lead to performance gains.
 Sending signals For some context, this (toy) example was from a Real-time Operating System (CG2271) course where we had to build a race car and complete an obstacle course in the fastest time possible.</description></item><item><title>Hotswapping kernels like they're keyboard switches</title><link>https://nichyjt.github.io/essays/2024/kernel_duckery/</link><pubDate>Sat, 20 Jan 2024 00:00:00 +0000</pubDate><guid>https://nichyjt.github.io/essays/2024/kernel_duckery/</guid><description>New Kernels break things. Old Kernels break things. Sometimes in life you want to turn back time to simpler times.
 I&amp;rsquo;m taking CS3211 and learning to use thread sanitizer (TSAN) to debug concurrent C++ programs.
-Alas,
-FATAL: ThreadSanitizer: unexpected memory mapping 0x5fb3d2108000-0x5fb3d2129000 Even the simplest of &amp;ldquo;hello world&amp;rdquo; programs (with no concurrency) results in a crash. Pain.
+Alas, FATAL: ThreadSanitizer: unexpected memory mapping 0x5fb3d2108000-0x5fb3d2129000
+Even the simplest of &amp;ldquo;hello world&amp;rdquo; programs (with no concurrency) results in a crash. Pain.
 After hours of google-fu, prowling old-school forums and asking around, it turns out to be a kernel issue.</description></item><item><title>Generalized CNF for "At Least k, given n variables"</title><link>https://nichyjt.github.io/essays/2023/atleastk/</link><pubDate>Thu, 28 Dec 2023 00:00:00 +0000</pubDate><guid>https://nichyjt.github.io/essays/2023/atleastk/</guid><description>I built this formula in preparation for CS3243 finals, but on hindsight it was overkill and the exam didn&amp;rsquo;t even need this&amp;hellip; 😢
 But, in the spirit of sharing, here&amp;rsquo;s my questionable formula and the method I obtained this.
 General CNF at least k, n variables For $n$ variables, $X = \set{x_1, x_2, &amp;hellip;, x_n}$. Arrange them into combinations of k variables.

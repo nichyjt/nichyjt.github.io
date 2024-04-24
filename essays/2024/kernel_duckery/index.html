@@ -160,15 +160,15 @@ swap between kernels (again) for whatever cursed reason!
 <h1 id=new-kernels-break-things-old-kernels-break-things>New Kernels break things. Old Kernels break things.</h1>
 <p>Sometimes in life you want to turn back time to simpler times.</p>
 <p>I&rsquo;m taking <a href=https://nusmods.com/courses/CS3211/parallel-and-concurrent-programming>CS3211</a> and learning to use <code>thread sanitizer</code> (TSAN) to debug concurrent C++ programs.</p>
-<p>Alas,</p>
-<pre tabindex=0><code>FATAL: ThreadSanitizer: unexpected memory mapping 0x5fb3d2108000-0x5fb3d2129000
-</code></pre><p>Even the simplest of &ldquo;hello world&rdquo; programs (with no concurrency) results in a crash. Pain.</p>
+<p>Alas,
+<code>FATAL: ThreadSanitizer: unexpected memory mapping 0x5fb3d2108000-0x5fb3d2129000</code></p>
+<p>Even the simplest of &ldquo;hello world&rdquo; programs (with no concurrency) results in a crash. Pain.</p>
 <p>After hours of google-fu, prowling old-school forums and asking around, it turns out to be a kernel issue.
 TSAN breaks for <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=67308">old</a> and <a href=https://stackoverflow.com/questions/77850769/fatal-threadsanitizer-unexpected-memory-mapping-when-running-on-linux-kernels>new</a> kernel versions. Pain. Shouldn&rsquo;t have updated my kernel that fast&mldr;</p>
 <p>The fix should be simple - just use a kernel between the 2 useless versions. (This happens to be <code>6.5.0-15-generic</code> for me!)</p>
 <p>The way to do this is surprisingly simpler than expected.</p>
 <h1 id=choosing-kernels>Choosing Kernels</h1>
-<p>It is possible to <a href=http://localhost:1313/essays/2022/popos_choose_os/>choose</a> which OS or kernel you want to boot into.</p>
+<p>It is possible to <a href=/essays/2022/popos_choose_os/>choose</a> which OS or kernel you want to boot into.</p>
 <p>To &lsquo;hotswap&rsquo; kernels, we just need to tell the bootloader where the kernel images are and we can easily choose the kernel to apply</p>
 <p>Hotswapping is basically:</p>
 <ol>
