@@ -5,9 +5,11 @@
     margin-left: 3px;
 }
 .typewriter-container {
+    line-height: 1.0;
     display: flex;
 }
 .typewriter-text{
+    line-height: 1.0;
     font-size: 1.375rem;
 }
 .typewriter {
