@@ -168,13 +168,13 @@ systemd-boot menu, Image src: freedesktop.org
 <h2 id=option-2-edit-loaderconf>Option 2: Edit loader.conf</h2>
 <p>What if you want the boot menu to come up everytime you boot up?<br>
 To have the menu show up, edit your <code>loader.conf</code> as root.</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#080;background-color:#0f140f;font-style:italic># This is for an EFI partitioned device</span>
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#776e71># This is for an EFI partitioned device</span>
 sudo nano /boot/efi/loader/loader.conf
 </code></pre></td></tr></table>
 </div>
@@ -182,9 +182,9 @@ sudo nano /boot/efi/loader/loader.conf
 <h3 id=windows-os-not-showing-up>Windows OS not showing up</h3>
 <p>If you dual boot on seperate drives, there is a chance systemd-boot will not detect the other OS in the system.</p>
 <p>To register your other OSes (like windows), copy the EFI partition contents into the boot directory.</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -198,17 +198,17 @@ sudo nano /boot/efi/loader/loader.conf
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Bash data-lang=Bash><span style=color:#080;background-color:#0f140f;font-style:italic># Find out the partition that holds your undetected OS&#39;s boot entry</span>
-<span style=color:#080;background-color:#0f140f;font-style:italic># It should be small - 260Mb in my case</span>
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Bash data-lang=Bash><span style=color:#776e71># Find out the partition that holds your undetected OS&#39;s boot entry</span>
+<span style=color:#776e71># It should be small - 260Mb in my case</span>
 lsblk
 
-<span style=color:#080;background-color:#0f140f;font-style:italic># Create a staging folder to copy the Windows/Other OS bootloader contents </span>
+<span style=color:#776e71># Create a staging folder to copy the Windows/Other OS bootloader contents </span>
 sudo mkdir /mnt/someEfi
 
-<span style=color:#080;background-color:#0f140f;font-style:italic># Mount the other OS into your staging folder</span>
+<span style=color:#776e71># Mount the other OS into your staging folder</span>
 sudo mount /dev/sdb1 /mnt/someEfi
 
-<span style=color:#080;background-color:#0f140f;font-style:italic># Copy the EFI contents (Assuming its a windows EFI)</span>
+<span style=color:#776e71># Copy the EFI contents (Assuming its a windows EFI)</span>
 sudo cp -r /mnt/someEfi/EFI/Microsoft /boot/efi/EFI
 </code></pre></td></tr></table>
 </div>

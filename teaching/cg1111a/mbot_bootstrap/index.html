@@ -155,14 +155,14 @@
 <p>MakeBlock&rsquo;s C API documentation is virtually non-existent. I tried already&mldr;</p>
 <p>You will need to read through the <a href=https://github.com/Makeblock-official/Makeblock-Libraries/tree/master/src>source code</a> to see what libraries have certain functions.</p>
 <p>Minimally, you must import these 2 libraries:</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c# data-lang=c#>#include &lt;MemCore.h&gt;
-#include &lt;MePort.h&gt;
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c# data-lang=c#><span style=color:#ef6155>#</span>include &lt;MemCore.h&gt;
+<span style=color:#ef6155>#</span>include &lt;MePort.h&gt;
 </code></pre></td></tr></table>
 </div>
 </div><p>To make it easier to navigate through the documentation, I provide references to the APIs you will likely be using.</p>
@@ -177,9 +177,9 @@
 </ul>
 <h3 id=sample-usage-ports>Sample usage: Ports</h3>
 <p>You want to access ports to read/write from.</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -194,49 +194,49 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#080;background-color:#0f140f;font-style:italic>// Port_N should be PORT_1 or PORT_2 or ...
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>MePort <span style=color:#ff0086;font-weight:700>my_port</span>(PORT_N);  
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#776e71>// Port_N should be PORT_1 or PORT_2 or ...
+</span><span style=color:#776e71></span>MePort <span style=color:#06b6ef>my_port</span>(PORT_N);  
 
-<span style=color:#080;background-color:#0f140f;font-style:italic>// Get the pin number for the port&#39;s s1 and s2 
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span><span style=color:#fb660a;font-weight:700>const</span> <span style=color:#cdcaa9;font-weight:700>int</span> port_n_s1 = my_port.pin1();
-<span style=color:#fb660a;font-weight:700>const</span> <span style=color:#cdcaa9;font-weight:700>int</span> port_n_s2 = my_port.pin2();
+<span style=color:#776e71>// Get the pin number for the port&#39;s s1 and s2 
+</span><span style=color:#776e71></span><span style=color:#815ba4>const</span> <span style=color:#fec418>int</span> port_n_s1 <span style=color:#5bc4bf>=</span> my_port.pin1();
+<span style=color:#815ba4>const</span> <span style=color:#fec418>int</span> port_n_s2 <span style=color:#5bc4bf>=</span> my_port.pin2();
 
-<span style=color:#080;background-color:#0f140f;font-style:italic>// To use the ports with Arduino, you use the pins as usual
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>pinMode(port_n_s1, OUTPUT); <span style=color:#080;background-color:#0f140f;font-style:italic>// setup
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>pinMode(port_n_s2, INPUT); <span style=color:#080;background-color:#0f140f;font-style:italic>// setup
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>digitalWrite(port_n_s1, HIGH); <span style=color:#080;background-color:#0f140f;font-style:italic>// usage
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>analogRead(port_n_s1); <span style=color:#080;background-color:#0f140f;font-style:italic>// usage
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>
+<span style=color:#776e71>// To use the ports with Arduino, you use the pins as usual
+</span><span style=color:#776e71></span>pinMode(port_n_s1, OUTPUT); <span style=color:#776e71>// setup
+</span><span style=color:#776e71></span>pinMode(port_n_s2, INPUT); <span style=color:#776e71>// setup
+</span><span style=color:#776e71></span>digitalWrite(port_n_s1, HIGH); <span style=color:#776e71>// usage
+</span><span style=color:#776e71></span>analogRead(port_n_s1); <span style=color:#776e71>// usage
+</span><span style=color:#776e71></span>
 </code></pre></td></tr></table>
 </div>
 </div><h3 id=sample-usage-motor>Sample Usage: Motor</h3>
 <p>Makeblock uses classes. You can think of it as variables that can perform functions (methods) and store many types of data at once.</p>
 <p>You can sort of figure out how to use the functions work inductively from these examples:</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#080;background-color:#0f140f;font-style:italic>// Port_N should be PORT_1 or PORT_2 or ...
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>MeDCMotor <span style=color:#ff0086;font-weight:700>my_motor</span>(PORT_N);
-my_motor.run(<span style=color:#0086f7;font-weight:700>75</span>);
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#776e71>// Port_N should be PORT_1 or PORT_2 or ...
+</span><span style=color:#776e71></span>MeDCMotor <span style=color:#06b6ef>my_motor</span>(PORT_N);
+my_motor.run(<span style=color:#f99b15>75</span>);
 my_motor.stop();
 </code></pre></td></tr></table>
 </div>
 </div><h3 id=sample-usage-line-follower>Sample Usage: Line follower</h3>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#080;background-color:#0f140f;font-style:italic>// Port_N should be PORT_1 or PORT_2 or ...
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>MeLineFollower <span style=color:#ff0086;font-weight:700>lineSensor</span>(PORT_N);
-<span style=color:#cdcaa9;font-weight:700>int</span> result = lineSensor.readSensors();
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#776e71>// Port_N should be PORT_1 or PORT_2 or ...
+</span><span style=color:#776e71></span>MeLineFollower <span style=color:#06b6ef>lineSensor</span>(PORT_N);
+<span style=color:#fec418>int</span> result <span style=color:#5bc4bf>=</span> lineSensor.readSensors();
 </code></pre></td></tr></table>
 </div>
 </div><p>The other sensors' usage are left as an exercise to the reader.</p>

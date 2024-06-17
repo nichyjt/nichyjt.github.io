@@ -228,9 +228,9 @@ Not to mention the many testing frameworks that exist out there.</p>
 <p>I&rsquo;m sure that there exist some unit testing frameworks for other languages out there
 that make things seamless and efficient. But in particular, building Unit tests is <strong>a language feature</strong> for Go and is quite easy to pick up.</p>
 <p>A very non-production ready trivial golang unit test example:</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -245,28 +245,28 @@ that make things seamless and efficient. But in particular, building Unit tests 
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=color:#080;background-color:#0f140f;font-style:italic>// foo.go
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span><span style=color:#fb660a;font-weight:700>func</span> <span style=color:#ff0086;font-weight:700>Add</span>(x <span style=color:#cdcaa9;font-weight:700>int</span>, y <span style=color:#cdcaa9;font-weight:700>int</span>){
-    <span style=color:#fb660a;font-weight:700>return</span> x+y;
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=color:#776e71>// foo.go
+</span><span style=color:#776e71></span><span style=color:#815ba4>func</span> <span style=color:#06b6ef>Add</span>(<span style=color:#06b6ef>x</span> <span style=color:#fec418>int</span>, <span style=color:#06b6ef>y</span> <span style=color:#fec418>int</span>){
+    <span style=color:#815ba4>return</span> <span style=color:#06b6ef>x</span><span style=color:#5bc4bf>+</span><span style=color:#06b6ef>y</span>;
 }
 
-<span style=color:#080;background-color:#0f140f;font-style:italic>// foo_test.go
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span><span style=color:#fb660a;font-weight:700>func</span> <span style=color:#ff0086;font-weight:700>TestAdd</span>(t *testing.T){
-    result := <span style=color:#ff0086;font-weight:700>Add</span>(<span style=color:#0086f7;font-weight:700>10</span>, <span style=color:#0086f7;font-weight:700>5</span>)
-    <span style=color:#fb660a;font-weight:700>if</span> result != <span style=color:#0086f7;font-weight:700>15</span> {
-        t.<span style=color:#ff0086;font-weight:700>Log</span>(<span style=color:#0086d2>&#34;Expected 15, got&#34;</span>, result)
-        t.<span style=color:#ff0086;font-weight:700>Fail</span>()
+<span style=color:#776e71>// foo_test.go
+</span><span style=color:#776e71></span><span style=color:#815ba4>func</span> <span style=color:#06b6ef>TestAdd</span>(<span style=color:#06b6ef>t</span> <span style=color:#5bc4bf>*</span><span style=color:#06b6ef>testing</span>.<span style=color:#06b6ef>T</span>){
+    <span style=color:#06b6ef>result</span> <span style=color:#5bc4bf>:=</span> <span style=color:#06b6ef>Add</span>(<span style=color:#f99b15>10</span>, <span style=color:#f99b15>5</span>)
+    <span style=color:#815ba4>if</span> <span style=color:#06b6ef>result</span> <span style=color:#5bc4bf>!=</span> <span style=color:#f99b15>15</span> {
+        <span style=color:#06b6ef>t</span>.<span style=color:#06b6ef>Log</span>(<span style=color:#48b685>&#34;Expected 15, got&#34;</span>, <span style=color:#06b6ef>result</span>)
+        <span style=color:#06b6ef>t</span>.<span style=color:#06b6ef>Fail</span>()
     }
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>To test the <code>Add</code> function, just</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> $ go test foo.go foo_test.go
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> $ go test foo.go foo_test.go
 </code></pre></td></tr></table>
 </div>
 </div><p>Clean. 🤌 Go will output the PASS/FAIL status for each test that was defined in
@@ -281,9 +281,9 @@ how to design your functions detect errors and handle them. 10/10 would do it ag
 open-source tool <a href=https://github.com/openapi-contrib/openapi3-generator>openapi3-generator</a>
 to help generate nice, human-readable formatted markdown docs from the spec file. In case you&rsquo;re wondering, the yaml/json formats are not particularly nice to for a human.</p>
 <p>Imagine digging through 500+ lines of this:</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -312,34 +312,34 @@ to help generate nice, human-readable formatted markdown docs from the spec file
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#080;background-color:#0f140f;font-style:italic># One of many endpoint definitions using OpenAPI3 specs</span><span style=color:#888>
-</span><span style=color:#888></span><span style=color:#fb660a;font-weight:700>paths</span>:<span style=color:#888>
-</span><span style=color:#888>  </span><span style=color:#fb660a;font-weight:700>/item</span>:<span style=color:#888>
-</span><span style=color:#888>    </span><span style=color:#fb660a;font-weight:700>post</span>:<span style=color:#888>
-</span><span style=color:#888>      </span><span style=color:#fb660a;font-weight:700>description</span>:<span style=color:#888> </span>|<span style=color:#0086d2>
-</span><span style=color:#0086d2>        </span><span style=color:#888>        </span>Add new Lost item to be put on Lookout on the database.<span style=color:#888>
-</span><span style=color:#888>      </span><span style=color:#fb660a;font-weight:700>parameters</span>:<span style=color:#888>
-</span><span style=color:#888>      </span>- <span style=color:#fb660a;font-weight:700>in</span>:<span style=color:#888> </span>header<span style=color:#888>
-</span><span style=color:#888>        </span><span style=color:#fb660a;font-weight:700>name</span>:<span style=color:#888> </span>Authorization<span style=color:#888>
-</span><span style=color:#888>        </span><span style=color:#fb660a;font-weight:700>description</span>:<span style=color:#888> </span>Firebase ID token of user <span style=color:#888>
-</span><span style=color:#888>        </span><span style=color:#fb660a;font-weight:700>required</span>:<span style=color:#888> </span><span style=color:#fb660a;font-weight:700>true</span><span style=color:#888>
-</span><span style=color:#888>        </span><span style=color:#fb660a;font-weight:700>schema</span>:<span style=color:#888>
-</span><span style=color:#888>          </span><span style=color:#fb660a;font-weight:700>type</span>:<span style=color:#888> </span>string<span style=color:#888>
-</span><span style=color:#888>          </span><span style=color:#fb660a;font-weight:700>example</span>:<span style=color:#888> </span><span style=color:#0086d2>&#34;Authorization: my-firebase-idToken&#34;</span><span style=color:#888>
-</span><span style=color:#888>      </span><span style=color:#fb660a;font-weight:700>requestBody</span>:<span style=color:#888>
-</span><span style=color:#888>        </span><span style=color:#fb660a;font-weight:700>description</span>:<span style=color:#888> </span>Callback item payload<span style=color:#888>
-</span><span style=color:#888>        </span><span style=color:#fb660a;font-weight:700>content</span>:<span style=color:#888>
-</span><span style=color:#888>          </span><span style=color:#fb660a;font-weight:700>&#39;application/json&#39;</span>:<span style=color:#888>
-</span><span style=color:#888>            </span><span style=color:#fb660a;font-weight:700>schema</span>:<span style=color:#888>
-</span><span style=color:#888>              </span><span style=color:#fb660a;font-weight:700>$ref</span>:<span style=color:#888> </span><span style=color:#0086d2>&#34;#/components/schemas/NewItem&#34;</span><span style=color:#888>
-</span><span style=color:#888>      </span><span style=color:#fb660a;font-weight:700>responses</span>:<span style=color:#888>
-</span><span style=color:#888>        </span><span style=color:#fb660a;font-weight:700>&#39;200&#39;</span>:<span style=color:#888>
-</span><span style=color:#888>          </span><span style=color:#fb660a;font-weight:700>description</span>:<span style=color:#888> </span>Item registered into database<span style=color:#888>
-</span><span style=color:#888>        </span><span style=color:#fb660a;font-weight:700>&#39;400&#39;</span>:<span style=color:#888>
-</span><span style=color:#888>          </span><span style=color:#fb660a;font-weight:700>description</span>:<span style=color:#888> </span>Rejected new item into database<span style=color:#888>
-</span><span style=color:#888>        </span><span style=color:#fb660a;font-weight:700>&#39;401&#39;</span>:<span style=color:#888>
-</span><span style=color:#888>          </span><span style=color:#fb660a;font-weight:700>description</span>:<span style=color:#888> </span>Firebase credentials not invalid<span style=color:#888>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#776e71># One of many endpoint definitions using OpenAPI3 specs</span>
+<span style=color:#5bc4bf>paths</span>:
+  <span style=color:#5bc4bf>/item</span>:
+    <span style=color:#5bc4bf>post</span>:
+      <span style=color:#5bc4bf>description</span>: |<span style=color:#776e71>
+</span><span style=color:#776e71>        </span>        <span style=color:#f99b15>Add new Lost item to be put on Lookout on the database.</span>
+      <span style=color:#5bc4bf>parameters</span>:
+      - <span style=color:#5bc4bf>in</span>: <span style=color:#f99b15>header</span>
+        <span style=color:#5bc4bf>name</span>: <span style=color:#f99b15>Authorization</span>
+        <span style=color:#5bc4bf>description</span>: <span style=color:#f99b15>Firebase ID token of user </span>
+        <span style=color:#5bc4bf>required</span>: <span style=color:#815ba4>true</span>
+        <span style=color:#5bc4bf>schema</span>:
+          <span style=color:#5bc4bf>type</span>: <span style=color:#f99b15>string</span>
+          <span style=color:#5bc4bf>example</span>: <span style=color:#48b685>&#34;Authorization: my-firebase-idToken&#34;</span>
+      <span style=color:#5bc4bf>requestBody</span>:
+        <span style=color:#5bc4bf>description</span>: <span style=color:#f99b15>Callback item payload</span>
+        <span style=color:#5bc4bf>content</span>:
+          <span style=color:#5bc4bf>&#39;application/json&#39;</span>:
+            <span style=color:#5bc4bf>schema</span>:
+              <span style=color:#5bc4bf>$ref</span>: <span style=color:#48b685>&#34;#/components/schemas/NewItem&#34;</span>
+      <span style=color:#5bc4bf>responses</span>:
+        <span style=color:#5bc4bf>&#39;200&#39;</span>:
+          <span style=color:#5bc4bf>description</span>: <span style=color:#f99b15>Item registered into database</span>
+        <span style=color:#5bc4bf>&#39;400&#39;</span>:
+          <span style=color:#5bc4bf>description</span>: <span style=color:#f99b15>Rejected new item into database</span>
+        <span style=color:#5bc4bf>&#39;401&#39;</span>:
+          <span style=color:#5bc4bf>description</span>: <span style=color:#f99b15>Firebase credentials not invalid</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>Not exactly human friendly.</p>
 <p>The purpose of API Docs is to make things crystal clear and save time communicating with others<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>. But this only works if docs are updated and written well. In FindNUS&rsquo;s case, due to the tight timeline and speed of development, I often had to play catch-up for documentation<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup>.</p>

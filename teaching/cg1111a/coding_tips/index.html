@@ -179,9 +179,9 @@ Document your code, please
 </figure>
 <p>We will need to store the roll, pitch and yaw as config.</p>
 <p>The simplest way is to use an integer array.</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
@@ -190,12 +190,12 @@ Document your code, please
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#080;background-color:#0f140f;font-style:italic>// Which is roll, pitch and yaw? 
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span><span style=color:#cdcaa9;font-weight:700>int</span> drone_params[] = {<span style=color:#0086f7;font-weight:700>42</span>, <span style=color:#0086f7;font-weight:700>100</span>, <span style=color:#0086f7;font-weight:700>254</span>}; <span style=color:#080;background-color:#0f140f;font-style:italic>// dummy values
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>
-drone_params[<span style=color:#0086f7;font-weight:700>0</span>] = read_input_pitch();
-drone_params[<span style=color:#0086f7;font-weight:700>1</span>] = read_input_roll();
-drone_params[<span style=color:#0086f7;font-weight:700>2</span>] = read_input_yaw();
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#776e71>// Which is roll, pitch and yaw? 
+</span><span style=color:#776e71></span><span style=color:#fec418>int</span> drone_params[] <span style=color:#5bc4bf>=</span> {<span style=color:#f99b15>42</span>, <span style=color:#f99b15>100</span>, <span style=color:#f99b15>254</span>}; <span style=color:#776e71>// dummy values
+</span><span style=color:#776e71></span>
+drone_params[<span style=color:#f99b15>0</span>] <span style=color:#5bc4bf>=</span> read_input_pitch();
+drone_params[<span style=color:#f99b15>1</span>] <span style=color:#5bc4bf>=</span> read_input_roll();
+drone_params[<span style=color:#f99b15>2</span>] <span style=color:#5bc4bf>=</span> read_input_yaw();
 
 </code></pre></td></tr></table>
 </div>
@@ -203,9 +203,9 @@ drone_params[<span style=color:#0086f7;font-weight:700>2</span>] = read_input_ya
 <p>We can <strong>infer</strong> that <code>drone_params[0] == pitch</code> and so on. But is it really? Only the person who wrote the line of code knows.</p>
 <p>Other people who read it will be confused and won&rsquo;t really be able to work on the project. We also run the risk of index errors <del>if</del> when we accidentally use 1-based indexing (e.g. <code>drone_params[3]</code>)<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p>
 <p>What if we used a <code>struct</code> instead?</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
@@ -217,16 +217,16 @@ drone_params[<span style=color:#0086f7;font-weight:700>2</span>] = read_input_ya
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#fb660a;font-weight:700>struct</span> FlightParams {
-    <span style=color:#cdcaa9;font-weight:700>int</span> roll;
-    <span style=color:#cdcaa9;font-weight:700>int</span> pitch;
-    <span style=color:#cdcaa9;font-weight:700>int</span> yaw;
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#815ba4>struct</span> FlightParams {
+    <span style=color:#fec418>int</span> roll;
+    <span style=color:#fec418>int</span> pitch;
+    <span style=color:#fec418>int</span> yaw;
 };
 
-<span style=color:#fb660a;font-weight:700>struct</span> FlightParams drone_params;
-drone_params.pitch = read_input_pitch();
-drone_params.roll = read_input_roll();
-drone_params.yaw = read_input_yaw();
+<span style=color:#815ba4>struct</span> FlightParams drone_params;
+drone_params.pitch <span style=color:#5bc4bf>=</span> read_input_pitch();
+drone_params.roll <span style=color:#5bc4bf>=</span> read_input_roll();
+drone_params.yaw <span style=color:#5bc4bf>=</span> read_input_yaw();
 </code></pre></td></tr></table>
 </div>
 </div><p>Much better. This type of readability is especially good if you are inheriting someone else&rsquo;s code. Instead of magical values like <code>0,1,2</code>, anyone that reads it will know exactly what&rsquo;s going on.</p>
@@ -239,9 +239,9 @@ drone_params.yaw = read_input_yaw();
 <p>Copying can be slow<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>. C++ (which Arduino uses) has a feature called &ldquo;Pass by reference&rdquo; (no more pointers!). Do this by appending &lsquo;&&rsquo; before the argument name. You can think of pass by reference as a &lsquo;pseudo pointer&rsquo;, where the actual variable is passed into the function rather than copying it. This saves you time and is useful when you need to actually modify the data. You will find this concept particularly useful in CS2040C.</p>
 <p>Any modifications made to the referenced variable in the function will persist once the function call ends.</p>
 <p><a href=https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-cpp/>Reference documentation</a> for pass by reference.</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -259,22 +259,22 @@ drone_params.yaw = read_input_yaw();
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#fb660a;font-weight:700>struct</span> Foo {
-    <span style=color:#cdcaa9;font-weight:700>int</span> bar;
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#815ba4>struct</span> <span style=color:#fec418>Foo</span> {
+    <span style=color:#fec418>int</span> bar;
 };
 
-<span style=color:#cdcaa9;font-weight:700>void</span> <span style=color:#ff0086;font-weight:700>func</span>(Foo&amp; foo){
-    <span style=color:#080;background-color:#0f140f;font-style:italic>// process foo and change its state
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>    foo.bar = <span style=color:#0086f7;font-weight:700>1</span>;
+<span style=color:#fec418>void</span> <span style=color:#06b6ef>func</span>(Foo<span style=color:#5bc4bf>&amp;</span> foo){
+    <span style=color:#776e71>// process foo and change its state
+</span><span style=color:#776e71></span>    foo.bar <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>1</span>;
 } 
 
-<span style=color:#cdcaa9;font-weight:700>int</span> <span style=color:#ff0086;font-weight:700>main</span>(){
+<span style=color:#fec418>int</span> <span style=color:#06b6ef>main</span>(){
     Foo foo;
-    foo.bar = <span style=color:#0086f7;font-weight:700>0</span>;
-    printf(<span style=color:#0086d2>&#34;%d </span><span style=color:#0086d2>\n</span><span style=color:#0086d2>&#34;</span>, foo.bar); <span style=color:#080;background-color:#0f140f;font-style:italic>// prints 0
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>    func(foo);
-    printf(<span style=color:#0086d2>&#34;%d </span><span style=color:#0086d2>\n</span><span style=color:#0086d2>&#34;</span>, foo.bar); <span style=color:#080;background-color:#0f140f;font-style:italic>// prints 1
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>}
+    foo.bar <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>;
+    printf(<span style=color:#48b685>&#34;%d </span><span style=color:#f99b15>\n</span><span style=color:#48b685>&#34;</span>, foo.bar); <span style=color:#776e71>// prints 0
+</span><span style=color:#776e71></span>    func(foo);
+    printf(<span style=color:#48b685>&#34;%d </span><span style=color:#f99b15>\n</span><span style=color:#48b685>&#34;</span>, foo.bar); <span style=color:#776e71>// prints 1
+</span><span style=color:#776e71></span>}
 </code></pre></td></tr></table>
 </div>
 </div><h2 id=3-avoid-magic-literals>3. Avoid magic literals</h2>
@@ -282,9 +282,9 @@ drone_params.yaw = read_input_yaw();
 <p>There is no obvious meaning to its value.</p>
 <p>You will learn this more in-depth later on in <a href=https://nus-cs2113-ay2324s1.github.io/website/se-book-adapted/chapters/codeQuality.html#avoid-magic-numbers>CS2113</a>. But here&rsquo;s a simple example.</p>
 <p>Let&rsquo;s say we need to calculate the resistance of a copper wire.</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
@@ -294,13 +294,13 @@ drone_params.yaw = read_input_yaw();
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#cdcaa9;font-weight:700>double</span> <span style=color:#ff0086;font-weight:700>calc_wire_resistance</span>(<span style=color:#cdcaa9;font-weight:700>float</span> length, <span style=color:#cdcaa9;font-weight:700>float</span> area){
-    <span style=color:#080;background-color:#0f140f;font-style:italic>// What does 1.77e-8 represent?
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>    <span style=color:#fb660a;font-weight:700>return</span> (<span style=color:#0086f7;font-weight:700>1.77e-8</span>) * length/area;
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#fec418>double</span> <span style=color:#06b6ef>calc_wire_resistance</span>(<span style=color:#fec418>float</span> length, <span style=color:#fec418>float</span> area){
+    <span style=color:#776e71>// What does 1.77e-8 represent?
+</span><span style=color:#776e71></span>    <span style=color:#815ba4>return</span> (<span style=color:#f99b15>1.77e-8</span>) <span style=color:#5bc4bf>*</span> length<span style=color:#5bc4bf>/</span>area;
 }
 
-<span style=color:#cdcaa9;font-weight:700>double</span> <span style=color:#ff0086;font-weight:700>calc_conductivity</span>(){
-    <span style=color:#fb660a;font-weight:700>return</span> <span style=color:#0086f7;font-weight:700>1</span>/(<span style=color:#0086f7;font-weight:700>1.77e-8</span>);
+<span style=color:#fec418>double</span> <span style=color:#06b6ef>calc_conductivity</span>(){
+    <span style=color:#815ba4>return</span> <span style=color:#f99b15>1</span><span style=color:#5bc4bf>/</span>(<span style=color:#f99b15>1.77e-8</span>);
 }
 </code></pre></td></tr></table>
 </div>
@@ -316,9 +316,9 @@ How will this affect all the functions that use the literal?</p>
 <li><strong>Do not scale</strong> well, especially if frequently used</li>
 </ol>
 <p>Let&rsquo;s refactor the code with a <strong>named constant</strong> (you can opt for a <code>#define</code> macro too).</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
@@ -329,14 +329,14 @@ How will this affect all the functions that use the literal?</p>
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#fb660a;font-weight:700>const</span> <span style=color:#cdcaa9;font-weight:700>double</span> RESISTIVITY = <span style=color:#0086f7;font-weight:700>1.77</span>*(<span style=color:#0086f7;font-weight:700>10e-8</span>);
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#815ba4>const</span> <span style=color:#fec418>double</span> RESISTIVITY <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>1.77</span><span style=color:#5bc4bf>*</span>(<span style=color:#f99b15>10e-8</span>);
 
-<span style=color:#cdcaa9;font-weight:700>double</span> <span style=color:#ff0086;font-weight:700>calc_wire_resistance</span>(<span style=color:#cdcaa9;font-weight:700>float</span> length, <span style=color:#cdcaa9;font-weight:700>float</span> area){
-    <span style=color:#fb660a;font-weight:700>return</span> RESISTIVITY*length/area;
+<span style=color:#fec418>double</span> <span style=color:#06b6ef>calc_wire_resistance</span>(<span style=color:#fec418>float</span> length, <span style=color:#fec418>float</span> area){
+    <span style=color:#815ba4>return</span> RESISTIVITY<span style=color:#5bc4bf>*</span>length<span style=color:#5bc4bf>/</span>area;
 }
 
-<span style=color:#cdcaa9;font-weight:700>double</span> <span style=color:#ff0086;font-weight:700>calc_conductivity</span>() {
-    <span style=color:#fb660a;font-weight:700>return</span> <span style=color:#0086f7;font-weight:700>1</span>/RESISTIVITY;
+<span style=color:#fec418>double</span> <span style=color:#06b6ef>calc_conductivity</span>() {
+    <span style=color:#815ba4>return</span> <span style=color:#f99b15>1</span><span style=color:#5bc4bf>/</span>RESISTIVITY;
 }
 </code></pre></td></tr></table>
 </div>
@@ -348,9 +348,9 @@ How will this affect all the functions that use the literal?</p>
 <p>If you have tons of constants, it might get messy.</p>
 <p>You can consider using enums to group together constants that make sense semantically.</p>
 <p><a href=https://www.geeksforgeeks.org/enumeration-in-cpp/>Learn more about C++ enums</a>.</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -367,19 +367,19 @@ How will this affect all the functions that use the literal?</p>
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#fb660a;font-weight:700>enum</span> COLORS {
-    COLOR_NONE = <span style=color:#0086f7;font-weight:700>0</span>,
-    COLOR_RED  = <span style=color:#0086f7;font-weight:700>1</span>,
-    COLOR_GREEN = <span style=color:#0086f7;font-weight:700>2</span>,
-    COLOR_BLUE = <span style=color:#0086f7;font-weight:700>3</span>,
-    COLOR_PURPLE = <span style=color:#0086f7;font-weight:700>4</span>,
-    COLOR_ORANGE = <span style=color:#0086f7;font-weight:700>5</span>,
-    COLOR_WHITE = <span style=color:#0086f7;font-weight:700>6</span>,
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#815ba4>enum</span> <span style=color:#fec418>COLORS</span> {
+    COLOR_NONE <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>,
+    COLOR_RED  <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>1</span>,
+    COLOR_GREEN <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>2</span>,
+    COLOR_BLUE <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>3</span>,
+    COLOR_PURPLE <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>4</span>,
+    COLOR_ORANGE <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>5</span>,
+    COLOR_WHITE <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>6</span>,
 };
 
-<span style=color:#080;background-color:#0f140f;font-style:italic>// Sample usage
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span><span style=color:#cdcaa9;font-weight:700>bool</span> <span style=color:#ff0086;font-weight:700>isWhite</span>(<span style=color:#fb660a;font-weight:700>enum</span> COLORS color){
-    <span style=color:#fb660a;font-weight:700>return</span> (color == COLOR_WHITE);
+<span style=color:#776e71>// Sample usage
+</span><span style=color:#776e71></span><span style=color:#fec418>bool</span> <span style=color:#06b6ef>isWhite</span>(<span style=color:#815ba4>enum</span> <span style=color:#fec418>COLORS</span> color){
+    <span style=color:#815ba4>return</span> (color <span style=color:#5bc4bf>==</span> COLOR_WHITE);
 }
 
 </code></pre></td></tr></table>

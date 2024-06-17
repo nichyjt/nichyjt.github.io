@@ -277,13 +277,13 @@ POP!_OS as the First Pick
 </figure>
 <h1 id=making-linux-cozier->Making Linux Cozier ⛱️</h1>
 <p>The great thing about Linux is that out-of-the-box, you don&rsquo;t need to do much to make it secure. You will probably want to update all the pre-installed packages, though.</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ sudo apt-get update
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ sudo apt-get update
 $ sudo apt-get upgrade
 </code></pre></td></tr></table>
 </div>
@@ -315,12 +315,12 @@ There&rsquo;s also the option of a GUI variant of ufw called gufw that makes wra
 <h2 id=quality-of-life-extras>Quality of Life Extras</h2>
 <p><strong>Media Formats</strong></p>
 <p>Some media codecs/formats such as mp3, mp4 & quicktime may not come installed with your Linux flavour due to patenting issues. The repository/link to install the codec depend on your flavour, but for Ubuntu based distros like POP, you can get them by running:</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> $ sudo apt-get install ubuntu-restricted-extras
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> $ sudo apt-get install ubuntu-restricted-extras
 </code></pre></td></tr></table>
 </div>
 </div><p><strong>Running Windows Software</strong></p>
@@ -328,14 +328,14 @@ There&rsquo;s also the option of a GUI variant of ufw called gufw that makes wra
 <p><strong>Automating with Cronjobs</strong></p>
 <p>You may also find it necessary to automate certain regular tasks. Consider using <code>cron</code>. It is an common Linux daemon that helps you execute bash commands at regular intervals. You just need to add job entries via <code>crontab</code> where you will have to specify the time interval and what commands to run.</p>
 <p>For example, let&rsquo;s say I want to run <code>webscraper.py</code> every weekday at 1.45am at the root directory. I would run these commands&mldr;</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ crontab -e my_username  
-<span style=color:#0086f7;font-weight:700>45</span> <span style=color:#0086f7;font-weight:700>1</span> * *  1,2,3,4,5 python3 webscraper.py
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>$ crontab -e my_username  
+<span style=color:#f99b15>45</span> <span style=color:#f99b15>1</span> * *  1,2,3,4,5 python3 webscraper.py
 </code></pre></td></tr></table>
 </div>
 </div><p>If you&rsquo;re interested in understanding more about what the asterisks and numbers mean, take a look at <a href=https://crontab.guru/>this</a>. Take note that cron jobs run as root in the root directory, and you will likely need to change the directory to access files further down the directory.</p>

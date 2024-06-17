@@ -192,9 +192,9 @@ Check the PS4 controller state, and send the appropriate command packet. Simple!
 <p>Unfortunately, our implementation was sending out command packets to the KL25 MCU at every loop iteration, which has an upper bound of <a href=https://www.mouser.com/datasheet/2/891/esp-wroom-32_datasheet_en-1223836.pdf>80MHz</a> (the lower bound of clock speeds for the ESP).</p>
 <p>TLDR; we are spamming our KL25 with command packets.</p>
 <p>Here&rsquo;s the first cut of our code (abridged and redacted HEAVILY for readability)&mldr;</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -218,25 +218,25 @@ Check the PS4 controller state, and send the appropriate command packet. Simple!
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C++ data-lang=C++><span style=color:#080;background-color:#0f140f;font-style:italic>// We were using ESP32 Arduino, hence the arduino loop() 
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span><span style=color:#cdcaa9;font-weight:700>void</span> <span style=color:#ff0086;font-weight:700>loop</span>() {
-    <span style=color:#fb660a;font-weight:700>if</span> (PS4.isConnected()) {
-        <span style=color:#080;background-color:#0f140f;font-style:italic>// if PS4 current input is a certain direction, 
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>        <span style=color:#080;background-color:#0f140f;font-style:italic>// send that command to KL25 via Serial2
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>        <span style=color:#fb660a;font-weight:700>if</span> (PS4.Up()) {
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C++ data-lang=C++><span style=color:#776e71>// We were using ESP32 Arduino, hence the arduino loop() 
+</span><span style=color:#776e71></span><span style=color:#fec418>void</span> <span style=color:#06b6ef>loop</span>() {
+    <span style=color:#815ba4>if</span> (PS4.isConnected()) {
+        <span style=color:#776e71>// if PS4 current input is a certain direction, 
+</span><span style=color:#776e71></span>        <span style=color:#776e71>// send that command to KL25 via Serial2
+</span><span style=color:#776e71></span>        <span style=color:#815ba4>if</span> (PS4.Up()) {
             Serial2.write(DXN_FWD);
         }
-        <span style=color:#fb660a;font-weight:700>else</span> <span style=color:#fb660a;font-weight:700>if</span> (PS4.Down()) {
+        <span style=color:#815ba4>else</span> <span style=color:#815ba4>if</span> (PS4.Down()) {
             Serial2.write(DXN_BACK);
         }
-        <span style=color:#fb660a;font-weight:700>else</span> <span style=color:#fb660a;font-weight:700>if</span> (PS4.Left()) {
+        <span style=color:#815ba4>else</span> <span style=color:#815ba4>if</span> (PS4.Left()) {
             Serial2.write(DXN_LEFT);
         }
-        <span style=color:#fb660a;font-weight:700>else</span> <span style=color:#fb660a;font-weight:700>if</span> (PS4.Right()) {
+        <span style=color:#815ba4>else</span> <span style=color:#815ba4>if</span> (PS4.Right()) {
             Serial2.write(DXN_RIGHT);
         }
-        <span style=color:#fb660a;font-weight:700>else</span> { <span style=color:#080;background-color:#0f140f;font-style:italic>// fallback
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>            Serial2.write(DXN_STOP);
+        <span style=color:#815ba4>else</span> { <span style=color:#776e71>// fallback
+</span><span style=color:#776e71></span>            Serial2.write(DXN_STOP);
         }
     }
 }
@@ -257,9 +257,9 @@ ESP32 stuffing messages into the queue (visualized)
 <p>When trying to optimize the code, I realised that many redundant states were being sent.</p>
 <p>For example, when the racecar is idling, the state will always be <code>DXN_STOP</code>. Every loop iter will send <code>DXN_STOP</code> packets. The duplicate packets/messages being sent was useless!</p>
 <p>Partially inspired by dynamic programming, I introduced a simple optimization.</p>
-<div class=highlight><div style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
@@ -289,31 +289,31 @@ ESP32 stuffing messages into the queue (visualized)
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#080;background-color:#0f140f;font-style:italic>// Our state tracker (cache)
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>uint8 prev = DXN_INIT;
+<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#776e71>// Our state tracker (cache)
+</span><span style=color:#776e71></span>uint8 prev <span style=color:#5bc4bf>=</span> DXN_INIT;
 
-<span style=color:#cdcaa9;font-weight:700>void</span> <span style=color:#ff0086;font-weight:700>loop</span>() {
-    <span style=color:#080;background-color:#0f140f;font-style:italic>// default direction
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>    uint8 curr = DXN_STOP;
+<span style=color:#fec418>void</span> <span style=color:#06b6ef>loop</span>() {
+    <span style=color:#776e71>// default direction
+</span><span style=color:#776e71></span>    uint8 curr <span style=color:#5bc4bf>=</span> DXN_STOP;
 
-    <span style=color:#fb660a;font-weight:700>if</span> (PS4.isConnected()) {
-        <span style=color:#fb660a;font-weight:700>if</span> (PS4.Up()) {
-            curr = DXN_FWD;
+    <span style=color:#815ba4>if</span> (PS4.isConnected()) {
+        <span style=color:#815ba4>if</span> (PS4.Up()) {
+            curr <span style=color:#5bc4bf>=</span> DXN_FWD;
         }
-        <span style=color:#fb660a;font-weight:700>else</span> <span style=color:#fb660a;font-weight:700>if</span> (PS4.Down()) {
-            curr = DXN_BACK;
+        <span style=color:#815ba4>else</span> <span style=color:#815ba4>if</span> (PS4.Down()) {
+            curr <span style=color:#5bc4bf>=</span> DXN_BACK;
         }
-        <span style=color:#fb660a;font-weight:700>else</span> <span style=color:#fb660a;font-weight:700>if</span> (PS4.Left()) {
-            curr = DXN_LEFT;
+        <span style=color:#815ba4>else</span> <span style=color:#815ba4>if</span> (PS4.Left()) {
+            curr <span style=color:#5bc4bf>=</span> DXN_LEFT;
         }
-        <span style=color:#fb660a;font-weight:700>else</span> <span style=color:#fb660a;font-weight:700>if</span> (PS4.Right()) {
-            curr = DXN_RIGHT;
+        <span style=color:#815ba4>else</span> <span style=color:#815ba4>if</span> (PS4.Right()) {
+            curr <span style=color:#5bc4bf>=</span> DXN_RIGHT;
         }
 
-        <span style=color:#080;background-color:#0f140f;font-style:italic>// Only send a packet if there is a change in state
-</span><span style=color:#080;background-color:#0f140f;font-style:italic></span>        <span style=color:#fb660a;font-weight:700>if</span> (prev != curr) {
+        <span style=color:#776e71>// Only send a packet if there is a change in state
+</span><span style=color:#776e71></span>        <span style=color:#815ba4>if</span> (prev <span style=color:#5bc4bf>!=</span> curr) {
             Serial2.write(curr);
-            prev = curr;
+            prev <span style=color:#5bc4bf>=</span> curr;
         }
     }
 }
