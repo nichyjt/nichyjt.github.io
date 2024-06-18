@@ -11,6 +11,7 @@
 .coyLogo {
     max-height: 64px;
     width: auto;
+    align-self: center;
 }
 
 .stripMargin {
