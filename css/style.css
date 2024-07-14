@@ -83,8 +83,6 @@ table{
 .listitem{
     display: flex;
     flex-direction: column;
-    background-color: var(--color-listitem);
-    margin: 2rem;
     border-radius: 5px;
     border: 2px transparent solid;
 }
@@ -96,7 +94,7 @@ table{
     -ms-transition:transform 0.2s ease-in-out;
 }
 .listitem-cont {
-    margin-inline: 2rem;
+    padding-inline: 0.65rem;
 }
 .listTitleLink{
     color: var(--color-link-title);
@@ -144,7 +142,7 @@ table{
 .section{
     align-self: center;
     width: 50vw;
-    margin-bottom: 4rem;
+    margin-bottom: 1rem;
 }
 /*Default shortcode*/
 .figmd{
@@ -188,12 +186,6 @@ img{
     /* Redundancy */
     .fignormal{
         max-width: 100%;
-    }
-    .listitem {
-        margin: 1rem;
-    }
-    .listitem-cont {
-        margin-inline: 1rem;
     }
     .section {
         width: 85vw;
