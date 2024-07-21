@@ -153,7 +153,7 @@ for easier use with the resolution algorithm.
 ⌛ 5 minutes read
 </p>
 </div>
-<p class=tags style=width:fit-content>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/essay> Essay</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/math> Math</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/artificial-intelligence> Artificial Intelligence</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/cs3243> CS3243</a>
+<p class=tags style=width:fit-content>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/essay> Essay</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/math> Math</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/a.i.> A.I.</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/cs3243> CS3243</a>
 </p>
 </div>
 <hr>
@@ -188,7 +188,7 @@ Ok. That&rsquo;s a mouthful, but I hope you get it.</p>
 <p>You can prove this pattern to yourself by using 4 variables, but I do not recommend that unless you like the tedium of enumerating combinations.</p>
 <p>The issue now is the tedium of converting DNF to CNF.</p>
 <p>Since we don&rsquo;t have implications (->) and NOTs (!) to worry about, we can simply<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> just distribute the terms and regroup them into CNF. See <a href=https://math.stackexchange.com/questions/2452787/converting-dnf-to-cnf-boolean-logic>this</a> stack exchange post for an example of distributing over many terms.</p>
-<p>We can try and inductively (weak) figure out if there is a pattern.</p>
+<p>theWe can try and inductively (weak) figure out if there is a pattern.</p>
 <p>We just need to do the &lsquo;simple&rsquo; task of enumerating ALL the CNFs from their standard form and see if there is a pattern&mldr;</p>
 <table>
 <thead>
@@ -203,8 +203,8 @@ Ok. That&rsquo;s a mouthful, but I hope you get it.</p>
 <tr>
 <td>2</td>
 <td>3</td>
-<td><code>(X₁∧X₂)∨(X₁∧X₃)∨(X₂∧X₃)</code></td>
-<td><code>(X₁∨X₂)∧(X₁∨X₃)∧(X₂∨X₃)</code></td>
+<td>(X₁∧X₂)∨(X₁∧X₃)∨(X₂∧X₃)</td>
+<td>(X₁∨X₂)∧(X₁∨X₃)∧(X₂∨X₃)</td>
 </tr>
 </tbody>
 </table>
@@ -233,32 +233,32 @@ Plugging in the standard form for k=2, n=4...
 <tr>
 <td>2</td>
 <td>2</td>
-<td><code>(x₁∧x₂)</code></td>
-<td><code>(x₁)∧(x₂)</code></td>
+<td>(x₁∧x₂)</td>
+<td>(x₁)∧(x₂)</td>
 </tr>
 <tr>
 <td>2</td>
 <td>3</td>
-<td><code>(X₁∧X₂)∨(X₁∧X₃)∨(X₂∧X₃)</code></td>
-<td><code>(X₁∨X₂)∧(X₁∨X₃)∧(X₂∨X₃)</code></td>
+<td>(X₁∧X₂)∨(X₁∧X₃)∨(X₂∧X₃)</td>
+<td>(X₁∨X₂)∧(X₁∨X₃)∧(X₂∨X₃)</td>
 </tr>
 <tr>
 <td>2</td>
 <td>4</td>
-<td><code>(x₁∧x₂)∨(x₁ x₂)∨(x₁∧x₄)∨(x₂∧x₃)∨(x₂∧x₄)∨(x₃∧x₄)</code></td>
-<td><code>(x₁∨x₂∨x₃)∧(x₁∨x₂∨x₄)∧(x₁∨x₃∨x₄)∧(x₂∨x₃∨x₄)</code></td>
+<td>(x₁∧x₂)∨(x₁∧x₂)∨(x₁∧x₄)∨(x₂∧x₃)∨(x₂∧x₄)∨(x₃∧x₄)</td>
+<td>(x₁∨x₂∨x₃)∧(x₁∨x₂∨x₄)∧(x₁∨x₃∨x₄)∧(x₂∨x₃∨x₄)</td>
 </tr>
 <tr>
 <td>3</td>
 <td>3</td>
-<td><code>(x₁∧x₂∧x₃)</code></td>
-<td><code>(x₁∧x₂∧x₃)</code></td>
+<td>(x₁∧x₂∧x₃)</td>
+<td>(x₁∧x₂∧x₃)</td>
 </tr>
 <tr>
 <td>3</td>
 <td>4</td>
-<td><code>(x₁∧x₂∧x₃)∨(x₁∧x₂∧x₄)∨(x₁∧x₃∧x₄)∨(x₂∧x₃∧x₄)</code></td>
-<td><code>(x₁∨x₂)∧(x₁∨x₃)∧(x₁∨x₄)∧(x₂∨x₃)∧(x₂∨x₄)∧(x₃∨x₄)</code></td>
+<td>(x₁∧x₂∧x₃)∨(x₁∧x₂∧x₄)∨(x₁∧x₃∧x₄)∨(x₂∧x₃∧x₄)</td>
+<td>(x₁∨x₂)∧(x₁∨x₃)∧(x₁∨x₄)∧(x₂∨x₃)∧(x₂∨x₄)∧(x₃∨x₄)</td>
 </tr>
 </tbody>
 </table>
@@ -266,7 +266,7 @@ Plugging in the standard form for k=2, n=4...
 <p>It should be somewhat obvious what the emerging pattern is.</p>
 <p>Observe that for the <strong>standard</strong> form,</p>
 <ol>
-<li>Each conjunctive clause (e.g. <code>(x₁∧x₂)</code> ) is joined via disjunction to another clause</li>
+<li>Each conjunctive clause (e.g. (x₁∧x₂) ) is joined via disjunction to another clause</li>
 <li>Each clause is a unique combination of <code>k</code> vars out of <code>n</code>
 <ul>
 <li>By extension, this means that the |clauses| = $n \choose k$</li>
@@ -275,7 +275,7 @@ Plugging in the standard form for k=2, n=4...
 </ol>
 <p>For the <strong>CNF</strong> form,</p>
 <ol>
-<li>Each disjunctive clause (e.g. <code>(X₁∨X₃)</code>) is joined via conjunction to another clause</li>
+<li>Each disjunctive clause (e.g. (X₁∨X₃)) is joined via conjunction to another clause</li>
 <li>Each clause is a unique combination if <code>n-k+1</code> vars<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup> out of <code>n</code>.
 <ul>
 <li>By extension, this means that |clauses| = $n \choose {n-k+1}$</li>
