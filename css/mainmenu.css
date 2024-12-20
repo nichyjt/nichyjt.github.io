@@ -119,23 +119,19 @@ main {
     cursor: pointer;
     color: var(--color-menuicon);
   }
-  /* Apple compatability wrapper */
-  .hamburg-wrapper:focus-within .navbar-hamburg-items {
+  .navbar-hamburg-items {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-speed);
+  }
+  .navbar-hamburg-items.show {
     opacity: 1;
     pointer-events: all;
   }
-  .hamburg-wrapper:not(:focus-within) .navbar-hamburg-items {
-    opacity: 0;
-    pointer-events: none;
-  }
-  .navbar-hamburg-items{
-    list-style: none;
-    padding: 0;
-    margin-top:0.5rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: all --var(--transition-speed);
-  }
+  
   .navbar-hamburg-items svg{
     width: 1rem;
     min-width: 1rem;
@@ -146,16 +142,7 @@ main {
     width: 1rem;
     margin: 0.5rem;
   }
-  /*Click animation*/
-  .hamburg-btn:focus + .navbar-hamburg-items{
-    opacity: 1;
-    pointer-events: all;
-    transition: var(--transition-speed);
-  }
-  .navbar-hamburg-items:focus-within{
-    pointer-events:visible;
-  }
-  
+
   /* Smooth border */
   .nav-item:first-child{
     border-top-left-radius: 8px;
