@@ -119,6 +119,15 @@ main {
     cursor: pointer;
     color: var(--color-menuicon);
   }
+  /* Apple compatability wrapper */
+  .hamburg-wrapper:focus-within .navbar-hamburg-items {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .hamburg-wrapper:not(:focus-within) .navbar-hamburg-items {
+    opacity: 0;
+    pointer-events: none;
+  }
   .navbar-hamburg-items{
     list-style: none;
     padding: 0;
