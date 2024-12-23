@@ -85,6 +85,12 @@ figcaption{
 .experienceSummary {
         font-size: 1.25rem;
 }
+td {
+    font-size: 1rem;
+}
+th {
+    font-size: 1rem;
+}
 @media only screen and (max-width: 650px) {
     p, ol, li, em{
         text-align: justify;
@@ -129,5 +135,11 @@ figcaption{
     }
     .experienceSummary {
         font-size: 1rem;
+    }
+    td {
+        font-size: 0.75rem;
+    }
+    th {
+        font-size: 0.75rem;
     }
 }
