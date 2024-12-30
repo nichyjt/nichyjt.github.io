@@ -87,7 +87,7 @@
 
 .spoiler-hidden {
     background-color: #5A5A5A;
-    display: inline-block; 
+    display: inline flow-root; 
     cursor: pointer;
     user-select: none;
     color: transparent; 
@@ -95,7 +95,6 @@
 
 .spoiler-visible {
     background-color: transparent; 
-    display: inline flow-root;
     cursor: auto;
     color: inherit;
 }
