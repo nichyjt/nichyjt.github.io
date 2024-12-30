@@ -16,8 +16,10 @@ I reflect on developing its RESTful API backend and various aspects of backend d
 <link rel=stylesheet href=/css/featured.css>
 <link rel=stylesheet href=/css/shortcodes.css>
 <link rel=stylesheet href=/css/badgeicon.css>
+<link rel=stylesheet href=/css/expandable.css>
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
+<script src=/js/expandable.js></script>
 <meta property="og:title" content="FindNUS :telescope:">
 <meta property="og:description" content="My friend and I built a Lost & Found web-app over summer.
 I reflect on developing its RESTful API backend and various aspects of backend development.
@@ -162,9 +164,7 @@ I reflect on developing its RESTful API backend and various aspects of backend d
 <p>You can try <a href=https://findnus.netlify.app>FindNUS out here</a>!</p>
 <figure class=figmd>
 <img src=findnushome.webp alt="findnus homepage" class=fignormal>
-<figcaption>
-FindNUS landing page
-</figcaption>
+<figcaption>FindNUS landing page</figcaption>
 </figure>
 <p>We wrote a <strong>truck load</strong> of documentation, including things like User Research and obscure bug quashing.
 If this interests you, please head on over to our <a href=https://findnus.github.io>official docusite</a>.</p>
@@ -181,9 +181,7 @@ and perform business logic. Here&rsquo;s how I planned out the architecture:</p>
 <p>The architecture follows the microservices design pattern.</p>
 <figure class=figmd>
 <img src=backend.webp alt="backend architecture diagram" class=fignormal>
-<figcaption>
-Backend Architecture
-</figcaption>
+<figcaption>Backend Architecture</figcaption>
 </figure>
 <p><strong>Tech Stack</strong> 📚:<br>
 Golang, Go-gonic, MongoDB, Heroku, ElasticSearch, RabbitMQ, Firebase, Docker, SMTP, Imgur API</p>

@@ -87,23 +87,24 @@
 
 .spoiler-hidden {
     background-color: #5A5A5A;
-    display: inline;
+    display: inline-block; 
     cursor: pointer;
     user-select: none;
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
+    color: transparent; 
 }
 
 .spoiler-visible {
-    background-color: transparent;
-    display: inline;
+    background-color: transparent; 
+    display: inline-block;
     cursor: auto;
+    color: inherit;
 }
 
 .spoiler-text {
-    visibility: hidden;
+    visibility: visible;
+    transition: color 0.3s ease; 
 }
+
 
 .tooltip .tooltip-text {
     visibility: hidden;

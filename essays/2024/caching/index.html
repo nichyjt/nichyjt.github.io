@@ -16,8 +16,10 @@ We made it pretty responsive with some trivial state caching.
 <link rel=stylesheet href=/css/featured.css>
 <link rel=stylesheet href=/css/shortcodes.css>
 <link rel=stylesheet href=/css/badgeicon.css>
+<link rel=stylesheet href=/css/expandable.css>
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
+<script src=/js/expandable.js></script>
 <meta property="og:title" content="Caching makes things fast - an embedded example (CG2271)">
 <meta property="og:description" content="We built a race car for a RTOS course.
 We made it pretty responsive with some trivial state caching.
@@ -168,9 +170,7 @@ But greatly simplified
 <p>Here&rsquo;s the communication problem that my team is trying to solve in our RTOS project:</p>
 <figure class=figmd>
 <img src=communication.png alt class=fignormal>
-<figcaption>
-Message flow
-</figcaption>
+<figcaption>Message flow</figcaption>
 </figure>
 <p>For the race car to be fast and responsive, the message passing between the communication links needs to be fast.</p>
 <p>How the links work are that:</p>
@@ -248,9 +248,7 @@ Check the PS4 controller state, and send the appropriate command packet. Simple!
 <p>In practice, this meant that there was some latency between button pushes and our race car responding. We have even seen command packets dropping (button push ignored) occasionally (queue buffer overflow?).</p>
 <figure class=figmd>
 <img src=https://3.bp.blogspot.com/-C61DqOh5EGA/XCN_jPFOybI/AAAAAAAAAIY/GgmybsbdvWkp7zzQHcvmWmMFPnJ_sPzowCLcBGAs/s1600/oshiya.jpg alt class=figsmall>
-<figcaption>
-ESP32 stuffing messages into the queue (visualized)
-</figcaption>
+<figcaption>ESP32 stuffing messages into the queue (visualized)</figcaption>
 </figure>
 <h1 id=caching-controller-state>Caching Controller State</h1>
 <p>We are graded on speed. This cannot suffice. Every delay in communicating our command packets adds up.</p>
@@ -341,9 +339,7 @@ In our RTOS application, the message handler thread is not active as often, givi
 <p>All this in practice leads to:</p>
 <figure class=figmd>
 <img src=demo.gif alt class=fignormal>
-<figcaption>
-Speedy loop the loop! (An early iteration with the caching)
-</figcaption>
+<figcaption>Speedy loop the loop! (An early iteration with the caching)</figcaption>
 </figure>
 <p><em>Not pictured is our dear gamer friend button-mashing the controller</em> 😉</p>
 <p>Caching works, I guess.</p>

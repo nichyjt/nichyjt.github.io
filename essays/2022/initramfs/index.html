@@ -15,8 +15,10 @@
 <link rel=stylesheet href=/css/featured.css>
 <link rel=stylesheet href=/css/shortcodes.css>
 <link rel=stylesheet href=/css/badgeicon.css>
+<link rel=stylesheet href=/css/expandable.css>
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
+<script src=/js/expandable.js></script>
 <meta property="og:title" content="Recovering Linux from initramfs">
 <meta property="og:description" content="If you boot into initramfs, chances are that your hard disk has some memory error. This essay talks about how to fix it.
 ">
@@ -155,9 +157,7 @@
 <p>You turned on your Linux machine and are greeted by a very scary looking terminal. You&rsquo;ve booted into busybox and are in initramfs. How do I fix this?</p>
 <figure class=figmd>
 <img src=https://i.stack.imgur.com/P5AAC.jpg alt class=figsmall>
-<figcaption>
-initramfs, Image src: askubuntu question
-</figcaption>
+<figcaption>initramfs, Image src: askubuntu question</figcaption>
 </figure>
 <p>Very rarely, memory can get corrupted on your Linux machine. When that happens, you boot into the terminal above. The fix is a simple 1 line command using the <code>fsck</code> built-in tool.</p>
 <p>Before using <code>fsck</code>, you need to identify which hard disk stores your working data.<br>

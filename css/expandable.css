@@ -1,0 +1,38 @@
+.expandable-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    max-width: inherit;
+    border-left: 2px solid var(--color-accent);
+    
+}
+
+.expandable-up-btn {
+    height: 24px;
+    width: 24px;
+    display: none;
+    margin-left: 1rem;
+}
+
+.expandable-down-btn {
+    height: 24px;
+    width: 24px;
+    margin-left: 1rem;
+}
+
+.expandable-body-cont {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    border-left: 2px solid var(--color-accent);
+    padding-left: 1rem;
+}
+.expandable-body-cont.open {
+    max-height: 0;
+}
+.expandable-title {
+    margin-left: 1rem;
+    margin-block: 0.5rem;
+}

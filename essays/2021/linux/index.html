@@ -14,8 +14,10 @@
 <link rel=stylesheet href=/css/featured.css>
 <link rel=stylesheet href=/css/shortcodes.css>
 <link rel=stylesheet href=/css/badgeicon.css>
+<link rel=stylesheet href=/css/expandable.css>
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
+<script src=/js/expandable.js></script>
 <meta property="og:title" content="Making Linux Home">
 <meta property="og:description" content="A gentle introduction to Linux, installing it (Pop!_OS), and making it cozy.">
 <meta property="og:type" content="article">
@@ -212,33 +214,25 @@ Bootloaders are software to load your OS. They can be proprietary (Windows Bootl
 <p>Its always good to check if your PC manufacturer has any specific documentation on UEFI/BIOS-specific settings that need to be configured to install Linux. In my case, I just needed to disable Secure Boot via the UEFI firmware.</p>
 <figure class=figmd>
 <img src=./makelinuxhome/secure_boot.webp alt class=figsmall>
-<figcaption>
-Disabling Secure Boot via UEFI Config
-</figcaption>
+<figcaption>Disabling Secure Boot via UEFI Config</figcaption>
 </figure>
 <h2 id=step-4-booting-from-usb>STEP 4: Booting from USB</h2>
 <p>Once the relevant firmware config is done, I plugged in the POP!_OS flashed USB stick and rebooted my laptop. Entering the UEFI boot menu, I found the &lsquo;boot from USB&rsquo; option and clicked it.</p>
 <figure class=figmd>
 <img src=./makelinuxhome/boot_menu.webp alt class=figsmall>
-<figcaption>
-Booting from USB (Option 4)
-</figcaption>
+<figcaption>Booting from USB (Option 4)</figcaption>
 </figure>
 <h2 id=step-5-entering-the-installer>STEP 5: Entering the Installer</h2>
 <p>At this stage the computer is booting POP!_OS from the USB. After a short while of loading, I&rsquo;m presented with a login screen. Entering it, I&rsquo;m given a desktop environment with the Installer wizard open as shown in the image below. At this point, I just need to follow the installer instructions to setup some settings like keyboard and language before entering the install stage.</p>
 <figure class=figmd>
 <img src=./makelinuxhome/installer.webp alt class=fignormal>
-<figcaption>
-The Installer Screen
-</figcaption>
+<figcaption>The Installer Screen</figcaption>
 </figure>
 <h2 id=step-6-partitioning-and-drive-choosing>STEP 6: Partitioning and Drive Choosing</h2>
 <p>Once I&rsquo;m done with some initial setup, I&rsquo;m shown options to clean install or custom install. Unless you intend on having multiple OS-es on the same disk or are particular about the partition sizing (e.g. you want less swap), you are better off doing a clean install.</p>
 <figure class=figmd>
 <img src=./makelinuxhome/install_mode.webp alt class=fignormal>
-<figcaption>
-Installation Stage
-</figcaption>
+<figcaption>Installation Stage</figcaption>
 </figure>
 <p>If you are interested in customising your partitions, you need at least <strong>3 partitions</strong> for Linux.</p>
 <ul>
@@ -248,33 +242,25 @@ Installation Stage
 </ul>
 <figure class=figmd>
 <img src=./makelinuxhome/partition.webp alt class=fignormal>
-<figcaption>
-Example Partition Format
-</figcaption>
+<figcaption>Example Partition Format</figcaption>
 </figure>
 <p>By default (clean install), the POP!_OS installer will allocate 4GB for Swap, 500MB for boot and 4GB for recovery.</p>
 <p>Since I want to dedicate one hard disk to Linux, I chose to install on the disk that does not have Windows on it (your D: drive equivalent).
 <figure class=figmd>
 <img src=./makelinuxhome/choosing_disk.webp alt class=fignormal>
-<figcaption>
-Choosing a Disk to Install
-</figcaption>
+<figcaption>Choosing a Disk to Install</figcaption>
 </figure></p>
 <p>After clicking &lsquo;erase and install&rsquo;, just wait for the install to finish. After that, reboot your computer and unplug the USB.
 When I opened up the UEFI Boot Menu after the install, as expected, POP_OS shows up. A successful install!</p>
 <figure class=figmd>
 <img src=./makelinuxhome/successful_install.webp alt class=figsmall>
-<figcaption>
-POP!_OS Now on the Boot Menu
-</figcaption>
+<figcaption>POP!_OS Now on the Boot Menu</figcaption>
 </figure>
 <h2 id=step-7-changing-the-boot-order>STEP 7: Changing the Boot Order</h2>
 <p>I mentioned earlier about how the firmware chooses what bootloader to start based on the &lsquo;boot order&rsquo; setting. On your UEFI, you should be able to find this boot order in the UEFI menu and change it to your preference. I want to use Linux as my primary OS, so I made POP!_OS the first to be booted.</p>
 <figure class=figmd>
 <img src=./makelinuxhome/boot_order.webp alt class=figsmall>
-<figcaption>
-POP!_OS as the First Pick
-</figcaption>
+<figcaption>POP!_OS as the First Pick</figcaption>
 </figure>
 <h1 id=making-linux-cozier->Making Linux Cozier ⛱️</h1>
 <p>The great thing about Linux is that out-of-the-box, you don&rsquo;t need to do much to make it secure. You will probably want to update all the pre-installed packages, though.</p>

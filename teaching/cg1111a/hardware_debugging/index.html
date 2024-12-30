@@ -15,8 +15,10 @@
 <link rel=stylesheet href=/css/featured.css>
 <link rel=stylesheet href=/css/shortcodes.css>
 <link rel=stylesheet href=/css/badgeicon.css>
+<link rel=stylesheet href=/css/expandable.css>
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
+<script src=/js/expandable.js></script>
 <meta property="og:title" content="Hardware Debugging Tips">
 <meta property="og:description" content="Pointers to make your hardware debugging experience less stressful.
 ">
@@ -179,9 +181,7 @@ Wires with &lsquo;cooler&rsquo; colours such as blue and purple indicate an INPU
 <p>In addition, I also try and use the LEFT side for INPUT pins and RIGHT side for OUTPUT pins to add more predictable meanings to my wires.</p>
 <figure class=figmd>
 <img src=wire.jpg alt class=figsmall>
-<figcaption>
-My CG2271 circuit (partial)
-</figcaption>
+<figcaption>My CG2271 circuit (partial)</figcaption>
 </figure>
 <h3 id=1-3-label-your-wires>1-3. Label your wires</h3>
 <p>Once you are sure of your labelling, you can also consider using some masking tape to label the wires and what function/pin they belong to. This is an added precaution in case you need to do some major rewiring or some accident happens that led to your wires coming out of your board.</p>
@@ -194,16 +194,12 @@ My CG2271 circuit (partial)
 <p>Label <strong>each unknown node</strong> with its expected voltage AND/OR signal profile. The latter is more important for variable signals like PWM or op-amps.</p>
 <figure class=figmd>
 <img src=diagram.jpg alt class=figsmall>
-<figcaption>
-Trivial circuit labelling example
-</figcaption>
+<figcaption>Trivial circuit labelling example</figcaption>
 </figure>
 <p>Then, map these nodes to the real circuit via labelling by picture or by making a mental note.</p>
 <figure class=figmd>
 <img src=mapping.jpg alt class=figsmall>
-<figcaption>
-Mapping the voltages to the breadboard
-</figcaption>
+<figcaption>Mapping the voltages to the breadboard</figcaption>
 </figure>
 <p>Once the mapping is done, we can easily debug by voltage/signal tracing.</p>
 <h3 id=voltage--signal-tracing>Voltage & Signal Tracing</h3>
@@ -214,16 +210,12 @@ Mapping the voltages to the breadboard
 <p>The idea is simple. Don&rsquo;t do this:</p>
 <figure class=figmd>
 <img src="https://hackaday.com/wp-content/uploads/2018/02/cpu-main.jpg?w=800" alt class=figsmall>
-<figcaption>
-Your op-amp lab, visualized
-</figcaption>
+<figcaption>Your op-amp lab, visualized</figcaption>
 </figure>
 <p>Do this:</p>
 <figure class=figmd>
 <img src=https://i.stack.imgur.com/4E3ge.jpg alt class=figsmall>
-<figcaption>
-Much cleaner!
-</figcaption>
+<figcaption>Much cleaner!</figcaption>
 </figure>
 <p>So how do you do this? Two heuristics:</p>
 <h3 id=3-1-reduce-jumper-cable-usage>3-1. Reduce Jumper cable usage</h3>
@@ -234,9 +226,7 @@ Much cleaner!
 <p>They look like this:
 <figure class=figmd>
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF8Eye8bjyMg4jFSUxIy2jCCtFpf4sbQb1IMNxiK7GsbHokJ_qsrvg249oAfD9uKbUd_I&usqp=CAU" alt class=figsmall>
-<figcaption>
-Smaller, neater wires
-</figcaption>
+<figcaption>Smaller, neater wires</figcaption>
 </figure></p>
 <p>I <strong>highly recommend this approach</strong> as jumper wires for your bot tend to get loose, fall out and brush against the wall, creating friction and messing up your project evaluation.</p>
 <p>Happy debugging!</p>

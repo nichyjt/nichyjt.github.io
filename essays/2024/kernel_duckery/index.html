@@ -15,8 +15,10 @@
 <link rel=stylesheet href=/css/featured.css>
 <link rel=stylesheet href=/css/shortcodes.css>
 <link rel=stylesheet href=/css/badgeicon.css>
+<link rel=stylesheet href=/css/expandable.css>
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
+<script src=/js/expandable.js></script>
 <meta property="og:title" content="Hotswapping kernels like they're keyboard switches">
 <meta property="og:description" content="A guide to boot into different Linux kernels for whatever (cursed) reason.
 ">
@@ -179,9 +181,7 @@ You can plug in different switches to get differnet functionality (clicky<sup id
 <p>Ubuntu/ubuntu-variant users rejoice! There&rsquo;s an easy way to pick your Ubuntu kernel using <a href=https://ubunlog.com/en/ukuu-abandons-gpl-license-and-ubuntu-mainline-kernel-installer-takes-its-place/><code>mainline kernel installer</code></a></p>
 <figure class=figmd>
 <img src=https://github.com/bkw777/mainline/raw/master/main_window.png alt class=figsmall>
-<figcaption>
-If you hate CLI, this installer is good. Also reduces the risk of shooting onself in the foot.
-</figcaption>
+<figcaption>If you hate CLI, this installer is good. Also reduces the risk of shooting onself in the foot.</figcaption>
 </figure>
 <p>Otherwise, you&rsquo;ll have to manually install the kernel.</p>
 <div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
@@ -229,9 +229,7 @@ $ sudo update-initramfs -u -k all
 <p>Copy paste them into <code>/boot/efi/EFI/Your_OS_Folder</code>. Inside the ``/boot/efi/EFI/Your_OS_Folder` folder, there should already be default files with similar naming to what you are copy-pasting from.</p>
 <figure class=figmd>
 <img src=boot.png alt class=figsmall>
-<figcaption>
-This is what's in /boot/efi/EFI/POP_Os... for me
-</figcaption>
+<figcaption>This is what's in /boot/efi/EFI/POP_Os... for me</figcaption>
 </figure>
 <p>Installed. That&rsquo;s it!</p>
 <h3 id=4-update-your-bootloader-file>4. Update your bootloader file</h3>
@@ -251,9 +249,7 @@ sudo nano /boot/efi/loader/loader.conf
 <p>If all goes well, you&rsquo;d be able to see and choose your new kernel the next time you restart, like this:</p>
 <figure class=figmd>
 <img src=https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/systemd-boot-menu.png alt class=figsmall>
-<figcaption>
-systemd-boot menu, Image src: freedesktop.org
-</figcaption>
+<figcaption>systemd-boot menu, Image src: freedesktop.org</figcaption>
 </figure>
 <section class=footnotes role=doc-endnotes>
 <hr>

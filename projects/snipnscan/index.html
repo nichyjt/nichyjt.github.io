@@ -14,8 +14,10 @@
 <link rel=stylesheet href=/css/featured.css>
 <link rel=stylesheet href=/css/shortcodes.css>
 <link rel=stylesheet href=/css/badgeicon.css>
+<link rel=stylesheet href=/css/expandable.css>
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
+<script src=/js/expandable.js></script>
 <meta property="og:title" content="SnipNScan :camera:">
 <meta property="og:description" content="A winter break project to scan QR codes and text on desktop. Borne out of pdf pain and exasperation with people sending me images to debug code (please stop doing that).">
 <meta property="og:type" content="article">
@@ -164,9 +166,7 @@
 <p>Sometimes I get questions from friends asking for help with their code. Instead of sending me text, I get an image instead.</p>
 <figure class=figmd>
 <img src=snipnscan/Original_lightcode.webp alt class=fignormal>
-<figcaption>
-Actual image from a friend - truncated for brevity
-</figcaption>
+<figcaption>Actual image from a friend - truncated for brevity</figcaption>
 </figure>
 <h3 id=images-of-text-why>Images of text (Why?!)</h3>
 <p>One thing that frustrates me is that certain research papers and lecture slides format text as images. Some of these texts are meant to be copy-pasted, such as boilerplate lab code for a tutorial or some DOI link.</p>
@@ -206,9 +206,7 @@ Actual image from a friend - truncated for brevity
 <h2 id=grayscaling>Grayscaling</h2>
 <figure class=figmd>
 <img src=snipnscan/Grayscaled_lightcode.webp alt class=fignormal>
-<figcaption>
-Grayscaled Image
-</figcaption>
+<figcaption>Grayscaled Image</figcaption>
 </figure>
 <p>Why is there a need to grayscale? Most functions in OpenCV only work for Grayscaled images. Also, we are reducing the amount of information needed to do operations on. Instead of 3 channels (Red Blue Green), we only deal with one (Grayscale).</p>
 <h2 id=denoising-and-adaptive-thresholding>Denoising and Adaptive Thresholding</h2>
@@ -217,32 +215,24 @@ Grayscaled Image
 <p>Compared to simple thresholding that sets every pixel based on a threshold value, adaptive thresholding generalises better to different lighting conditions.</p>
 <figure class=figmd>
 <img src=snipnscan/process_lightcode.webp alt class=fignormal>
-<figcaption>
-Thresholding the denoised, grayscaled image
-</figcaption>
+<figcaption>Thresholding the denoised, grayscaled image</figcaption>
 </figure>
 <h2 id=dark-mode-pain>Dark Mode Pain</h2>
 <p>After testing the pre-processing with some image of code (using lightmode&mldr;) that a friend sent me, I was quite satisfied with the results &ndash; it was pretty accurate! But then I hopped over to Stack Overflow with dark mode on and realised that <em>everything broke</em>.</p>
 <p>Dark mode broke stuff. After some investigation and testing I realised that the constant added to the <code>adaptiveThreshold</code> function caused the preprocessed image to behave very <strong>very</strong> wonkily.</p>
 <figure class=figmd>
 <img src=snipnscan/Original.darkblog.webp alt class=fignormal>
-<figcaption>
-Using dark theme images from my blog (Original)
-</figcaption>
+<figcaption>Using dark theme images from my blog (Original)</figcaption>
 </figure>
 <figure class=figmd>
 <img src=snipnscan/process_darkblog_badC.webp alt class=fignormal>
-<figcaption>
-Thresholding with badly chosen (lightmode) constant
-</figcaption>
+<figcaption>Thresholding with badly chosen (lightmode) constant</figcaption>
 </figure>
 <h3 id=a-lazy-workaround>A lazy workaround</h3>
 <p>The thresholding constant, c for lightmode is positive (<code>c = 26</code>). Through some testing I realised that negative values of c, (s.a. <code>c=-42</code>) work better for dark background/themed images.</p>
 <figure class=figmd>
 <img src=snipnscan/process_darkblog.webp alt class=fignormal>
-<figcaption>
-Thresholding with appropriate constant (much better...)
-</figcaption>
+<figcaption>Thresholding with appropriate constant (much better...)</figcaption>
 </figure>
 <p>The question is - how to determine programatically if an image is dark/light mode?</p>
 <p><strong>The Lazy Fix</strong>: find out the most dominant shade of grey and determine from there if the image is light or dark themed from there.</p>
@@ -251,21 +241,15 @@ Thresholding with appropriate constant (much better...)
 <p>NOTE: The horizontal axis represents how <strong>light</strong> the shade is. The further right, the lighter the shade.</p>
 <figure class=figmd>
 <img src=snipnscan/hist.lightblog.webp alt class=fignormal>
-<figcaption>
-Histogram of a light theme
-</figcaption>
+<figcaption>Histogram of a light theme</figcaption>
 </figure>
 <figure class=figmd>
 <img src=snipnscan/hist.darkblog.webp alt class=fignormal>
-<figcaption>
-Histogram of a dark theme
-</figcaption>
+<figcaption>Histogram of a dark theme</figcaption>
 </figure>
 <figure class=figmd>
 <img src=snipnscan/hist_ling.webp alt class=fignormal>
-<figcaption>
-Histogram of a particularly noisy, light image (Ling's cars)
-</figcaption>
+<figcaption>Histogram of a particularly noisy, light image (Ling's cars)</figcaption>
 </figure>
 <p>It&rsquo;s quite clear to see that for light themes, the mode lies beyond the middle of the scale to the most extreme right. For dark themes, it lies around the start to the middle.</p>
 <p>So, the solution is simple and lazy<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>. Decide the threshold between dark and light themes to be exactly in the middle of the horizontal axis.</p>
@@ -356,16 +340,12 @@ self.dob = dob
 <p>This is the noisy image I want to scan.
 <figure class=figmd>
 <img src=snipnscan/Original_ling.webp alt class=fignormal>
-<figcaption>
-Colourful!
-</figcaption>
+<figcaption>Colourful!</figcaption>
 </figure></p>
 <p>This is how the pre-processing turned out:</p>
 <figure class=figmd>
 <img src=snipnscan/processed_ling.webp alt class=fignormal>
-<figcaption>
-Still quite noisy...
-</figcaption>
+<figcaption>Still quite noisy...</figcaption>
 </figure>
 <p>And what was returned by the OCR:</p>
 <blockquote>

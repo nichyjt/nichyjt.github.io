@@ -16,8 +16,10 @@ Here are some guidelines to reduce running around like a headless chicken.
 <link rel=stylesheet href=/css/featured.css>
 <link rel=stylesheet href=/css/shortcodes.css>
 <link rel=stylesheet href=/css/badgeicon.css>
+<link rel=stylesheet href=/css/expandable.css>
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
+<script src=/js/expandable.js></script>
 <meta property="og:title" content="Testing & Tuning with Data">
 <meta property="og:description" content="You will be testing alot for your project. Testing your robot and testing your patience.
 Here are some guidelines to reduce running around like a headless chicken. 
@@ -158,9 +160,7 @@ Here are some guidelines to reduce running around like a headless chicken.
 <p>This is generally what will happen when you test your sensors, especially for your IR and colour-detection sensors.</p>
 <figure class=figmd>
 <img src=flow.webp alt class=fignormal>
-<figcaption>
-The number of iterations is positively correlated with you tilting
-</figcaption>
+<figcaption>The number of iterations is positively correlated with you tilting</figcaption>
 </figure>
 <p>Most of us will fail the &ldquo;works on 2nd try step&rdquo;. And many of you will get <strong>incredibly tilted</strong> when the number of times you re-collected your data approaches infinity.</p>
 <p>Yes - this is the biggest headache in this course - tuning your code to fit the &lsquo;experimental&rsquo; data you get from the sensors.</p>
@@ -176,9 +176,7 @@ The number of iterations is positively correlated with you tilting
 <p>Use your high school statistics knowledge and plot some graphs! Maybe something like {Red, green, blue} values VS the values of your data point(s). Experiment! Would a scatter, bar, or box plot work best?</p>
 <figure class=figmd>
 <img src=https://i.stack.imgur.com/EqmoE.png alt class=figsmall>
-<figcaption>
-Unrelated plot of RGB values in the wild. 2D plots are sufficient for this course.
-</figcaption>
+<figcaption>Unrelated plot of RGB values in the wild. 2D plots are sufficient for this course.</figcaption>
 </figure>
 <p>You <strong>don&rsquo;t need Excel</strong> to plot your graphs.</p>
 <p>Use ANY tool that you are comfortable with. Plot your data appropriately, and you will be able to see a very clear pattern between each colour and exploit it. The more datasets you include in your data, the stronger the pattern (hence guideline 2).</p>
