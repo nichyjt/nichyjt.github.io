@@ -95,7 +95,7 @@
 
 .spoiler-visible {
     background-color: transparent; 
-    display: inline flow-root list-item;
+    display: inline flow-root;
     cursor: auto;
     color: inherit;
 }
