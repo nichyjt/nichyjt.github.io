@@ -158,188 +158,188 @@
 <p>In memory limited environments, using typical C++ synchronization primitives such as <code>counting_semaphores</code> may not be possible. Or perhaps you are using C. So, a pure atomic implementation may be needed.</p>
 <p>This is my crack at making a buffered MPMC MQ.</p>
 <p>Done in 1 night as a POC to a peer. So, this is likely problematic somewhere. But for the sake of documentation, here it is.</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">77
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">78
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">79
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">80
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">81
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">82
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">83
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">84
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">85
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">86
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">87
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">88
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">89
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">89
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#776e71>#include</span> <span style=color:#776e71>&lt;stdatomic.h&gt;</span><span style=color:#776e71>
-</span><span style=color:#776e71>#include</span> <span style=color:#776e71>&lt;stdbool.h&gt;</span><span style=color:#776e71>
-</span><span style=color:#776e71>#include</span> <span style=color:#776e71>&lt;unistd.h&gt;</span><span style=color:#776e71>
-</span><span style=color:#776e71>#include</span> <span style=color:#776e71>&lt;stdint.h&gt;</span><span style=color:#776e71>
-</span><span style=color:#776e71>#include</span> <span style=color:#776e71>&lt;stdlib.h&gt;</span><span style=color:#776e71>
-</span><span style=color:#776e71></span>
-<span style=color:#815ba4>typedef</span> <span style=color:#815ba4>struct</span> {
-    <span style=color:#fec418>uint8_t</span> id;
-    <span style=color:#fec418>int</span> data;           <span style=color:#776e71>// change type as needed
-</span><span style=color:#776e71></span>} payload_t;
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;stdatomic.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;stdbool.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;unistd.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;stdint.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;stdlib.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700></span>
+<span style=color:#6ab825;font-weight:700>typedef</span> <span style=color:#6ab825;font-weight:700>struct</span> {
+    <span style=color:#6ab825;font-weight:700>uint8_t</span> id;
+    <span style=color:#6ab825;font-weight:700>int</span> data;           <span style=color:#999;font-style:italic>// change type as needed
+</span><span style=color:#999;font-style:italic></span>} payload_t;
 
-<span style=color:#815ba4>typedef</span> <span style=color:#815ba4>struct</span> {
-    <span style=color:#fec418>uint8_t</span> len;
-    <span style=color:#fec418>uint8_t</span> read;
-    <span style=color:#fec418>uint8_t</span> write;
-    atomic_flag mtx;    <span style=color:#776e71>// use atomics as a mutex
-</span><span style=color:#776e71></span>    payload_t<span style=color:#5bc4bf>*</span> buf;     <span style=color:#776e71>// circular buffer
-</span><span style=color:#776e71></span>} MQ_t;
+<span style=color:#6ab825;font-weight:700>typedef</span> <span style=color:#6ab825;font-weight:700>struct</span> {
+    <span style=color:#6ab825;font-weight:700>uint8_t</span> len;
+    <span style=color:#6ab825;font-weight:700>uint8_t</span> read;
+    <span style=color:#6ab825;font-weight:700>uint8_t</span> write;
+    atomic_flag mtx;    <span style=color:#999;font-style:italic>// use atomics as a mutex
+</span><span style=color:#999;font-style:italic></span>    payload_t* buf;     <span style=color:#999;font-style:italic>// circular buffer
+</span><span style=color:#999;font-style:italic></span>} MQ_t;
 
-<span style=color:#776e71>// Prototype functions
-</span><span style=color:#776e71></span>MQ_t<span style=color:#5bc4bf>*</span> <span style=color:#06b6ef>MQ_init</span>(<span style=color:#fec418>uint8_t</span> len);
-<span style=color:#fec418>void</span> <span style=color:#06b6ef>MQ_send</span>(MQ_t<span style=color:#5bc4bf>*</span> mq, payload_t data);
-payload_t <span style=color:#06b6ef>MQ_recv</span>(MQ_t<span style=color:#5bc4bf>*</span> mq);
+<span style=color:#999;font-style:italic>// Prototype functions
+</span><span style=color:#999;font-style:italic></span>MQ_t* <span style=color:#447fcf>MQ_init</span>(<span style=color:#6ab825;font-weight:700>uint8_t</span> len);
+<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>MQ_send</span>(MQ_t* mq, payload_t data);
+payload_t <span style=color:#447fcf>MQ_recv</span>(MQ_t* mq);
 
-<span style=color:#776e71>// Instantiate the queue
-</span><span style=color:#776e71></span>MQ_t<span style=color:#5bc4bf>*</span> <span style=color:#06b6ef>MQ_init</span>(<span style=color:#fec418>uint8_t</span> len){
-    <span style=color:#776e71>// works only with len &gt;= 2 bc of circular buffer quirks
-</span><span style=color:#776e71></span>    assert(len <span style=color:#5bc4bf>&gt;</span> <span style=color:#f99b15>1</span>);
+<span style=color:#999;font-style:italic>// Instantiate the queue
+</span><span style=color:#999;font-style:italic></span>MQ_t* <span style=color:#447fcf>MQ_init</span>(<span style=color:#6ab825;font-weight:700>uint8_t</span> len){
+    <span style=color:#999;font-style:italic>// works only with len &gt;= 2 bc of circular buffer quirks
+</span><span style=color:#999;font-style:italic></span>    assert(len &gt; <span style=color:#3677a9>1</span>);
 
-    payload_t<span style=color:#5bc4bf>*</span> data <span style=color:#5bc4bf>=</span> malloc(len <span style=color:#5bc4bf>*</span> <span style=color:#815ba4>sizeof</span>(payload_t));
-    MQ_t<span style=color:#5bc4bf>*</span> mq <span style=color:#5bc4bf>=</span> (MQ_t<span style=color:#5bc4bf>*</span>)malloc(<span style=color:#815ba4>sizeof</span>(MQ_t));
-    mq<span style=color:#5bc4bf>-&gt;</span>buf <span style=color:#5bc4bf>=</span> data;
-    mq<span style=color:#5bc4bf>-&gt;</span>len <span style=color:#5bc4bf>=</span> len;
-    mq<span style=color:#5bc4bf>-&gt;</span>read <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>;
-    mq<span style=color:#5bc4bf>-&gt;</span>write <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>;
-    atomic_flag_clear(<span style=color:#5bc4bf>&amp;</span>mq<span style=color:#5bc4bf>-&gt;</span>mtx);
-    <span style=color:#815ba4>return</span> mq;  
+    payload_t* data = malloc(len * <span style=color:#6ab825;font-weight:700>sizeof</span>(payload_t));
+    MQ_t* mq = (MQ_t*)malloc(<span style=color:#6ab825;font-weight:700>sizeof</span>(MQ_t));
+    mq-&gt;buf = data;
+    mq-&gt;len = len;
+    mq-&gt;read = <span style=color:#3677a9>0</span>;
+    mq-&gt;write = <span style=color:#3677a9>0</span>;
+    atomic_flag_clear(&amp;mq-&gt;mtx);
+    <span style=color:#6ab825;font-weight:700>return</span> mq;  
 }
 
-<span style=color:#776e71>// Place a message into the MQ
-</span><span style=color:#776e71></span><span style=color:#fec418>void</span> <span style=color:#06b6ef>MQ_send</span>(MQ_t<span style=color:#5bc4bf>*</span> mq, payload_t data){
-    <span style=color:#fec418>bool</span> ok <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>;
-    <span style=color:#815ba4>while</span>(<span style=color:#5bc4bf>!</span>ok){
-        <span style=color:#776e71>// this spinlocks if no yield() to scheduler
-</span><span style=color:#776e71></span>        <span style=color:#815ba4>while</span>(<span style=color:#5bc4bf>!</span>atomic_flag_test_and_set(<span style=color:#5bc4bf>&amp;</span>mq<span style=color:#5bc4bf>-&gt;</span>mtx)){
-            <span style=color:#776e71>// CHOOSE: Do an exponential backoff if you&#39;re fancy
-</span><span style=color:#776e71></span>            usleep(<span style=color:#f99b15>1</span>);
-            <span style=color:#776e71>// OR, yield with whatever equivalent your (RT)OS uses  
-</span><span style=color:#776e71></span>            <span style=color:#776e71>// sched_yield();
-</span><span style=color:#776e71></span>        }
+<span style=color:#999;font-style:italic>// Place a message into the MQ
+</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>MQ_send</span>(MQ_t* mq, payload_t data){
+    <span style=color:#6ab825;font-weight:700>bool</span> ok = <span style=color:#3677a9>0</span>;
+    <span style=color:#6ab825;font-weight:700>while</span>(!ok){
+        <span style=color:#999;font-style:italic>// this spinlocks if no yield() to scheduler
+</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>while</span>(!atomic_flag_test_and_set(&amp;mq-&gt;mtx)){
+            <span style=color:#999;font-style:italic>// CHOOSE: Do an exponential backoff if you&#39;re fancy
+</span><span style=color:#999;font-style:italic></span>            usleep(<span style=color:#3677a9>1</span>);
+            <span style=color:#999;font-style:italic>// OR, yield with whatever equivalent your (RT)OS uses  
+</span><span style=color:#999;font-style:italic></span>            <span style=color:#999;font-style:italic>// sched_yield();
+</span><span style=color:#999;font-style:italic></span>        }
         
-        <span style=color:#776e71>// critical section start
-</span><span style=color:#776e71></span>        <span style=color:#815ba4>if</span>(<span style=color:#5bc4bf>!</span>(mq<span style=color:#5bc4bf>-&gt;</span>read <span style=color:#5bc4bf>==</span> (mq<span style=color:#5bc4bf>-&gt;</span>write <span style=color:#5bc4bf>+</span> <span style=color:#f99b15>1</span>) <span style=color:#5bc4bf>%</span> mq<span style=color:#5bc4bf>-&gt;</span>len)){
-            <span style=color:#776e71>// perform the write iff it is valid
-</span><span style=color:#776e71></span>            mq<span style=color:#5bc4bf>-&gt;</span>buf[mq<span style=color:#5bc4bf>-&gt;</span>write] <span style=color:#5bc4bf>=</span> data;
-            mq<span style=color:#5bc4bf>-&gt;</span>write <span style=color:#5bc4bf>=</span> (mq<span style=color:#5bc4bf>-&gt;</span>write <span style=color:#5bc4bf>+</span> <span style=color:#f99b15>1</span>) <span style=color:#5bc4bf>%</span> mq<span style=color:#5bc4bf>-&gt;</span>len;
-            ok <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>1</span>;
+        <span style=color:#999;font-style:italic>// critical section start
+</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>if</span>(!(mq-&gt;read == (mq-&gt;write + <span style=color:#3677a9>1</span>) % mq-&gt;len)){
+            <span style=color:#999;font-style:italic>// perform the write iff it is valid
+</span><span style=color:#999;font-style:italic></span>            mq-&gt;buf[mq-&gt;write] = data;
+            mq-&gt;write = (mq-&gt;write + <span style=color:#3677a9>1</span>) % mq-&gt;len;
+            ok = <span style=color:#3677a9>1</span>;
         }
-        <span style=color:#776e71>// critical section end; release the lock
-</span><span style=color:#776e71></span>        atomic_flag_clear(<span style=color:#5bc4bf>&amp;</span>mq<span style=color:#5bc4bf>-&gt;</span>mtx);
+        <span style=color:#999;font-style:italic>// critical section end; release the lock
+</span><span style=color:#999;font-style:italic></span>        atomic_flag_clear(&amp;mq-&gt;mtx);
     }
 }
 
-<span style=color:#776e71>// Get a message from the MQ.
-</span><span style=color:#776e71>// If empty, returns a zero-initalized payload_t. Non-blocking.
-</span><span style=color:#776e71></span>payload_t <span style=color:#06b6ef>MQ_recv</span>(MQ_t<span style=color:#5bc4bf>*</span> mq){
+<span style=color:#999;font-style:italic>// Get a message from the MQ.
+</span><span style=color:#999;font-style:italic>// If empty, returns a zero-initalized payload_t. Non-blocking.
+</span><span style=color:#999;font-style:italic></span>payload_t <span style=color:#447fcf>MQ_recv</span>(MQ_t* mq){
     payload_t result;
     
-    <span style=color:#fec418>bool</span> ok <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>;
-    <span style=color:#815ba4>while</span>(<span style=color:#5bc4bf>!</span>ok){
-        <span style=color:#815ba4>while</span>(<span style=color:#5bc4bf>!</span>atomic_flag_test_and_set(<span style=color:#5bc4bf>&amp;</span>mq<span style=color:#5bc4bf>-&gt;</span>mtx)){
-            <span style=color:#776e71>// CHOOSE: Do an exponential backoff if you&#39;re fancy
-</span><span style=color:#776e71></span>            usleep(<span style=color:#f99b15>1</span>);
-            <span style=color:#776e71>// OR, yield with whatever equivalent your (RT)OS uses  
-</span><span style=color:#776e71></span>            <span style=color:#776e71>// sched_yield();
-</span><span style=color:#776e71></span>        }
+    <span style=color:#6ab825;font-weight:700>bool</span> ok = <span style=color:#3677a9>0</span>;
+    <span style=color:#6ab825;font-weight:700>while</span>(!ok){
+        <span style=color:#6ab825;font-weight:700>while</span>(!atomic_flag_test_and_set(&amp;mq-&gt;mtx)){
+            <span style=color:#999;font-style:italic>// CHOOSE: Do an exponential backoff if you&#39;re fancy
+</span><span style=color:#999;font-style:italic></span>            usleep(<span style=color:#3677a9>1</span>);
+            <span style=color:#999;font-style:italic>// OR, yield with whatever equivalent your (RT)OS uses  
+</span><span style=color:#999;font-style:italic></span>            <span style=color:#999;font-style:italic>// sched_yield();
+</span><span style=color:#999;font-style:italic></span>        }
 
-        <span style=color:#776e71>// critical section start
-</span><span style=color:#776e71></span>        <span style=color:#815ba4>if</span>(<span style=color:#5bc4bf>!</span>(mq<span style=color:#5bc4bf>-&gt;</span>read <span style=color:#5bc4bf>==</span> mq<span style=color:#5bc4bf>-&gt;</span>write)){
-            <span style=color:#776e71>// perform the write iff it is valid
-</span><span style=color:#776e71></span>            result <span style=color:#5bc4bf>=</span> mq<span style=color:#5bc4bf>-&gt;</span>buf[mq<span style=color:#5bc4bf>-&gt;</span>read];
-            mq<span style=color:#5bc4bf>-&gt;</span>read <span style=color:#5bc4bf>=</span> (mq<span style=color:#5bc4bf>-&gt;</span>read <span style=color:#5bc4bf>+</span> <span style=color:#f99b15>1</span>) <span style=color:#5bc4bf>%</span> mq<span style=color:#5bc4bf>-&gt;</span>len;
-            ok <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>1</span>;
+        <span style=color:#999;font-style:italic>// critical section start
+</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>if</span>(!(mq-&gt;read == mq-&gt;write)){
+            <span style=color:#999;font-style:italic>// perform the write iff it is valid
+</span><span style=color:#999;font-style:italic></span>            result = mq-&gt;buf[mq-&gt;read];
+            mq-&gt;read = (mq-&gt;read + <span style=color:#3677a9>1</span>) % mq-&gt;len;
+            ok = <span style=color:#3677a9>1</span>;
         }
-        <span style=color:#776e71>// critical section end, release the lock
-</span><span style=color:#776e71></span>        atomic_flag_clear(<span style=color:#5bc4bf>&amp;</span>mq<span style=color:#5bc4bf>-&gt;</span>mtx);
+        <span style=color:#999;font-style:italic>// critical section end, release the lock
+</span><span style=color:#999;font-style:italic></span>        atomic_flag_clear(&amp;mq-&gt;mtx);
     }
-    <span style=color:#815ba4>return</span> result;
+    <span style=color:#6ab825;font-weight:700>return</span> result;
 }
 
 </code></pre></td></tr></table>
@@ -349,163 +349,163 @@ payload_t <span style=color:#06b6ef>MQ_recv</span>(MQ_t<span style=color:#5bc4bf
 <p>You should see the order of which Producer P sent message M, and the order of which Consumer C receives message M from Producer P.</p>
 <p>Empirically, on a <code>x86</code> machine running Ubuntu, all messages received by consumers are unique (i.e. no Producer P&rsquo;s message M is ever received more than once).</p>
 <p>Also, if we set <code>NUM_CONSUMERS</code> to be 1, we also observe that the order of which messages are received are also in-order of them being sent. The message queue hence follows a FIFO order<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">76
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#776e71>#include</span> <span style=color:#776e71>&lt;pthread.h&gt;</span><span style=color:#776e71>
-</span><span style=color:#776e71>#include</span> <span style=color:#776e71>&lt;stdint.h&gt;</span><span style=color:#776e71>
-</span><span style=color:#776e71>#include</span> <span style=color:#776e71>&lt;stdio.h&gt;</span><span style=color:#776e71>
-</span><span style=color:#776e71>#include</span> <span style=color:#776e71>&lt;stdlib.h&gt;</span><span style=color:#776e71>
-</span><span style=color:#776e71></span>
-<span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span> <span style=color:#06b6ef>producer</span>(<span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span> arg){
-    <span style=color:#fec418>void</span><span style=color:#5bc4bf>**</span> args <span style=color:#5bc4bf>=</span> (<span style=color:#fec418>void</span><span style=color:#5bc4bf>**</span>) arg;
-    MQ_t<span style=color:#5bc4bf>*</span> mq <span style=color:#5bc4bf>=</span> (MQ_t<span style=color:#5bc4bf>*</span>) args[<span style=color:#f99b15>0</span>];
-    <span style=color:#fec418>int</span> id <span style=color:#5bc4bf>=</span> (<span style=color:#fec418>int</span>) (intptr_t) args[<span style=color:#f99b15>1</span>];
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;pthread.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;stdint.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;stdio.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;stdlib.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700></span>
+<span style=color:#6ab825;font-weight:700>void</span>* <span style=color:#447fcf>producer</span>(<span style=color:#6ab825;font-weight:700>void</span>* arg){
+    <span style=color:#6ab825;font-weight:700>void</span>** args = (<span style=color:#6ab825;font-weight:700>void</span>**) arg;
+    MQ_t* mq = (MQ_t*) args[<span style=color:#3677a9>0</span>];
+    <span style=color:#6ab825;font-weight:700>int</span> id = (<span style=color:#6ab825;font-weight:700>int</span>) (intptr_t) args[<span style=color:#3677a9>1</span>];
     payload_t pl;
-    <span style=color:#815ba4>for</span>(<span style=color:#fec418>int</span> i <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>; i <span style=color:#5bc4bf>&lt;</span> <span style=color:#f99b15>5</span>; <span style=color:#5bc4bf>++</span>i) {
-        pl.data <span style=color:#5bc4bf>=</span> i;
-        pl.id <span style=color:#5bc4bf>=</span> id;
+    <span style=color:#6ab825;font-weight:700>for</span>(<span style=color:#6ab825;font-weight:700>int</span> i = <span style=color:#3677a9>0</span>; i &lt; <span style=color:#3677a9>5</span>; ++i) {
+        pl.data = i;
+        pl.id = id;
         MQ_send(mq, pl);
-        printf(<span style=color:#48b685>&#34;P%d send %d</span><span style=color:#f99b15>\n</span><span style=color:#48b685>&#34;</span>, id, i);
-        usleep(<span style=color:#f99b15>100000</span>); <span style=color:#776e71>// Sleep for 100 ms to simulate work
-</span><span style=color:#776e71></span>    }
-    <span style=color:#815ba4>return</span> NULL;
+        printf(<span style=color:#ed9d13>&#34;P%d send %d</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, id, i);
+        usleep(<span style=color:#3677a9>100000</span>); <span style=color:#999;font-style:italic>// Sleep for 100 ms to simulate work
+</span><span style=color:#999;font-style:italic></span>    }
+    <span style=color:#6ab825;font-weight:700>return</span> <span style=color:#24909d>NULL</span>;
 }
 
-<span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span> <span style=color:#06b6ef>consumer</span>(<span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span> arg) {
-    <span style=color:#fec418>void</span><span style=color:#5bc4bf>**</span> args <span style=color:#5bc4bf>=</span> (<span style=color:#fec418>void</span><span style=color:#5bc4bf>**</span>) arg;
-    MQ_t<span style=color:#5bc4bf>*</span> mq <span style=color:#5bc4bf>=</span> (MQ_t<span style=color:#5bc4bf>*</span>) args[<span style=color:#f99b15>0</span>];
-    <span style=color:#fec418>int</span> id <span style=color:#5bc4bf>=</span> (<span style=color:#fec418>int</span>) (intptr_t) args[<span style=color:#f99b15>1</span>];
-    <span style=color:#815ba4>while</span> (<span style=color:#f99b15>1</span>) {
-        payload_t data <span style=color:#5bc4bf>=</span> MQ_recv(mq);
-        printf(<span style=color:#48b685>&#34;C%d get P%d-%d</span><span style=color:#f99b15>\n</span><span style=color:#48b685>&#34;</span>, id, data.id, data.data);
-        usleep(<span style=color:#f99b15>300000</span>); <span style=color:#776e71>// Sleep for 300 ms
-</span><span style=color:#776e71></span>    }
-    <span style=color:#815ba4>return</span> NULL;
+<span style=color:#6ab825;font-weight:700>void</span>* <span style=color:#447fcf>consumer</span>(<span style=color:#6ab825;font-weight:700>void</span>* arg) {
+    <span style=color:#6ab825;font-weight:700>void</span>** args = (<span style=color:#6ab825;font-weight:700>void</span>**) arg;
+    MQ_t* mq = (MQ_t*) args[<span style=color:#3677a9>0</span>];
+    <span style=color:#6ab825;font-weight:700>int</span> id = (<span style=color:#6ab825;font-weight:700>int</span>) (intptr_t) args[<span style=color:#3677a9>1</span>];
+    <span style=color:#6ab825;font-weight:700>while</span> (<span style=color:#3677a9>1</span>) {
+        payload_t data = MQ_recv(mq);
+        printf(<span style=color:#ed9d13>&#34;C%d get P%d-%d</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, id, data.id, data.data);
+        usleep(<span style=color:#3677a9>300000</span>); <span style=color:#999;font-style:italic>// Sleep for 300 ms
+</span><span style=color:#999;font-style:italic></span>    }
+    <span style=color:#6ab825;font-weight:700>return</span> <span style=color:#24909d>NULL</span>;
 }
 
-<span style=color:#776e71>#define LEN 10
-</span><span style=color:#776e71>#define NUM_PRODUCER 5
-</span><span style=color:#776e71>#define NUM_CONSUMER 5
-</span><span style=color:#776e71></span>
-<span style=color:#fec418>int</span> <span style=color:#06b6ef>main</span>() {
-    <span style=color:#776e71>// Create some producers and comsumers.
-</span><span style=color:#776e71></span>    <span style=color:#776e71>// Add as many as you want to stress test.
-</span><span style=color:#776e71></span>    pthread_t producers[NUM_PRODUCER], consumers[NUM_CONSUMER];
-    MQ_t<span style=color:#5bc4bf>*</span> mq <span style=color:#5bc4bf>=</span> MQ_init(LEN);
+<span style=color:#cd2828;font-weight:700>#define LEN 10
+</span><span style=color:#cd2828;font-weight:700>#define NUM_PRODUCER 5
+</span><span style=color:#cd2828;font-weight:700>#define NUM_CONSUMER 5
+</span><span style=color:#cd2828;font-weight:700></span>
+<span style=color:#6ab825;font-weight:700>int</span> <span style=color:#447fcf>main</span>() {
+    <span style=color:#999;font-style:italic>// Create some producers and comsumers.
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// Add as many as you want to stress test.
+</span><span style=color:#999;font-style:italic></span>    pthread_t producers[NUM_PRODUCER], consumers[NUM_CONSUMER];
+    MQ_t* mq = MQ_init(LEN);
 
-    <span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span> producer_args[NUM_PRODUCER][<span style=color:#f99b15>2</span>];
-    <span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span> consumer_args[NUM_CONSUMER][<span style=color:#f99b15>2</span>];
+    <span style=color:#6ab825;font-weight:700>void</span>* producer_args[NUM_PRODUCER][<span style=color:#3677a9>2</span>];
+    <span style=color:#6ab825;font-weight:700>void</span>* consumer_args[NUM_CONSUMER][<span style=color:#3677a9>2</span>];
 
-    <span style=color:#776e71>// Create producers
-</span><span style=color:#776e71></span>    <span style=color:#815ba4>for</span> (<span style=color:#fec418>int</span> i <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>; i <span style=color:#5bc4bf>&lt;</span> NUM_PRODUCER; <span style=color:#5bc4bf>++</span>i) {
-        producer_args[i][<span style=color:#f99b15>0</span>] <span style=color:#5bc4bf>=</span> (<span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span>) mq;
-        producer_args[i][<span style=color:#f99b15>1</span>] <span style=color:#5bc4bf>=</span> (<span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span>) (intptr_t) i;
-        <span style=color:#815ba4>if</span> (pthread_create(<span style=color:#5bc4bf>&amp;</span>producers[i], NULL, producer, producer_args[i]) <span style=color:#5bc4bf>!=</span> <span style=color:#f99b15>0</span>) {
-            perror(<span style=color:#48b685>&#34;Failed to create producer thread&#34;</span>);
-            <span style=color:#815ba4>return</span> <span style=color:#f99b15>1</span>;
+    <span style=color:#999;font-style:italic>// Create producers
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>for</span> (<span style=color:#6ab825;font-weight:700>int</span> i = <span style=color:#3677a9>0</span>; i &lt; NUM_PRODUCER; ++i) {
+        producer_args[i][<span style=color:#3677a9>0</span>] = (<span style=color:#6ab825;font-weight:700>void</span>*) mq;
+        producer_args[i][<span style=color:#3677a9>1</span>] = (<span style=color:#6ab825;font-weight:700>void</span>*) (intptr_t) i;
+        <span style=color:#6ab825;font-weight:700>if</span> (pthread_create(&amp;producers[i], <span style=color:#24909d>NULL</span>, producer, producer_args[i]) != <span style=color:#3677a9>0</span>) {
+            perror(<span style=color:#ed9d13>&#34;Failed to create producer thread&#34;</span>);
+            <span style=color:#6ab825;font-weight:700>return</span> <span style=color:#3677a9>1</span>;
         }
     }
 
-    <span style=color:#776e71>// Create consumers
-</span><span style=color:#776e71></span>    <span style=color:#815ba4>for</span> (<span style=color:#fec418>int</span> i <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>; i <span style=color:#5bc4bf>&lt;</span> NUM_CONSUMER; <span style=color:#5bc4bf>++</span>i){
-        consumer_args[i][<span style=color:#f99b15>0</span>] <span style=color:#5bc4bf>=</span> (<span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span>) mq;
-        consumer_args[i][<span style=color:#f99b15>1</span>] <span style=color:#5bc4bf>=</span> (<span style=color:#fec418>void</span><span style=color:#5bc4bf>*</span>) (intptr_t) i;
-        <span style=color:#815ba4>if</span> (pthread_create(<span style=color:#5bc4bf>&amp;</span>consumers[i], NULL, consumer, consumer_args[i]) <span style=color:#5bc4bf>!=</span> <span style=color:#f99b15>0</span>) {
-            perror(<span style=color:#48b685>&#34;Failed to create consumer thread&#34;</span>);
-            <span style=color:#815ba4>return</span> <span style=color:#f99b15>1</span>;
+    <span style=color:#999;font-style:italic>// Create consumers
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>for</span> (<span style=color:#6ab825;font-weight:700>int</span> i = <span style=color:#3677a9>0</span>; i &lt; NUM_CONSUMER; ++i){
+        consumer_args[i][<span style=color:#3677a9>0</span>] = (<span style=color:#6ab825;font-weight:700>void</span>*) mq;
+        consumer_args[i][<span style=color:#3677a9>1</span>] = (<span style=color:#6ab825;font-weight:700>void</span>*) (intptr_t) i;
+        <span style=color:#6ab825;font-weight:700>if</span> (pthread_create(&amp;consumers[i], <span style=color:#24909d>NULL</span>, consumer, consumer_args[i]) != <span style=color:#3677a9>0</span>) {
+            perror(<span style=color:#ed9d13>&#34;Failed to create consumer thread&#34;</span>);
+            <span style=color:#6ab825;font-weight:700>return</span> <span style=color:#3677a9>1</span>;
         }
     }
 
-    <span style=color:#776e71>// join the threads
-</span><span style=color:#776e71></span>    <span style=color:#815ba4>for</span> (<span style=color:#fec418>int</span> i <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>; i <span style=color:#5bc4bf>&lt;</span> NUM_PRODUCER; <span style=color:#5bc4bf>++</span>i) {
-        pthread_join(producers[i], NULL);
+    <span style=color:#999;font-style:italic>// join the threads
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>for</span> (<span style=color:#6ab825;font-weight:700>int</span> i = <span style=color:#3677a9>0</span>; i &lt; NUM_PRODUCER; ++i) {
+        pthread_join(producers[i], <span style=color:#24909d>NULL</span>);
     }
 
-    <span style=color:#776e71>// VERY lazy consumer implementation
-</span><span style=color:#776e71></span>    <span style=color:#776e71>// check correctness via stdout then SIGTERM out.
-</span><span style=color:#776e71></span>    pthread_join(consumers[<span style=color:#f99b15>0</span>], NULL); <span style=color:#776e71>//blocks forever
-</span><span style=color:#776e71></span>    <span style=color:#776e71>// Cleanup in case the thread dies
-</span><span style=color:#776e71></span>    free(mq);
-    <span style=color:#815ba4>return</span> <span style=color:#f99b15>0</span>;
+    <span style=color:#999;font-style:italic>// VERY lazy consumer implementation
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// check correctness via stdout then SIGTERM out.
+</span><span style=color:#999;font-style:italic></span>    pthread_join(consumers[<span style=color:#3677a9>0</span>], <span style=color:#24909d>NULL</span>); <span style=color:#999;font-style:italic>//blocks forever
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// Cleanup in case the thread dies
+</span><span style=color:#999;font-style:italic></span>    free(mq);
+    <span style=color:#6ab825;font-weight:700>return</span> <span style=color:#3677a9>0</span>;
 }
 </code></pre></td></tr></table>
 </div>

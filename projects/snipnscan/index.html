@@ -253,60 +253,60 @@
 </figure>
 <p>It&rsquo;s quite clear to see that for light themes, the mode lies beyond the middle of the scale to the most extreme right. For dark themes, it lies around the start to the middle.</p>
 <p>So, the solution is simple and lazy<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>. Decide the threshold between dark and light themes to be exactly in the middle of the horizontal axis.</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#fec418>bool</span> <span style=color:#06b6ef>isDominantDark</span>(...){
-<span style=color:#776e71>// Histogram logic omitted for brevity
-</span><span style=color:#776e71>// Trivial O(n) find max value
-</span><span style=color:#776e71></span>    <span style=color:#fec418>int</span> intensity <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>;
-    <span style=color:#fec418>int</span> dominantBin <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>;
-    <span style=color:#815ba4>for</span>(<span style=color:#fec418>int</span> i<span style=color:#5bc4bf>=</span><span style=color:#f99b15>0</span>; i<span style=color:#5bc4bf>&lt;</span>bins; <span style=color:#5bc4bf>++</span>i){
-        <span style=color:#776e71>// Loop through the histogram hist to find the highest intensity
-</span><span style=color:#776e71></span>        <span style=color:#fec418>float</span> binVal <span style=color:#5bc4bf>=</span> hist.at<span style=color:#5bc4bf>&lt;</span><span style=color:#fec418>float</span><span style=color:#5bc4bf>&gt;</span>(i);
-        <span style=color:#776e71>// maxval was initialised earlier in histogram logic
-</span><span style=color:#776e71></span>        <span style=color:#fec418>int</span> relFreq <span style=color:#5bc4bf>=</span> cvRound(binVal<span style=color:#5bc4bf>*</span>hist_height<span style=color:#5bc4bf>/</span>max_val);
-        <span style=color:#815ba4>if</span>(relFreq <span style=color:#5bc4bf>&gt;</span> intensity){
-            intensity <span style=color:#5bc4bf>=</span> relFreq;
-            dominantBin <span style=color:#5bc4bf>=</span> i;
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#6ab825;font-weight:700>bool</span> <span style=color:#447fcf>isDominantDark</span>(...){
+<span style=color:#999;font-style:italic>// Histogram logic omitted for brevity
+</span><span style=color:#999;font-style:italic>// Trivial O(n) find max value
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>int</span> intensity = <span style=color:#3677a9>0</span>;
+    <span style=color:#6ab825;font-weight:700>int</span> dominantBin = <span style=color:#3677a9>0</span>;
+    <span style=color:#6ab825;font-weight:700>for</span>(<span style=color:#6ab825;font-weight:700>int</span> i=<span style=color:#3677a9>0</span>; i&lt;bins; ++i){
+        <span style=color:#999;font-style:italic>// Loop through the histogram hist to find the highest intensity
+</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>float</span> binVal = hist.at&lt;<span style=color:#6ab825;font-weight:700>float</span>&gt;(i);
+        <span style=color:#999;font-style:italic>// maxval was initialised earlier in histogram logic
+</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>int</span> relFreq = cvRound(binVal*hist_height/max_val);
+        <span style=color:#6ab825;font-weight:700>if</span>(relFreq &gt; intensity){
+            intensity = relFreq;
+            dominantBin = i;
         }
     }
-    <span style=color:#776e71>// Greedy solution: Take midpt of intensity values as the binary trigger for dark/light mode
-</span><span style=color:#776e71></span>    <span style=color:#815ba4>return</span> (dominantBin <span style=color:#5bc4bf>&lt;</span> (<span style=color:#f99b15>256</span><span style=color:#5bc4bf>/</span><span style=color:#f99b15>2</span>));
+    <span style=color:#999;font-style:italic>// Greedy solution: Take midpt of intensity values as the binary trigger for dark/light mode
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>return</span> (dominantBin &lt; (<span style=color:#3677a9>256</span>/<span style=color:#3677a9>2</span>));
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>Now, to apply the appropriate constant is simply calling the <code>isDominantDark</code> function and assigning from there.</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#fec418>int</span> c <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>26</span>;
-<span style=color:#815ba4>if</span>(isDominantDark(grayed)){
-    c <span style=color:#5bc4bf>=</span> <span style=color:#5bc4bf>-</span><span style=color:#f99b15>42</span>;
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#6ab825;font-weight:700>int</span> c = <span style=color:#3677a9>26</span>;
+<span style=color:#6ab825;font-weight:700>if</span>(isDominantDark(grayed)){
+    c = -<span style=color:#3677a9>42</span>;
 }
 </code></pre></td></tr></table>
 </div>

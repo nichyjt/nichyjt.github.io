@@ -179,46 +179,46 @@ The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p>
 <p>But before we work on making the approach more rigorous, let&rsquo;s make the code work first.</p>
 <h2 id=making-the-grid>Making the Grid</h2>
 <p>First things first, we need to set up a empty sudoku grid so that we can fill it in.</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#815ba4>def</span> <span style=color:#06b6ef>generateSudoku</span>():
-    <span style=color:#776e71># A more elegant way of building the grid</span>
-    grid <span style=color:#5bc4bf>=</span> [[<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)] <span style=color:#815ba4>for</span> j <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)]
-    <span style=color:#776e71># But let&#39;s make the grid more human-readable...</span>
-    <span style=color:#776e71># ...for ease of visualisation/debugging</span>
-    grid <span style=color:#5bc4bf>=</span> [
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>]
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateSudoku</span>():
+    <span style=color:#999;font-style:italic># A more elegant way of building the grid</span>
+    grid = [[<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)] <span style=color:#6ab825;font-weight:700>for</span> j <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
+    <span style=color:#999;font-style:italic># But let&#39;s make the grid more human-readable...</span>
+    <span style=color:#999;font-style:italic># ...for ease of visualisation/debugging</span>
+    grid = [
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>]
     ]
-    <span style=color:#815ba4>return</span> grid
-<span style=color:#776e71># In the source code, the latter approach was used</span>
+    <span style=color:#6ab825;font-weight:700>return</span> grid
+<span style=color:#999;font-style:italic># In the source code, the latter approach was used</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>The next thing we need to do is to build the row. To fill in the cells in the row, we need to find out what the possible (unused) values can be placed in each cell.</p>
@@ -226,200 +226,200 @@ The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p>
 <p>To find the <code>unused</code> numbers that can be inserted, we must search and find out which numbers have appeared in the position&rsquo;s row, column and square. This is essentially how one would check if their Sudoku answer is correct.</p>
 <p>An intuitive approach is to search the row/column/square and check which values already exist, which will implicitly give us the unused values.</p>
 <p>This is one way we can implement this if we just checked the row:</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#776e71># For a given position (rowIdx, colIdx) on the grid...</span>
-<span style=color:#815ba4>def</span> <span style=color:#06b6ef>getAvailValues</span>(rowIndex, colIndex, grid):
-    unused <span style=color:#5bc4bf>=</span> [n <span style=color:#815ba4>for</span> n <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>1</span>,<span style=color:#f99b15>10</span>)]
-    <span style=color:#776e71># Find occurences in a row</span>
-    <span style=color:#815ba4>for</span> value <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>1</span>,<span style=color:#f99b15>10</span>):
-        <span style=color:#776e71># colIndex rather than 2/5/8 for &#39;early stopping&#39;</span>
-        <span style=color:#815ba4>for</span> colPosition <span style=color:#5bc4bf>in</span> range(colIndex<span style=color:#5bc4bf>+</span><span style=color:#f99b15>1</span>):
-            <span style=color:#815ba4>if</span> grid[rowindex][colPosition] <span style=color:#5bc4bf>==</span> value:
-                unused<span style=color:#5bc4bf>.</span>pop(value)
-                <span style=color:#815ba4>break</span>
-    <span style=color:#815ba4>return</span> unused
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#999;font-style:italic># For a given position (rowIdx, colIdx) on the grid...</span>
+<span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
+    unused = [n <span style=color:#6ab825;font-weight:700>for</span> n <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>1</span>,<span style=color:#3677a9>10</span>)]
+    <span style=color:#999;font-style:italic># Find occurences in a row</span>
+    <span style=color:#6ab825;font-weight:700>for</span> value <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>1</span>,<span style=color:#3677a9>10</span>):
+        <span style=color:#999;font-style:italic># colIndex rather than 2/5/8 for &#39;early stopping&#39;</span>
+        <span style=color:#6ab825;font-weight:700>for</span> colPosition <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(colIndex+<span style=color:#3677a9>1</span>):
+            <span style=color:#6ab825;font-weight:700>if</span> grid[rowindex][colPosition] == value:
+                unused.pop(value)
+                <span style=color:#6ab825;font-weight:700>break</span>
+    <span style=color:#6ab825;font-weight:700>return</span> unused
 </code></pre></td></tr></table>
 </div>
 </div><p>This approach is slow. Its worst case time complexity is O(n^2).</p>
 <p>This slowness adds up over time when building the Sudoku. This function is the workhorse of the algorithm, as it is called for every position of the Sudoku grid, which means that at least 81 calls need to be made!</p>
 <p>So what I did was implement a counting sort.</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#815ba4>def</span> <span style=color:#06b6ef>getAvailValues</span>(rowIndex, colIndex, grid):
-    vmap <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>10</span>)]
-    <span style=color:#776e71># Logs occurences in row</span>
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(colIndex<span style=color:#5bc4bf>+</span><span style=color:#f99b15>1</span>):
-        vmap[grid[rowIndex][i]] <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-    unused <span style=color:#5bc4bf>=</span> []
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>1</span>,<span style=color:#f99b15>10</span>):
-        <span style=color:#815ba4>if</span> vmap[i] <span style=color:#5bc4bf>==</span> <span style=color:#f99b15>0</span>:
-            unused<span style=color:#5bc4bf>.</span>append(i)
-    <span style=color:#815ba4>return</span> unused
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
+    vmap = [<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)]
+    <span style=color:#999;font-style:italic># Logs occurences in row</span>
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(colIndex+<span style=color:#3677a9>1</span>):
+        vmap[grid[rowIndex][i]] +=<span style=color:#3677a9>1</span>
+    unused = []
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>1</span>,<span style=color:#3677a9>10</span>):
+        <span style=color:#6ab825;font-weight:700>if</span> vmap[i] == <span style=color:#3677a9>0</span>:
+            unused.append(i)
+    <span style=color:#6ab825;font-weight:700>return</span> unused
 
-<span style=color:#776e71># NOTE: It is entirely possible to range(9) instead.</span>
-<span style=color:#776e71># range(1,10) was used for clarity&#39;s sake </span>
+<span style=color:#999;font-style:italic># NOTE: It is entirely possible to range(9) instead.</span>
+<span style=color:#999;font-style:italic># range(1,10) was used for clarity&#39;s sake </span>
 </code></pre></td></tr></table>
 </div>
 </div><p>This allows us to map the values that have been used when scanning through the row, col & squares of the grid. We can then check for a value&rsquo;s occurence with a O(1) list access to <code>vmap</code>. For example, to find how many times &lsquo;1&rsquo; has appeared, I simply need to call <code>vmap[1]</code>.</p>
 <p>This reduces our time complexity to O(n)<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>.</p>
 <p>We can implement this trivially for rows and columns, since we can access a row/column using <code>rowIndex</code>/<code>colIndex</code>. But finding the 3x3 squares is a little harder. First, we need to know where the square starts and stops for the position being queried.</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#776e71># Returns the row/col limits for the cell&#39;s square</span>
-<span style=color:#815ba4>def</span> <span style=color:#06b6ef>getSquareLimits</span>(rowIndex, colIndex):
-    rowLimits, colLimits <span style=color:#5bc4bf>=</span> [],[]
-    <span style=color:#776e71># Column Limits</span>
-    <span style=color:#815ba4>if</span> colIndex <span style=color:#5bc4bf>&lt;</span> <span style=color:#f99b15>3</span>:
-        colLimits <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>3</span>]
-    <span style=color:#815ba4>elif</span> colIndex <span style=color:#5bc4bf>&lt;</span> <span style=color:#f99b15>6</span>:
-        colLimits <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>3</span>,<span style=color:#f99b15>6</span>]
-    <span style=color:#815ba4>else</span>:
-        colLimits <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>6</span>,<span style=color:#f99b15>9</span>]
-    <span style=color:#776e71># Row Limits</span>
-    <span style=color:#776e71># rowIndex is used for early stopping</span>
-    <span style=color:#815ba4>if</span> rowIndex <span style=color:#5bc4bf>&lt;</span> <span style=color:#f99b15>3</span>:
-        rowLimits <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>0</span>,rowIndex<span style=color:#5bc4bf>+</span><span style=color:#f99b15>1</span>]
-    <span style=color:#815ba4>elif</span> rowIndex <span style=color:#5bc4bf>&lt;</span> <span style=color:#f99b15>6</span>:
-        rowLimits <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>3</span>,rowIndex<span style=color:#5bc4bf>+</span><span style=color:#f99b15>1</span>]
-    <span style=color:#815ba4>else</span>:
-        rowLimits <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>6</span>,rowIndex<span style=color:#5bc4bf>+</span><span style=color:#f99b15>1</span>]
-    <span style=color:#815ba4>return</span> (rowLimits, colLimits)
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#999;font-style:italic># Returns the row/col limits for the cell&#39;s square</span>
+<span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getSquareLimits</span>(rowIndex, colIndex):
+    rowLimits, colLimits = [],[]
+    <span style=color:#999;font-style:italic># Column Limits</span>
+    <span style=color:#6ab825;font-weight:700>if</span> colIndex &lt; <span style=color:#3677a9>3</span>:
+        colLimits = [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>3</span>]
+    <span style=color:#6ab825;font-weight:700>elif</span> colIndex &lt; <span style=color:#3677a9>6</span>:
+        colLimits = [<span style=color:#3677a9>3</span>,<span style=color:#3677a9>6</span>]
+    <span style=color:#6ab825;font-weight:700>else</span>:
+        colLimits = [<span style=color:#3677a9>6</span>,<span style=color:#3677a9>9</span>]
+    <span style=color:#999;font-style:italic># Row Limits</span>
+    <span style=color:#999;font-style:italic># rowIndex is used for early stopping</span>
+    <span style=color:#6ab825;font-weight:700>if</span> rowIndex &lt; <span style=color:#3677a9>3</span>:
+        rowLimits = [<span style=color:#3677a9>0</span>,rowIndex+<span style=color:#3677a9>1</span>]
+    <span style=color:#6ab825;font-weight:700>elif</span> rowIndex &lt; <span style=color:#3677a9>6</span>:
+        rowLimits = [<span style=color:#3677a9>3</span>,rowIndex+<span style=color:#3677a9>1</span>]
+    <span style=color:#6ab825;font-weight:700>else</span>:
+        rowLimits = [<span style=color:#3677a9>6</span>,rowIndex+<span style=color:#3677a9>1</span>]
+    <span style=color:#6ab825;font-weight:700>return</span> (rowLimits, colLimits)
 </code></pre></td></tr></table>
 </div>
 </div><p>With these limits, we can then implement our counting sort for a 3x3 square in the Sudoku:</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#776e71># Get the unused values for the square only</span>
-<span style=color:#815ba4>def</span> <span style=color:#06b6ef>getAvailValues</span>(rowIndex, colIndex, grid):
-    <span style=color:#776e71># Get the square limits</span>
-    sqLim <span style=color:#5bc4bf>=</span> getSquareLimits(rowIndex, colIndex)
-    <span style=color:#815ba4>for</span> ri <span style=color:#5bc4bf>in</span> range(sqLim[<span style=color:#f99b15>0</span>][<span style=color:#f99b15>0</span>], sqLim[<span style=color:#f99b15>0</span>][<span style=color:#f99b15>1</span>]):
-        <span style=color:#815ba4>for</span> ci <span style=color:#5bc4bf>in</span> range(sqLim[<span style=color:#f99b15>1</span>][<span style=color:#f99b15>0</span>], sqLim[<span style=color:#f99b15>1</span>][<span style=color:#f99b15>1</span>]):
-            vmap[grid[ri][ci]] <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>1</span>,<span style=color:#f99b15>10</span>):
-        <span style=color:#815ba4>if</span> vmap[i] <span style=color:#5bc4bf>==</span> <span style=color:#f99b15>0</span>:
-            unused<span style=color:#5bc4bf>.</span>append(i)
-    <span style=color:#815ba4>return</span> unused
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#999;font-style:italic># Get the unused values for the square only</span>
+<span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
+    <span style=color:#999;font-style:italic># Get the square limits</span>
+    sqLim = getSquareLimits(rowIndex, colIndex)
+    <span style=color:#6ab825;font-weight:700>for</span> ri <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(sqLim[<span style=color:#3677a9>0</span>][<span style=color:#3677a9>0</span>], sqLim[<span style=color:#3677a9>0</span>][<span style=color:#3677a9>1</span>]):
+        <span style=color:#6ab825;font-weight:700>for</span> ci <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(sqLim[<span style=color:#3677a9>1</span>][<span style=color:#3677a9>0</span>], sqLim[<span style=color:#3677a9>1</span>][<span style=color:#3677a9>1</span>]):
+            vmap[grid[ri][ci]] +=<span style=color:#3677a9>1</span>
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>1</span>,<span style=color:#3677a9>10</span>):
+        <span style=color:#6ab825;font-weight:700>if</span> vmap[i] == <span style=color:#3677a9>0</span>:
+            unused.append(i)
+    <span style=color:#6ab825;font-weight:700>return</span> unused
 </code></pre></td></tr></table>
 </div>
 </div><p>We can then finally build our overall function that checks for row, column and square:</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#776e71># Main logic for sifting through usable values</span>
-<span style=color:#815ba4>def</span> <span style=color:#06b6ef>getAvailValues</span>(rowIndex, colIndex, grid):
-    <span style=color:#776e71># Mapping of number of values that appear</span>
-    vmap <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>10</span>)] 
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#999;font-style:italic># Main logic for sifting through usable values</span>
+<span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
+    <span style=color:#999;font-style:italic># Mapping of number of values that appear</span>
+    vmap = [<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)] 
 
-    <span style=color:#776e71># Logs occurences in row</span>
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(colIndex<span style=color:#5bc4bf>+</span><span style=color:#f99b15>1</span>):
-        vmap[grid[rowIndex][i]] <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
+    <span style=color:#999;font-style:italic># Logs occurences in row</span>
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(colIndex+<span style=color:#3677a9>1</span>):
+        vmap[grid[rowIndex][i]] +=<span style=color:#3677a9>1</span>
 
-    <span style=color:#776e71># Log occurences in col</span>
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(rowIndex<span style=color:#5bc4bf>+</span><span style=color:#f99b15>1</span>):
-        vmap[grid[i][colIndex]] <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
+    <span style=color:#999;font-style:italic># Log occurences in col</span>
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(rowIndex+<span style=color:#3677a9>1</span>):
+        vmap[grid[i][colIndex]] +=<span style=color:#3677a9>1</span>
 
-    <span style=color:#776e71># Log occurences in the cell&#39;s square</span>
-    sqLim <span style=color:#5bc4bf>=</span> getSquareLimits(rowIndex, colIndex)
-    <span style=color:#815ba4>for</span> ri <span style=color:#5bc4bf>in</span> range(sqLim[<span style=color:#f99b15>0</span>][<span style=color:#f99b15>0</span>], sqLim[<span style=color:#f99b15>0</span>][<span style=color:#f99b15>1</span>]):
-        <span style=color:#815ba4>for</span> ci <span style=color:#5bc4bf>in</span> range(sqLim[<span style=color:#f99b15>1</span>][<span style=color:#f99b15>0</span>], sqLim[<span style=color:#f99b15>1</span>][<span style=color:#f99b15>1</span>]):
-            vmap[grid[ri][ci]] <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
+    <span style=color:#999;font-style:italic># Log occurences in the cell&#39;s square</span>
+    sqLim = getSquareLimits(rowIndex, colIndex)
+    <span style=color:#6ab825;font-weight:700>for</span> ri <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(sqLim[<span style=color:#3677a9>0</span>][<span style=color:#3677a9>0</span>], sqLim[<span style=color:#3677a9>0</span>][<span style=color:#3677a9>1</span>]):
+        <span style=color:#6ab825;font-weight:700>for</span> ci <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(sqLim[<span style=color:#3677a9>1</span>][<span style=color:#3677a9>0</span>], sqLim[<span style=color:#3677a9>1</span>][<span style=color:#3677a9>1</span>]):
+            vmap[grid[ri][ci]] +=<span style=color:#3677a9>1</span>
 
-    <span style=color:#776e71># Check which values did not appear             </span>
-    unused <span style=color:#5bc4bf>=</span> []
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>1</span>,<span style=color:#f99b15>10</span>):
-        <span style=color:#815ba4>if</span> vmap[i] <span style=color:#5bc4bf>==</span> <span style=color:#f99b15>0</span>:
-            unused<span style=color:#5bc4bf>.</span>append(i)
-    <span style=color:#815ba4>return</span> unused
+    <span style=color:#999;font-style:italic># Check which values did not appear             </span>
+    unused = []
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>1</span>,<span style=color:#3677a9>10</span>):
+        <span style=color:#6ab825;font-weight:700>if</span> vmap[i] == <span style=color:#3677a9>0</span>:
+            unused.append(i)
+    <span style=color:#6ab825;font-weight:700>return</span> unused
 </code></pre></td></tr></table>
 </div>
 </div><h3 id=building-row-by-row>Building Row by Row</h3>
@@ -427,105 +427,105 @@ The algorithm&rsquo;s script is in the repo under <code>sudogen.py</code>.</p>
 <p>In the likely event that there is no solution where <code>getAvailValues</code> returns an empty list, we execute step 2 of the algorithm: Discard the row and start it again through a recursive call.
 There is a possibility that the arrangement of previous rows make it such that no permutation of numbers can give a valid Sudoku row. The function will then loop forever in recursion purgatory.</p>
 <p>To prevent this, we can keep track of the number of recursions the function has gone through and break it if it passes a certain threshold.<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup></p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#776e71># Generate the sudoku board row in accordance with sdku rules</span>
-<span style=color:#815ba4>def</span> <span style=color:#06b6ef>generateRow</span>(rowIndex, sudokuGrid):
-    <span style=color:#815ba4>global</span> __recursionCounter
-    <span style=color:#776e71># Break recursion to backtrack and rebuild the previous row</span>
-    <span style=color:#776e71># Arbitrary number chosen </span>
-    <span style=color:#815ba4>if</span>(__recursionCounter<span style=color:#5bc4bf>&gt;</span><span style=color:#f99b15>9</span>):
-        <span style=color:#815ba4>return</span>
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>):
-        pool <span style=color:#5bc4bf>=</span> getAvailValues(rowIndex, i, sudokuGrid)
-        <span style=color:#776e71># Recursion managed by the global counter field</span>
-        <span style=color:#815ba4>if</span> len(pool)<span style=color:#5bc4bf>==</span><span style=color:#f99b15>0</span>:
-            <span style=color:#776e71># No solution. Re-build row</span>
-            __recursionCounter <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-            sudokuGrid[rowIndex] <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)]
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#999;font-style:italic># Generate the sudoku board row in accordance with sdku rules</span>
+<span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateRow</span>(rowIndex, sudokuGrid):
+    <span style=color:#6ab825;font-weight:700>global</span> __recursionCounter
+    <span style=color:#999;font-style:italic># Break recursion to backtrack and rebuild the previous row</span>
+    <span style=color:#999;font-style:italic># Arbitrary number chosen </span>
+    <span style=color:#6ab825;font-weight:700>if</span>(__recursionCounter&gt;<span style=color:#3677a9>9</span>):
+        <span style=color:#6ab825;font-weight:700>return</span>
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>):
+        pool = getAvailValues(rowIndex, i, sudokuGrid)
+        <span style=color:#999;font-style:italic># Recursion managed by the global counter field</span>
+        <span style=color:#6ab825;font-weight:700>if</span> <span style=color:#24909d>len</span>(pool)==<span style=color:#3677a9>0</span>:
+            <span style=color:#999;font-style:italic># No solution. Re-build row</span>
+            __recursionCounter +=<span style=color:#3677a9>1</span>
+            sudokuGrid[rowIndex] = [<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
             generateRow(rowIndex, sudokuGrid)
-        <span style=color:#815ba4>else</span>:
-            rdi <span style=color:#5bc4bf>=</span> randint(<span style=color:#f99b15>0</span>,<span style=color:#f99b15>8</span>)
-            <span style=color:#815ba4>if</span> rdi <span style=color:#5bc4bf>&gt;=</span> len(pool):
-                rdi <span style=color:#5bc4bf>=</span> rdi<span style=color:#5bc4bf>%</span>len(pool)
-            sudokuGrid[rowIndex][i] <span style=color:#5bc4bf>=</span> pool[rdi]
+        <span style=color:#6ab825;font-weight:700>else</span>:
+            rdi = randint(<span style=color:#3677a9>0</span>,<span style=color:#3677a9>8</span>)
+            <span style=color:#6ab825;font-weight:700>if</span> rdi &gt;= <span style=color:#24909d>len</span>(pool):
+                rdi = rdi%<span style=color:#24909d>len</span>(pool)
+            sudokuGrid[rowIndex][i] = pool[rdi]
 </code></pre></td></tr></table>
 </div>
 </div><p>We can then wrap it up with additional logic to control row generation:</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#815ba4>def</span> <span style=color:#06b6ef>generateSudoku</span>():
-    grid <span style=color:#5bc4bf>=</span> [
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>],
-    [<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>,<span style=color:#f99b15>0</span>]
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateSudoku</span>():
+    grid = [
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>],
+    [<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>,<span style=color:#3677a9>0</span>]
     ]
-    i <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>
-    <span style=color:#815ba4>while</span> i<span style=color:#5bc4bf>&lt;</span><span style=color:#f99b15>9</span>:
-        <span style=color:#815ba4>global</span> __recursionCounter
-        <span style=color:#815ba4>if</span> __recursionCounter <span style=color:#5bc4bf>&gt;</span> <span style=color:#f99b15>9</span>:
-            <span style=color:#776e71># Reset the counter</span>
-            __recursionCounter <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>
-            i<span style=color:#5bc4bf>-=</span><span style=color:#f99b15>1</span>
+    i = <span style=color:#3677a9>0</span>
+    <span style=color:#6ab825;font-weight:700>while</span> i&lt;<span style=color:#3677a9>9</span>:
+        <span style=color:#6ab825;font-weight:700>global</span> __recursionCounter
+        <span style=color:#6ab825;font-weight:700>if</span> __recursionCounter &gt; <span style=color:#3677a9>9</span>:
+            <span style=color:#999;font-style:italic># Reset the counter</span>
+            __recursionCounter = <span style=color:#3677a9>0</span>
+            i-=<span style=color:#3677a9>1</span>
             generateRow(i,grid)
-        <span style=color:#815ba4>else</span>:
+        <span style=color:#6ab825;font-weight:700>else</span>:
             generateRow(i,grid)
-            i<span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-    <span style=color:#815ba4>return</span> grid
+            i+=<span style=color:#3677a9>1</span>
+    <span style=color:#6ab825;font-weight:700>return</span> grid
 </code></pre></td></tr></table>
 </div>
 </div><p>A purely recursive approach (getting <code>generateRow</code> to call itself to build the next row) was dropped in favor of a iterative approach for ease of debugging. Python also tended to just stop going into deeper levels of recursion even when setting the system variable for recursion depth limit to the max.</p>
@@ -551,155 +551,155 @@ There is a possibility that the arrangement of previous rows make it such that n
 </li>
 </ol>
 <p>I implemented the &lsquo;backtrack&rsquo; non-recursively, using a simple blacklist for a single row:</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python> __blacklistedVals <span style=color:#5bc4bf>=</span> [[<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>10</span>)] <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)]
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python> __blacklistedVals = [[<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)] <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
 </code></pre></td></tr></table>
 </div>
 </div><p>For every column index, failed values get logged into the blacklist and are excluded when <code>getAvailValues()</code> is being called in the event of a backtrack:</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#815ba4>def</span> <span style=color:#06b6ef>getAvailValues</span>(rowIndex, colIndex, grid):
-    <span style=color:#815ba4>global</span> __blacklistedVals
-    vmap <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>10</span>)] <span style=color:#776e71>#0-9 so 10 vals</span>
-    sqLim <span style=color:#5bc4bf>=</span> getSquareLimits(rowIndex, colIndex)
-    <span style=color:#776e71># Logs occurences in row</span>
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>0</span>,colIndex<span style=color:#5bc4bf>+</span><span style=color:#f99b15>1</span>):
-        vmap[grid[rowIndex][i]] <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-    <span style=color:#776e71># Log occurences in col</span>
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>0</span>,rowIndex<span style=color:#5bc4bf>+</span><span style=color:#f99b15>1</span>):
-        vmap[grid[i][colIndex]] <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-    <span style=color:#776e71># Log occurences in the cell&#39;s square</span>
-    <span style=color:#815ba4>for</span> ri <span style=color:#5bc4bf>in</span> range(sqLim[<span style=color:#f99b15>0</span>][<span style=color:#f99b15>0</span>], sqLim[<span style=color:#f99b15>0</span>][<span style=color:#f99b15>1</span>]):
-        <span style=color:#815ba4>for</span> ci <span style=color:#5bc4bf>in</span> range(sqLim[<span style=color:#f99b15>1</span>][<span style=color:#f99b15>0</span>], sqLim[<span style=color:#f99b15>1</span>][<span style=color:#f99b15>1</span>]):
-            vmap[grid[ri][ci]] <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-    unused <span style=color:#5bc4bf>=</span> []
-    <span style=color:#815ba4>for</span> i <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>1</span>,<span style=color:#f99b15>10</span>):
-        <span style=color:#815ba4>if</span> vmap[i] <span style=color:#5bc4bf>==</span> <span style=color:#f99b15>0</span> <span style=color:#5bc4bf>and</span> __blacklistedVals[colIndex][i]<span style=color:#5bc4bf>==</span><span style=color:#f99b15>0</span>:
-            unused<span style=color:#5bc4bf>.</span>append(i)
-    <span style=color:#815ba4>return</span> unused
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>getAvailValues</span>(rowIndex, colIndex, grid):
+    <span style=color:#6ab825;font-weight:700>global</span> __blacklistedVals
+    vmap = [<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)] <span style=color:#999;font-style:italic>#0-9 so 10 vals</span>
+    sqLim = getSquareLimits(rowIndex, colIndex)
+    <span style=color:#999;font-style:italic># Logs occurences in row</span>
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>0</span>,colIndex+<span style=color:#3677a9>1</span>):
+        vmap[grid[rowIndex][i]] +=<span style=color:#3677a9>1</span>
+    <span style=color:#999;font-style:italic># Log occurences in col</span>
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>0</span>,rowIndex+<span style=color:#3677a9>1</span>):
+        vmap[grid[i][colIndex]] +=<span style=color:#3677a9>1</span>
+    <span style=color:#999;font-style:italic># Log occurences in the cell&#39;s square</span>
+    <span style=color:#6ab825;font-weight:700>for</span> ri <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(sqLim[<span style=color:#3677a9>0</span>][<span style=color:#3677a9>0</span>], sqLim[<span style=color:#3677a9>0</span>][<span style=color:#3677a9>1</span>]):
+        <span style=color:#6ab825;font-weight:700>for</span> ci <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(sqLim[<span style=color:#3677a9>1</span>][<span style=color:#3677a9>0</span>], sqLim[<span style=color:#3677a9>1</span>][<span style=color:#3677a9>1</span>]):
+            vmap[grid[ri][ci]] +=<span style=color:#3677a9>1</span>
+    unused = []
+    <span style=color:#6ab825;font-weight:700>for</span> i <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>1</span>,<span style=color:#3677a9>10</span>):
+        <span style=color:#6ab825;font-weight:700>if</span> vmap[i] == <span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>and</span> __blacklistedVals[colIndex][i]==<span style=color:#3677a9>0</span>:
+            unused.append(i)
+    <span style=color:#6ab825;font-weight:700>return</span> unused
 </code></pre></td></tr></table>
 </div>
 </div><p>The row generating logic dropped the recursion in favor of an iterative approach which is somewhat easier to debug:</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">39
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#815ba4>def</span> <span style=color:#06b6ef>generateRow</span>(rowIndex, grid):
-    <span style=color:#815ba4>global</span> __blacklistedVals
-    i <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>
-    <span style=color:#776e71># Cell controller</span>
-    <span style=color:#815ba4>while</span> i<span style=color:#5bc4bf>&lt;</span><span style=color:#f99b15>9</span>:
-        pool <span style=color:#5bc4bf>=</span> getAvailValues(rowIndex, i, grid)
-        <span style=color:#815ba4>if</span>(len(pool)<span style=color:#5bc4bf>==</span><span style=color:#f99b15>0</span>):
-            <span style=color:#776e71># No solution.</span>
-            <span style=color:#776e71># Backtrack one cell, blacklist the prev value and try again</span>
-            __blacklistedVals[i] <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>10</span>)]
-            i<span style=color:#5bc4bf>-=</span><span style=color:#f99b15>1</span>
-            <span style=color:#815ba4>if</span> i<span style=color:#5bc4bf>&lt;</span><span style=color:#f99b15>0</span>:
-                <span style=color:#815ba4>return</span> <span style=color:#815ba4>True</span>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateRow</span>(rowIndex, grid):
+    <span style=color:#6ab825;font-weight:700>global</span> __blacklistedVals
+    i = <span style=color:#3677a9>0</span>
+    <span style=color:#999;font-style:italic># Cell controller</span>
+    <span style=color:#6ab825;font-weight:700>while</span> i&lt;<span style=color:#3677a9>9</span>:
+        pool = getAvailValues(rowIndex, i, grid)
+        <span style=color:#6ab825;font-weight:700>if</span>(<span style=color:#24909d>len</span>(pool)==<span style=color:#3677a9>0</span>):
+            <span style=color:#999;font-style:italic># No solution.</span>
+            <span style=color:#999;font-style:italic># Backtrack one cell, blacklist the prev value and try again</span>
+            __blacklistedVals[i] = [<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)]
+            i-=<span style=color:#3677a9>1</span>
+            <span style=color:#6ab825;font-weight:700>if</span> i&lt;<span style=color:#3677a9>0</span>:
+                <span style=color:#6ab825;font-weight:700>return</span> <span style=color:#6ab825;font-weight:700>True</span>
 
-            __blacklistedVals[i][grid[rowIndex][i]] <span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-            grid[rowIndex][i] <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>
+            __blacklistedVals[i][grid[rowIndex][i]] +=<span style=color:#3677a9>1</span>
+            grid[rowIndex][i] = <span style=color:#3677a9>0</span>
 
-        <span style=color:#815ba4>else</span>:
-            rdi <span style=color:#5bc4bf>=</span> randint(<span style=color:#f99b15>0</span>,<span style=color:#f99b15>8</span>)
-            <span style=color:#815ba4>if</span> rdi <span style=color:#5bc4bf>&gt;=</span> len(pool):
-                rdi <span style=color:#5bc4bf>=</span> rdi<span style=color:#5bc4bf>%</span>len(pool)
-            grid[rowIndex][i] <span style=color:#5bc4bf>=</span> pool[rdi]
-            i<span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
+        <span style=color:#6ab825;font-weight:700>else</span>:
+            rdi = randint(<span style=color:#3677a9>0</span>,<span style=color:#3677a9>8</span>)
+            <span style=color:#6ab825;font-weight:700>if</span> rdi &gt;= <span style=color:#24909d>len</span>(pool):
+                rdi = rdi%<span style=color:#24909d>len</span>(pool)
+            grid[rowIndex][i] = pool[rdi]
+            i+=<span style=color:#3677a9>1</span>
 
-    <span style=color:#815ba4>return</span> <span style=color:#815ba4>False</span>
+    <span style=color:#6ab825;font-weight:700>return</span> <span style=color:#6ab825;font-weight:700>False</span>
 
-<span style=color:#776e71># The bool returns are used to control the overall grid generation logic</span>
-<span style=color:#815ba4>def</span> <span style=color:#06b6ef>generateSudoku</span>():
-    <span style=color:#776e71># grid = [...] is omitted</span>
-    i <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>
-    <span style=color:#815ba4>while</span> i <span style=color:#5bc4bf>&lt;</span> <span style=color:#f99b15>9</span>:
-        <span style=color:#815ba4>if</span> generateRow(i, grid):
-            <span style=color:#776e71># Row has failed to build. Re-build the previous row and blacklist</span>
-            grid[i] <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)]
-            __blacklistedVals <span style=color:#5bc4bf>=</span> [[<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>10</span>)] <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)]
-            i<span style=color:#5bc4bf>-=</span><span style=color:#f99b15>1</span>
-            grid[i] <span style=color:#5bc4bf>=</span> [<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)]
-        <span style=color:#815ba4>else</span>:
-            i<span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-    <span style=color:#815ba4>return</span> grid
+<span style=color:#999;font-style:italic># The bool returns are used to control the overall grid generation logic</span>
+<span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateSudoku</span>():
+    <span style=color:#999;font-style:italic># grid = [...] is omitted</span>
+    i = <span style=color:#3677a9>0</span>
+    <span style=color:#6ab825;font-weight:700>while</span> i &lt; <span style=color:#3677a9>9</span>:
+        <span style=color:#6ab825;font-weight:700>if</span> generateRow(i, grid):
+            <span style=color:#999;font-style:italic># Row has failed to build. Re-build the previous row and blacklist</span>
+            grid[i] = [<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
+            __blacklistedVals = [[<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)] <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
+            i-=<span style=color:#3677a9>1</span>
+            grid[i] = [<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
+        <span style=color:#6ab825;font-weight:700>else</span>:
+            i+=<span style=color:#3677a9>1</span>
+    <span style=color:#6ab825;font-weight:700>return</span> grid
 </code></pre></td></tr></table>
 </div>
 </div><p>Running the script, it works! But what if we were more rigorous with the depth of the blacklist?</p>
 <h1 id=mother-of-all-backtracks-moab>Mother Of All Backtracks (MOAB)</h1>
 <p>Instead of keeping track of a row&rsquo;s worth of failed solutions, how about we extend it to the <strong>whole grid</strong>?</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python> __blacklistedVals <span style=color:#5bc4bf>=</span> [[[<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>10</span>)]<span style=color:#815ba4>for</span> y <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)]<span style=color:#815ba4>for</span> z <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)]
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python> __blacklistedVals = [[[<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)]<span style=color:#6ab825;font-weight:700>for</span> y <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]<span style=color:#6ab825;font-weight:700>for</span> z <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
 </code></pre></td></tr></table>
 </div>
 </div><p>This particular implementation was pretty hairy, with the backtracking logic extending out to 2 seperate functions.
@@ -720,114 +720,114 @@ In the repo, this is <code>sudogen3</code> if you are interested in the full imp
 </li>
 </ol>
 <p>This was a can of worms. Additional flags and conditions needed to be added to catch perculiar edge cases, such as infinite loops<sup id=fnref:5><a href=#fn:5 class=footnote-ref role=doc-noteref>5</a></sup> that the algorithm could get stuck in.</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">51
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#776e71># A quick showcase of the additional functions</span>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#999;font-style:italic># A quick showcase of the additional functions</span>
 
-<span style=color:#815ba4>def</span> <span style=color:#06b6ef>backtrackRow</span>(rowIndex):
-    <span style=color:#815ba4>global</span> __blacklistedVals
-    <span style=color:#776e71># Reset row blacklist</span>
-    __blacklistedVals[rowIndex] <span style=color:#5bc4bf>=</span> [[<span style=color:#f99b15>0</span> <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>10</span>)] <span style=color:#815ba4>for</span> y <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>)]
-    <span style=color:#815ba4>return</span> rowIndex<span style=color:#5bc4bf>-</span><span style=color:#f99b15>1</span>
+<span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>backtrackRow</span>(rowIndex):
+    <span style=color:#6ab825;font-weight:700>global</span> __blacklistedVals
+    <span style=color:#999;font-style:italic># Reset row blacklist</span>
+    __blacklistedVals[rowIndex] = [[<span style=color:#3677a9>0</span> <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>10</span>)] <span style=color:#6ab825;font-weight:700>for</span> y <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>)]
+    <span style=color:#6ab825;font-weight:700>return</span> rowIndex-<span style=color:#3677a9>1</span>
 
-<span style=color:#776e71># Backtrack cell by cell until we have a pool of &gt; 1 possible value</span>
-<span style=color:#776e71># Rare edge case whereby the backtrack cycles about a cell. The rows are built with no solution.</span>
-<span style=color:#776e71># This + other possible undefined edge cases are caught by the infiniteLoop flag.</span>
-<span style=color:#815ba4>def</span> <span style=color:#06b6ef>backtrackCell</span>(rowIndex, colIndex, grid, infiniteLoop):
-    <span style=color:#815ba4>if</span>(colIndex<span style=color:#5bc4bf>&lt;</span><span style=color:#f99b15>0</span>):
-        <span style=color:#776e71># Backtrack a row as current row has no solution</span>
-        rowIndex <span style=color:#5bc4bf>=</span> backtrackRow(rowIndex)
-        colIndex <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>8</span>
-    pool <span style=color:#5bc4bf>=</span> getAvailValues(rowIndex, colIndex, grid)
-    <span style=color:#815ba4>if</span> len(pool) <span style=color:#5bc4bf>&gt;</span> <span style=color:#f99b15>1</span> <span style=color:#5bc4bf>and</span> <span style=color:#5bc4bf>not</span> infiniteLoop:
-        <span style=color:#815ba4>return</span> [rowIndex, colIndex]
-    <span style=color:#815ba4>else</span>:
-        infiniteLoop <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>False</span>
-        grid[rowIndex][colIndex] <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>
-        <span style=color:#815ba4>return</span> backtrackCell(rowIndex, colIndex<span style=color:#5bc4bf>-</span><span style=color:#f99b15>1</span>, grid, infiniteLoop)
+<span style=color:#999;font-style:italic># Backtrack cell by cell until we have a pool of &gt; 1 possible value</span>
+<span style=color:#999;font-style:italic># Rare edge case whereby the backtrack cycles about a cell. The rows are built with no solution.</span>
+<span style=color:#999;font-style:italic># This + other possible undefined edge cases are caught by the infiniteLoop flag.</span>
+<span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>backtrackCell</span>(rowIndex, colIndex, grid, infiniteLoop):
+    <span style=color:#6ab825;font-weight:700>if</span>(colIndex&lt;<span style=color:#3677a9>0</span>):
+        <span style=color:#999;font-style:italic># Backtrack a row as current row has no solution</span>
+        rowIndex = backtrackRow(rowIndex)
+        colIndex = <span style=color:#3677a9>8</span>
+    pool = getAvailValues(rowIndex, colIndex, grid)
+    <span style=color:#6ab825;font-weight:700>if</span> <span style=color:#24909d>len</span>(pool) &gt; <span style=color:#3677a9>1</span> <span style=color:#6ab825;font-weight:700>and</span> <span style=color:#6ab825;font-weight:700>not</span> infiniteLoop:
+        <span style=color:#6ab825;font-weight:700>return</span> [rowIndex, colIndex]
+    <span style=color:#6ab825;font-weight:700>else</span>:
+        infiniteLoop = <span style=color:#6ab825;font-weight:700>False</span>
+        grid[rowIndex][colIndex] = <span style=color:#3677a9>0</span>
+        <span style=color:#6ab825;font-weight:700>return</span> backtrackCell(rowIndex, colIndex-<span style=color:#3677a9>1</span>, grid, infiniteLoop)
 
-<span style=color:#815ba4>def</span> <span style=color:#06b6ef>generateSudoku</span>():
-    <span style=color:#776e71># grid = [...] is omitted</span>
-    <span style=color:#815ba4>global</span> __blacklistedVals
-    <span style=color:#815ba4>global</span> __infiniteRecursion
-    i <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>
-    specificIndex <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>
-    new_coords <span style=color:#5bc4bf>=</span> []
-    <span style=color:#815ba4>while</span> i<span style=color:#5bc4bf>&lt;</span><span style=color:#f99b15>9</span>:
-        <span style=color:#815ba4>if</span> generateRow(i, grid, specificIndex):
-            i <span style=color:#5bc4bf>=</span> backtrackRow(i)
-            <span style=color:#815ba4>if</span> i<span style=color:#5bc4bf>&lt;</span><span style=color:#f99b15>0</span>:
-                <span style=color:#815ba4>for</span> x <span style=color:#5bc4bf>in</span> range(<span style=color:#f99b15>9</span>):
-                    print (grid[x])
-                <span style=color:#815ba4>break</span>
-            tmp <span style=color:#5bc4bf>=</span> backtrackCell(i, <span style=color:#f99b15>8</span>, grid, __infiniteRecursion)
-            <span style=color:#776e71># Oscillation infinite loop catcher</span>
-            <span style=color:#815ba4>if</span> new_coords <span style=color:#5bc4bf>==</span> tmp:
-                __infiniteRecursion <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>True</span>
-            <span style=color:#815ba4>else</span>:
-                __infiniteRecursion <span style=color:#5bc4bf>=</span> <span style=color:#815ba4>False</span>
-                new_coords <span style=color:#5bc4bf>=</span> tmp
-                specificIndex <span style=color:#5bc4bf>=</span> new_coords[<span style=color:#f99b15>1</span>]
-                i <span style=color:#5bc4bf>=</span> new_coords[<span style=color:#f99b15>0</span>]
-        <span style=color:#815ba4>else</span>:
-            specificIndex <span style=color:#5bc4bf>=</span> <span style=color:#f99b15>0</span>
-            i<span style=color:#5bc4bf>+=</span><span style=color:#f99b15>1</span>
-    __blacklistedVals <span style=color:#5bc4bf>=</span> make_new_blacklist()
-    <span style=color:#815ba4>return</span> grid
+<span style=color:#6ab825;font-weight:700>def</span> <span style=color:#447fcf>generateSudoku</span>():
+    <span style=color:#999;font-style:italic># grid = [...] is omitted</span>
+    <span style=color:#6ab825;font-weight:700>global</span> __blacklistedVals
+    <span style=color:#6ab825;font-weight:700>global</span> __infiniteRecursion
+    i = <span style=color:#3677a9>0</span>
+    specificIndex = <span style=color:#3677a9>0</span>
+    new_coords = []
+    <span style=color:#6ab825;font-weight:700>while</span> i&lt;<span style=color:#3677a9>9</span>:
+        <span style=color:#6ab825;font-weight:700>if</span> generateRow(i, grid, specificIndex):
+            i = backtrackRow(i)
+            <span style=color:#6ab825;font-weight:700>if</span> i&lt;<span style=color:#3677a9>0</span>:
+                <span style=color:#6ab825;font-weight:700>for</span> x <span style=color:#6ab825;font-weight:700>in</span> <span style=color:#24909d>range</span>(<span style=color:#3677a9>9</span>):
+                    <span style=color:#24909d>print</span> (grid[x])
+                <span style=color:#6ab825;font-weight:700>break</span>
+            tmp = backtrackCell(i, <span style=color:#3677a9>8</span>, grid, __infiniteRecursion)
+            <span style=color:#999;font-style:italic># Oscillation infinite loop catcher</span>
+            <span style=color:#6ab825;font-weight:700>if</span> new_coords == tmp:
+                __infiniteRecursion = <span style=color:#6ab825;font-weight:700>True</span>
+            <span style=color:#6ab825;font-weight:700>else</span>:
+                __infiniteRecursion = <span style=color:#6ab825;font-weight:700>False</span>
+                new_coords = tmp
+                specificIndex = new_coords[<span style=color:#3677a9>1</span>]
+                i = new_coords[<span style=color:#3677a9>0</span>]
+        <span style=color:#6ab825;font-weight:700>else</span>:
+            specificIndex = <span style=color:#3677a9>0</span>
+            i+=<span style=color:#3677a9>1</span>
+    __blacklistedVals = make_new_blacklist()
+    <span style=color:#6ab825;font-weight:700>return</span> grid
 </code></pre></td></tr></table>
 </div>
 </div><h1 id=visualising-efficiency>Visualising Efficiency</h1>
@@ -871,16 +871,16 @@ To wrap this project up, I made the UI using Tkinter and made it into a fully fu
 </li>
 <li id=fn:4 role=doc-endnote>
 <p>If you are coding along, you can see the grid on terminal by putting the following under your script&rsquo;s driver function:</p>
-<div class=highlight><div style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>sudoku <span style=color:#5bc4bf>=</span> generateSudoku()
-<span style=color:#815ba4>for</span> row <span style=color:#5bc4bf>in</span> sudoku:
-    print(row)
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>sudoku = generateSudoku()
+<span style=color:#6ab825;font-weight:700>for</span> row <span style=color:#6ab825;font-weight:700>in</span> sudoku:
+    <span style=color:#24909d>print</span>(row)
 </code></pre></td></tr></table>
 </div>
 </div>&#160;<a href=#fnref:4 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></li>
