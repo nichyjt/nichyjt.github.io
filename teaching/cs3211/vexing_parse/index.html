@@ -2,12 +2,11 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CS3211 Spring 2025 - T09 | Nicholas Yek</title>
-<meta name=description content="Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)
- &nbsp README/Quickstart  Disclaimer ⚠️ The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is completely optional and supplementary.
-Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.
-Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content.">
-<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/>
+<title>The Most Vexing Parse rule | Nicholas Yek</title>
+<meta name=description content="A brief explanation why a particular C++ thread creation syntax 
+does/doesn't work. 
+">
+<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/vexing_parse/>
 <link rel=stylesheet href=/css/style.css>
 <link rel=stylesheet href=/css/mainmenu.css>
 <link rel=stylesheet href=/css/fonts.css>
@@ -21,14 +20,20 @@ Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
 <script src=/js/expandable.js></script>
-<meta property="og:title" content="CS3211 Spring 2025 - T09">
-<meta property="og:description" content="Yet another quaint blog waffling on about code and technology.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/">
+<meta property="og:title" content="The Most Vexing Parse rule">
+<meta property="og:description" content="A brief explanation why a particular C++ thread creation syntax 
+does/doesn't work. 
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/vexing_parse/"><meta property="article:section" content="teaching">
+<meta property="article:published_time" content="2025-02-05T00:00:00+00:00">
+<meta property="article:modified_time" content="2025-02-05T00:00:00+00:00">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="CS3211 Spring 2025 - T09">
-<meta name=twitter:description content="Yet another quaint blog waffling on about code and technology.">
+<meta name=twitter:title content="The Most Vexing Parse rule">
+<meta name=twitter:description content="A brief explanation why a particular C++ thread creation syntax 
+does/doesn't work. 
+">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
 <div class=navcontainer><body>
@@ -138,44 +143,157 @@ Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/
 <div class=bodycontainer>
 <main>
 <section class=section>
-<h1 style=text-decoration:underline;margin-left:.75rem>CS3211 Spring 2025 - T09</h1>
-<div class=content style=margin-left:.75rem>
-<p>Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)</p>
-<details>
-<summary class=experienceSummary>
-&nbsp README/Quickstart
-        <br>
-</summary>
-<blockquote class=experienceBlockquote>
-<h3 id=disclaimer->Disclaimer ⚠️</h3>
-<p>The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is <strong>completely optional and supplementary</strong>.</p>
-<p>Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.</p>
-<p>Content <em>might</em> include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content. You&rsquo;re encouraged to <em>asynchronously</em> explore at your own convenience. You <strong>do not need to keep up with the extra stuff</strong>. In the spirit of exploration & tinkering, you might find that some of these content might be illuminating <em>after</em> finishing CS3211.</p>
-<h3 id=relevant-links->Relevant Links 🔗</h3>
-<p>Hide these under your pillow&mldr;</p>
+<div class=frontmatter>
+<h1 class="title, listTitleLink">The Most Vexing Parse rule</h1>
+<div class=subtitle>
+<p>
+<time>📆 February 5, 2025</time>
+|
+⌛ 3 minutes read
+</p>
+</div>
+<p class=tags style=width:fit-content>📋 Tags:
+</p>
+</div>
+<hr>
+<div class=content>
+<p>You have learnt in lecture that there are many ways to create threads, and certain ways of creating threads actually don&rsquo;t work.</p>
+<p>Due to time constraints + how confusing this may be, this isn&rsquo;t covered in the tutorial.</p>
+<p>A brief recap of what you see in lecture:</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">32
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;iostream&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;thread&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700></span>
+<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>task</span>();        <span style=color:#999;font-style:italic>// assume this is implemented
+</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>class</span> <span style=color:#447fcf;text-decoration:underline>TaskClass</span> {  <span style=color:#999;font-style:italic>// callable type
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>public</span>:
+    <span style=color:#6ab825;font-weight:700>void</span> <span style=color:#6ab825;font-weight:700>operator</span>()() <span style=color:#6ab825;font-weight:700>const</span> {
+        task();
+    }
+};
+
+<span style=color:#6ab825;font-weight:700>int</span> <span style=color:#447fcf>main</span>() {
+    std::<span style=color:#6ab825;font-weight:700>thread</span> t0(task);           <span style=color:#999;font-style:italic>// my favorite style. very RTOS-like.
+</span><span style=color:#999;font-style:italic></span>
+    TaskClass my_task;
+    std::<span style=color:#6ab825;font-weight:700>thread</span> t1(my_task);        <span style=color:#999;font-style:italic>// callable object
+</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t2{my_task};        <span style=color:#999;font-style:italic>// recommended approach
+</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t3((TaskClass()));  <span style=color:#999;font-style:italic>// () hell
+</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t4{TaskClass()};    <span style=color:#999;font-style:italic>// recommended approach  
+</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t5([](){            <span style=color:#999;font-style:italic>// lambdas are also recommended
+</span><span style=color:#999;font-style:italic></span>        task();
+    });
+
+    t0.join();
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
+    t5.join();
+}
+
+<span style=color:#999;font-style:italic>// WRONG: This returns a func that returns a std::thread object. wtf?
+</span><span style=color:#999;font-style:italic></span>std::<span style=color:#6ab825;font-weight:700>thread</span> t6(TaskClass());
+</code></pre></td></tr></table>
+</div>
+</div><p>The question is: why is this so cursed?</p>
+<h1 id=the-most-vexing-parse>The Most Vexing Parse</h1>
+<p>C++ is a messy language that wants to modernize with fancy modern syntactic features but MUST keep things backwards compatible<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p>
+<p>This results in some syntactical ambiguity on whether something is a parameter or a function type specification.</p>
+<p>The most vexing parse is a rule applied to handle such ambiguity.</p>
+<p>Consider this:</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-style:italic>// Simple, right?
+</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>char</span> <span style=color:#447fcf>foo</span>(Bar());
+</code></pre></td></tr></table>
+</div>
+</div><p>What do you think line 2 means?</p>
+<p>Generally, two schools of thought.</p>
+<ol>
+<li>foo is a char variable.
 <ul>
-<li><a href=https://godbolt.org/>https://godbolt.org/</a> or <a href=http://fsmbolt-i.comp.nus.edu.sg:10240/>http://fsmbolt-i.comp.nus.edu.sg:10240/</a></li>
-<li><a href="https://drive.google.com/drive/folders/13-SQ2Cbjt27u56I3C3wYR8LiRjMZsOed?usp=sharing">Tutorial slides</a></li>
-<li><a href=https://en.cppreference.com/w/>C++ Reference</a></li>
+<li>It was made with argument &lsquo;<code>Bar</code>&rsquo;, where &lsquo;<code>Bar</code>&rsquo; has been constructed<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>.</li>
 </ul>
-</blockquote>
-</details>
+</li>
+<li>foo is a function declaration<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup> that returns <code>char</code>.
+<ul>
+<li>It has an unnamed argument. The argument type is a pointer to a function<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup>.</li>
+</ul>
+</li>
+</ol>
+<p>The standard chooses 2 as the interpretation. I can&rsquo;t find the exact reason why in cppreference. Maybe you&rsquo;d have better luck digging through the ISO standard. This is unfortunately left as an exercise for the reader&mldr; 😰</p>
+<p>To resolve this ambiguity, we can either wrap the parameter in <code>()</code> (see <code>t3</code>), or use uniform initialization (see <code>t2</code> and <code>t4</code>), i.e. <code>{}</code> which was introduced in <a href=https://www.stroustrup.com/C++11FAQ.html#uniform-init>c++11</a>.</p>
+<p>You will get compile warnings if the vexing parse rule was applied to your code.</p>
+<p>I don&rsquo;t know the standard at the back of my hand, so here are some resources (and references to this writeup) to get you started on a deep-dive:</p>
+<ul>
+<li>
+<p>This mini writeup is mostly inspired by this <a href=https://en.wikipedia.org/wiki/Most_vexing_parse>wiki</a> article that does a detailed job explaining the vexing parse rule. Read it to see
+more examples, gory details and types of vexing parses that happen, such as with C-style casting. Also, they talk about the common ambiguity resolution techniques.</p>
+</li>
+<li>
+<p><a href=https://stackoverflow.com/questions/14077608/what-is-the-purpose-of-the-most-vexing-parse>Why most vexing parse?</a></p>
+</li>
+</ul>
+<p>TLDR: Use {} or lambdas for thread creation in assignments.</p>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p>C++ must be backwards compatible with C code, or else the world will explode.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:2 role=doc-endnote>
+<p>More precisely, an anonymous instance of Bar (don&rsquo;t worry, you don&rsquo;t really need to know this).&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:3 role=doc-endnote>
+<p>This might be confusing. How is it a function declaration without a {} body? This is probably because <a href=https://cplusplus.com/articles/yAqpX9L8/>prototype functions</a> are a thing.&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:4 role=doc-endnote>
+<p>The wiki on vexing parse claims this is due to C++ type decay rules.&#160;<a href=#fnref:4 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 </div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/vexing_parse/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>The Most Vexing Parse rule</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A brief explanation why a particular C++ thread creation syntax
-does/doesn't work.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 05 Feb '25
-</p>
-</div>
-</div>
-<div class=paginatorinternal>
-<ul class=pagenav>
-<a class=pagenav_current , href=/teaching/cs3211/>1</a>
 </div>
 </section>
 </main>
