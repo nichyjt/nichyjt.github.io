@@ -270,13 +270,15 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
 </span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
 </span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
 <pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;thread&gt;</span><span style=color:#cd2828;font-weight:700>
 </span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;iostream&gt;</span><span style=color:#cd2828;font-weight:700>
 </span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;unistd.h&gt;</span><span style=color:#cd2828;font-weight:700>
 </span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;cassert&gt;</span><span style=color:#cd2828;font-weight:700>
-</span><span style=color:#cd2828;font-weight:700></span><span style=color:#6ab825;font-weight:700>int</span> <span style=color:#447fcf>main</span>(){
+</span><span style=color:#cd2828;font-weight:700></span>
+<span style=color:#6ab825;font-weight:700>int</span> <span style=color:#447fcf>main</span>(){
     <span style=color:#6ab825;font-weight:700>int</span> local = <span style=color:#3677a9>0</span>;
     std::<span style=color:#6ab825;font-weight:700>thread</span> t1([](){
         <span style=color:#999;font-style:italic>// do stuff
@@ -293,13 +295,13 @@
 </div>
 </div><h3 id=c-implementations-of-stdmove-affects-its-internal-state>C++ Implementations of std::move affects its internal state</h3>
 <blockquote>
-<p>What <em>is</em> the moved thread&rsquo;s state?</p>
+<p>What <em>is</em> the old handle&rsquo;s state?</p>
 </blockquote>
 <p>Many asked this because we want to know what we can do with t1 (in the above example).</p>
 <p>What <code>std::move</code> exactly does to the moved thing (t1)&rsquo;s internal state is compiler dependent.<br>
 Different compilers implement c++ functions differently, as long as the behaviour conforms to the c++ standard.</p>
-<p>So, the <em>exact</em> state of the moved thing depends on <em>how</em> the compiler library implements it.</p>
-<p><a href=https://stackoverflow.com/questions/17730689/is-a-moved-from-vector-always-empty>This stackoverflow answer</a> explains how different implementations results in different internal states of the moved thing. This answer was in the context of <code>std::vector</code>. Unfortunately, I couldn&rsquo;t find the precise difference for <code>std::thread</code> in my gcc and clang compilers.</p>
+<p>So, the <em>exact</em> state of the moved thing&rsquo;s old handle depends on <em>how</em> the compiler library implements it.</p>
+<p><a href=https://stackoverflow.com/questions/17730689/is-a-moved-from-vector-always-empty>This stackoverflow answer</a> explains how different implementations results in different internal states of the moved thing&rsquo;s old handle. This answer was in the context of <code>std::vector</code>. Unfortunately, I couldn&rsquo;t find the precise difference for <code>std::thread</code> in my gcc and clang compilers.</p>
 <p>So, &ldquo;what is the exact internal state&rdquo; doesn&rsquo;t really matter. <br>
 In the context of <code>std::thread</code> and this class, you just need to know that:</p>
 <ol>
@@ -357,8 +359,8 @@ In the context of <code>std::thread</code> and this class, you just need to know
 <blockquote>
 <p>&mldr; POSIX.1-2024 explicitly documents that spurious wakeups may occur.</p>
 </blockquote>
-<p>You should probably give the linked doc a read, especially the &ldquo;Rationale -> Multiple Awakenings by Condition Signal&rdquo; section. They provided a good example of spurious wakeups and why they allow this &lsquo;bug&rsquo; in the POSIX standard.</p>
-<p>We know that the <strong>POSIX standard just allows spurious wakeups</strong>. (essentially &lsquo;Its a feature not a bug&rsquo;)<br>
+<p>The linked doc&rsquo;s section on &ldquo;Rationale -> Multiple Awakenings by Condition Signal&rdquo; section is good. They provided an example of spurious wakeups and explained why they allow this &lsquo;bug&rsquo; in the POSIX standard.</p>
+<p>We know that the <strong>POSIX standard just allows spurious wakeups</strong> (&lsquo;Its a feature not a bug&rsquo;). <br>
 So we should expect spurious wakeups for <code>condition_variable</code> and wrap it in a while loop to deal with such wakeups.</p>
 <h3 id=not-satisfied>Not satisfied?</h3>
 <p>For your own exploration; This <a href=https://sites.google.com/site/embeddedmonologue/home/mutual-exclusion-and-synchronization/spurious-wakeup-and-infinite-waiting-on-condvar>blogpost</a> dives much <strong>much</strong> deeper, enumerating different reasons (such as scheduling) specific to pthreads. You don&rsquo;t need to know any of these for CS3211.</p>
