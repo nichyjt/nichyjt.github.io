@@ -2,12 +2,10 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CS3211 Spring 2025 - T09 | Nicholas Yek</title>
-<meta name=description content="Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)
- &nbsp README/Quickstart  Disclaimer ⚠️ The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is completely optional and supplementary.
-Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.
-Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content.">
-<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/>
+<title>Tutorial 0 & Tutorial 1 QnA | Nicholas Yek</title>
+<meta name=description content="QnA for the first tutorial. Correct as at 9 Feb 2025.
+">
+<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/t1_faq/>
 <link rel=stylesheet href=/css/style.css>
 <link rel=stylesheet href=/css/mainmenu.css>
 <link rel=stylesheet href=/css/fonts.css>
@@ -21,14 +19,18 @@ Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
 <script src=/js/expandable.js></script>
-<meta property="og:title" content="CS3211 Spring 2025 - T09">
-<meta property="og:description" content="Yet another quaint blog waffling on about code and technology.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/">
+<meta property="og:title" content="Tutorial 0 & Tutorial 1 QnA">
+<meta property="og:description" content="QnA for the first tutorial. Correct as at 9 Feb 2025.
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/t1_faq/"><meta property="article:section" content="teaching">
+<meta property="article:published_time" content="2025-02-09T00:00:00+00:00">
+<meta property="article:modified_time" content="2025-02-09T00:00:00+00:00">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="CS3211 Spring 2025 - T09">
-<meta name=twitter:description content="Yet another quaint blog waffling on about code and technology.">
+<meta name=twitter:title content="Tutorial 0 & Tutorial 1 QnA">
+<meta name=twitter:description content="QnA for the first tutorial. Correct as at 9 Feb 2025.
+">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
 <div class=navcontainer><body>
@@ -138,66 +140,235 @@ Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/
 <div class=bodycontainer>
 <main>
 <section class=section>
-<h1 style=text-decoration:underline;margin-left:.75rem>CS3211 Spring 2025 - T09</h1>
-<div class=content style=margin-left:.75rem>
-<p>Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)</p>
-<details>
-<summary class=experienceSummary>
-&nbsp README/Quickstart
-        <br>
-</summary>
-<blockquote class=experienceBlockquote>
-<h3 id=disclaimer->Disclaimer ⚠️</h3>
-<p>The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is <strong>completely optional and supplementary</strong>.</p>
-<p>Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.</p>
-<p>Content <em>might</em> include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content. You&rsquo;re encouraged to <em>asynchronously</em> explore at your own convenience. You <strong>do not need to keep up with the extra stuff</strong>. In the spirit of exploration & tinkering, you might find that some of these content might be illuminating <em>after</em> finishing CS3211.</p>
-<h3 id=relevant-links->Relevant Links 🔗</h3>
-<p>Hide these under your pillow&mldr;</p>
+<div class=frontmatter>
+<h1 class="title, listTitleLink">Tutorial 0 & Tutorial 1 QnA</h1>
+<div class=subtitle>
+<p>
+<time>📆 February 9, 2025</time>
+|
+⌛ 6 minutes read
+</p>
+</div>
+<p class=tags style=width:fit-content>📋 Tags:
+</p>
+</div>
+<hr>
+<div class=content>
+<h2 id=index>Index</h2>
 <ul>
-<li><a href=https://godbolt.org/>https://godbolt.org/</a> or <a href=http://fsmbolt-i.comp.nus.edu.sg:10240/>http://fsmbolt-i.comp.nus.edu.sg:10240/</a></li>
-<li><a href="https://drive.google.com/drive/folders/13-SQ2Cbjt27u56I3C3wYR8LiRjMZsOed?usp=sharing">Tutorial slides</a></li>
-<li><a href=https://en.cppreference.com/w/>C++ Reference</a></li>
+<li><a href=#index>Index</a></li>
+<li><a href=#q1-different-lock-types>Q1: Different lock types</a></li>
+<li><a href=#q2-correction-stdmoves-unspecified-state>Q2: Correction: <code>std::move</code>&rsquo;s Unspecified State?</a>
+<ul>
+<li><a href=#correction-moved-thread-is-not-joinable>Correction: moved thread is not joinable</a></li>
+<li><a href=#c-implementations-of-stdmove-affects-its-internal-state>C++ Implementations of std::move affects its internal state</a></li>
 </ul>
+</li>
+<li><a href=#q3-lambdas---why-dont-we-use-the-argument-list--instead-of-capture-lists->Q3: Lambdas - why don&rsquo;t we use the argument list () instead of capture lists []?</a></li>
+<li><a href=#q4-why-do-spurious-wakeups-happen>Q4: Why do spurious wakeups happen?</a>
+<ul>
+<li><a href=#the-simple-answer-it-is-posix-standard>The simple answer: It is POSIX standard</a></li>
+<li><a href=#not-satisfied>Not satisfied?</a></li>
+</ul>
+</li>
+</ul>
+<h2 id=q1-different-lock-types>Q1: Different lock types</h2>
+<blockquote>
+<p>What&rsquo;s the difference between lock_guard, scoped_lock and unique_lock? It seems like scoped_lock is similar lock_guard, but it can acquire multiple mutexes together, so is there a need to use lock_guard?</p>
 </blockquote>
-</details>
+<p>The differences were covered in the lecture (based on the slides), but I&rsquo;ll summarise them here.</p>
+<ul>
+<li><a href=https://en.cppreference.com/w/cpp/thread/lock_guard><code>lock_guard</code></a> is just a RAII wrapper over a mutex.</li>
+<li><a href=https://en.cppreference.com/w/cpp/thread/scoped_lock><code>scoped_lock</code></a> is a lock_guard, just that you can lock/unlock multiple mutexes in a deadlock-free way.</li>
+<li><a href=https://en.cppreference.com/w/cpp/thread/unique_lock><code>unique_lock</code></a> is a lock_guard on steroids. In addition to lock_guard&rsquo;s basic feature, it&mldr;
+<ul>
+<li>can defer locking: <code>unique_lock lk{mtx, std::defer_lock}</code></li>
+<li>enables manual locking and unlocking</li>
+<li>is the only<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> lock that can be used with <a href=https://en.cppreference.com/w/cpp/thread/condition_variable><code>condition_variable</code></a> to build things like Monitors</li>
+<li>can <a href=https://en.cppreference.com/w/cpp/thread/unique_lock/swap>swap</a> state with another unique_lock</li>
+</ul>
+</li>
+</ul>
+<p>TLDR:</p>
+<table>
+<thead>
+<tr>
+<th>Lock</th>
+<th>Main Feature</th>
+<th>Usecase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lock_guard</td>
+<td>Simple RAII lock.</td>
+<td>You just need a simple RAII wrapper</td>
+</tr>
+<tr>
+<td>scoped_lock</td>
+<td>Lock multiple mutexes deadlock-free</td>
+<td>You need multiple mutexes in your critical section</td>
+</tr>
+<tr>
+<td>unique_lock</td>
+<td>Flexible locking (deferable, moveable)</td>
+<td>You need more control over locking behaviour</td>
+</tr>
+</tbody>
+</table>
+<p>The use of different RAII locks really <strong>depends on your usecase</strong>.</p>
+<p>Specifically, <strong>is there a need to use lock_guard</strong>?</p>
+<p>No. You can achieve lock_guard functionality with unique_lock. You can also just pass one mutex to scoped_lock to achieve the same functionality as lock_guard.</p>
+<p>BUT &ndash; lock_guard is not entirely useless. Sometimes you want to limit the amount of features a data structure gives you to avoid shooting youself in the foot.</p>
+<p>Relevant further readings:</p>
+<ul>
+<li><a href=https://stackoverflow.com/questions/43019598/stdlock-guard-or-stdscoped-lock>SO: lock_guard vs scoped_lock</a></li>
+<li><a href=https://stackoverflow.com/questions/19571958/is-using-unique-lock-for-a-task-that-can-be-acomplished-by-lock-guard-slower>SO: is unique_lock slower?</a></li>
+<li><a href=https://www.approxion.com/why-i-still-use-stdlock_guard/>Community Blogpost: Why I still use lock_guard</a></li>
+</ul>
+<h2 id=q2-correction-stdmoves-unspecified-state>Q2: Correction: <code>std::move</code>&rsquo;s Unspecified State?</h2>
+<p>Recall that <code>std::move</code> efficently transfers resources from a source to a destination.</p>
+<p>cppreference:</p>
+<blockquote>
+<p><code>std::move</code> is used to indicate that an object <code>t</code> may be &ldquo;moved from&rdquo;, i.e. allowing the efficient transfer of resources from <code>t</code> to another object.</p>
+</blockquote>
+<p>There was confusion over the state of the moved thing. The confusion is regarding the docs' vague phrasing for <a href=https://en.cppreference.com/w/cpp/utility/move>std::move</a>:</p>
+<blockquote>
+<p>Unless otherwise specified, all standard library objects that have been moved from are placed in a &ldquo;valid but unspecified state&rdquo;, meaning the object&rsquo;s class invariants hold&mldr;</p>
+</blockquote>
+<p>The general questions from this are:</p>
+<ul>
+<li>What is inside the moved thread&rsquo;s old handle?</li>
+<li>What can we do with the old identifier for thread?</li>
+</ul>
+<p>These are good questions because it highlights the difference between <strong>language standards</strong> and <strong>implementation</strong>.</p>
+<p><strong>TLDR WHAT YOU SHOULD KNOW ABOUT MOVING</strong>:</p>
+<ol>
+<li>Generally, ownership of moved things belongs to their new handle, so you should only interact with the thing using the new handle</li>
+<li>Ownership of a moved thread&rsquo;s execution belongs to the new handle, not the old one</li>
+<li>A moved thread&rsquo;s old handle is not joinable and detachable</li>
+<li>We don&rsquo;t care about the old handle&rsquo;s exact state for any moved thing. It depends on compiler implementation.</li>
+<li>Interacting with the old handle should not affect the thing that is in the new handle</li>
+</ol>
+<h3 id=correction-moved-thread-is-not-joinable>Correction: moved thread is not joinable</h3>
+<p>I re-read the specs and tested on a minimal example. You cannot <code>join()</code> or <code>detach()</code> on the moved thread&rsquo;s old handle:</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;thread&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;iostream&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;unistd.h&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;cassert&gt;</span><span style=color:#cd2828;font-weight:700>
+</span><span style=color:#cd2828;font-weight:700></span><span style=color:#6ab825;font-weight:700>int</span> <span style=color:#447fcf>main</span>(){
+    <span style=color:#6ab825;font-weight:700>int</span> local = <span style=color:#3677a9>0</span>;
+    std::<span style=color:#6ab825;font-weight:700>thread</span> t1([](){
+        <span style=color:#999;font-style:italic>// do stuff
+</span><span style=color:#999;font-style:italic></span>        sleep(<span style=color:#3677a9>3</span>);
+        std::cout &lt;&lt; <span style=color:#ed9d13>&#34;done!</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>;
+    });
+
+    std::<span style=color:#6ab825;font-weight:700>thread</span> t2 = std::move(t1); <span style=color:#999;font-style:italic>// Transfer ownership to t2
+</span><span style=color:#999;font-style:italic></span>    assert(!t1.joinable()); <span style=color:#999;font-style:italic>// this passes, meaning t1.joinable() is false.
+</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// This means that t1 cannot be joined or detached.
+</span><span style=color:#999;font-style:italic></span>    t2.join();
+}
+</code></pre></td></tr></table>
 </div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/t1_faq/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Tutorial 0 & Tutorial 1 QnA</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>QnA for the first tutorial. Correct as at 9 Feb 2025.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 09 Feb '25
-</p>
+</div><h3 id=c-implementations-of-stdmove-affects-its-internal-state>C++ Implementations of std::move affects its internal state</h3>
+<blockquote>
+<p>What <em>is</em> the moved thread&rsquo;s state?</p>
+</blockquote>
+<p>Many asked this because we want to know what we can do with t1 (in the above example).</p>
+<p>What <code>std::move</code> exactly does to the moved thing (t1)&rsquo;s internal state is compiler dependent.<br>
+Different compilers implement c++ functions differently, as long as the behaviour conforms to the c++ standard.</p>
+<p>So, the <em>exact</em> state of the moved thing is depends on how the compiler library implements it.</p>
+<p><a href=https://stackoverflow.com/questions/17730689/is-a-moved-from-vector-always-empty>This Stackoverflow answer</a> does a good job explaining how different implementations results in different internal states of the moved thing. This answer was in the context of <code>std::vector</code>. Unfortunately, I couldn&rsquo;t find the precise difference for <code>std::thread</code> in my gcc and clang compilers.</p>
+<p>So, &ldquo;what is the exact internal state&rdquo; doesn&rsquo;t really matter.<br>
+In the context of <code>std::thread</code> and this class, you just need to know that:</p>
+<ol>
+<li>You cannot join() or detach() a moved thread</li>
+<li>Ownership of the thread’s execution is transferred to the new handle (t2)</li>
+<li>Interacting with the old handle should not affect the thing that is in the new handle</li>
+</ol>
+<h2 id=q3-lambdas---why-dont-we-use-the-argument-list--instead-of-capture-lists->Q3: Lambdas - why don&rsquo;t we use the argument list () instead of capture lists []?</h2>
+<p>You <em>can</em> use the argument list instead of capture lists, but the ergonomics is not as good (my opinion).</p>
+<p>The following will compile. Test on your own machine:</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>foo</span>(){
+    <span style=color:#6ab825;font-weight:700>int</span> local = <span style=color:#3677a9>0</span>;
+    <span style=color:#999;font-style:italic>// the usual way
+</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t1([local](){
+        printf(<span style=color:#ed9d13>&#34;Local is %d </span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, local); <span style=color:#999;font-style:italic>// Local is 0
+</span><span style=color:#999;font-style:italic></span>    });  
+    t1.join();
+
+    std::<span style=color:#6ab825;font-weight:700>thread</span> t2([](<span style=color:#6ab825;font-weight:700>int</span> my_local){
+        printf(<span style=color:#ed9d13>&#34;Local is %d </span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, my_local); <span style=color:#999;font-style:italic>// Local is 0
+</span><span style=color:#999;font-style:italic></span>    }, local); <span style=color:#999;font-style:italic>// pass local just like a fn argument
+</span><span style=color:#999;font-style:italic></span>    t2.join();
+}
+</code></pre></td></tr></table>
 </div>
+</div><h2 id=q4-why-do-spurious-wakeups-happen>Q4: Why do spurious wakeups happen?</h2>
+<p>The reason I gave in tutorial might not be satisfying. This section is for those who want resources for a deeper explanation (which is very out of syllabus 💀).</p>
+<p>⚠️ Otherwise, for this class, you can just take it as &lsquo;they just happen&rsquo;. ⚠️</p>
+<h3 id=the-simple-answer-it-is-posix-standard>The simple answer: It is POSIX standard</h3>
+<p>Under the hood (for Linux), condition_variable uses pthread&rsquo;s condition variable: <code>pthread_cond_t</code>.</p>
+<p>You can verify that pthread is used under the hood in your own compiler library in Linux. For my compiler (gcc):</p>
+<p><img src=./pthread_cond_t.png alt=pthread_cond_t.png></p>
+<p>So what? Spurious wakeups are <strong>defined behaviours</strong> in the <a href=https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_cond_broadcast.html>IEEE POSIX standard</a>.</p>
+<p>Relevant quote:</p>
+<blockquote>
+<p>&mldr; POSIX.1-2024 explicitly documents that spurious wakeups may occur.</p>
+</blockquote>
+<p>You should probably give the linked doc a read, especially the &ldquo;Rationale/Multiple Awakenings by Condition Signal&rdquo; section. They provided a good example and why they allow this &lsquo;bug&rsquo; in the standard.</p>
+<p>We know that the <strong>POSIX standard just allows spurious wakeups</strong>. (essentially &lsquo;Its a feature not a bug&rsquo;)<br>
+So we should expect spurious wakeups for <code>condition_variable</code> and wrap it in a while loop to deal with such wakeups.</p>
+<h3 id=not-satisfied>Not satisfied?</h3>
+<p>For your own exploration; This <a href=https://sites.google.com/site/embeddedmonologue/home/mutual-exclusion-and-synchronization/spurious-wakeup-and-infinite-waiting-on-condvar>blogpost</a> dives much <strong>much</strong> deeper, enumerating different reasons specific to pthreads. You don&rsquo;t need to know any of these for CS3211.</p>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p>For <a href=https://en.cppreference.com/w/cpp/thread/condition_variable_any>condition_variable_any</a>, this does not apply. Any lock that implements <a href=https://en.cppreference.com/w/cpp/named_req/BasicLockable><em>Basic Lockable</em></a> can be used for this. Follow the links to find out more.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 </div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/lambdas_revisited/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Lambdas (capture lists) Revisited</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A revisit into how simple C++ lambdas capture lists work with references and sample code.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 08 Feb '25
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/vexing_parse/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>The Most Vexing Parse rule</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A brief explanation why a particular C++ thread creation syntax
-does/doesn't work.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 05 Feb '25
-</p>
-</div>
-</div>
-<div class=paginatorinternal>
-<ul class=pagenav>
-<a class=pagenav_current , href=/teaching/cs3211/>1</a>
 </div>
 </section>
 </main>
