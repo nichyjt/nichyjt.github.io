@@ -167,7 +167,7 @@
 <li><a href=#q3-lambdas---why-dont-we-use-the-argument-list--instead-of-capture-lists->Q3: Lambdas - why don&rsquo;t we use the argument list () instead of capture lists []?</a></li>
 <li><a href=#q4-why-do-spurious-wakeups-happen>Q4: Why do spurious wakeups happen?</a>
 <ul>
-<li><a href=#the-simple-answer-it-is-posix-standard>The simple answer: It is POSIX standard</a></li>
+<li><a href=#the-simple-answer-it-is-allowed-by-posix>The simple answer: It is allowed by POSIX</a></li>
 <li><a href=#not-satisfied>Not satisfied?</a></li>
 </ul>
 </li>
@@ -227,12 +227,11 @@
 <li><a href=https://www.approxion.com/why-i-still-use-stdlock_guard/>Community Blogpost: Why I still use lock_guard</a></li>
 </ul>
 <h2 id=q2-correction-stdmoves-unspecified-state>Q2: Correction: <code>std::move</code>&rsquo;s Unspecified State?</h2>
-<p>Recall that <code>std::move</code> efficently transfers resources from a source to a destination.</p>
-<p>cppreference:</p>
+<p>Recall <a href=https://en.cppreference.com/w/cpp/utility/move>std::move</a>. Relevant quote from cppreference:</p>
 <blockquote>
 <p><code>std::move</code> is used to indicate that an object <code>t</code> may be &ldquo;moved from&rdquo;, i.e. allowing the efficient transfer of resources from <code>t</code> to another object.</p>
 </blockquote>
-<p>There was confusion over the state of the moved thing. The confusion is regarding the docs' vague phrasing for <a href=https://en.cppreference.com/w/cpp/utility/move>std::move</a>:</p>
+<p>There was confusion over the state of the moved thing. The confusion is regarding the docs' vague phrasing:</p>
 <blockquote>
 <p>Unless otherwise specified, all standard library objects that have been moved from are placed in a &ldquo;valid but unspecified state&rdquo;, meaning the object&rsquo;s class invariants hold&mldr;</p>
 </blockquote>
@@ -299,9 +298,9 @@
 <p>Many asked this because we want to know what we can do with t1 (in the above example).</p>
 <p>What <code>std::move</code> exactly does to the moved thing (t1)&rsquo;s internal state is compiler dependent.<br>
 Different compilers implement c++ functions differently, as long as the behaviour conforms to the c++ standard.</p>
-<p>So, the <em>exact</em> state of the moved thing is depends on how the compiler library implements it.</p>
-<p><a href=https://stackoverflow.com/questions/17730689/is-a-moved-from-vector-always-empty>This Stackoverflow answer</a> does a good job explaining how different implementations results in different internal states of the moved thing. This answer was in the context of <code>std::vector</code>. Unfortunately, I couldn&rsquo;t find the precise difference for <code>std::thread</code> in my gcc and clang compilers.</p>
-<p>So, &ldquo;what is the exact internal state&rdquo; doesn&rsquo;t really matter.<br>
+<p>So, the <em>exact</em> state of the moved thing depends on <em>how</em> the compiler library implements it.</p>
+<p><a href=https://stackoverflow.com/questions/17730689/is-a-moved-from-vector-always-empty>This stackoverflow answer</a> explains how different implementations results in different internal states of the moved thing. This answer was in the context of <code>std::vector</code>. Unfortunately, I couldn&rsquo;t find the precise difference for <code>std::thread</code> in my gcc and clang compilers.</p>
+<p>So, &ldquo;what is the exact internal state&rdquo; doesn&rsquo;t really matter. <br>
 In the context of <code>std::thread</code> and this class, you just need to know that:</p>
 <ol>
 <li>You cannot join() or detach() a moved thread</li>
@@ -346,20 +345,23 @@ In the context of <code>std::thread</code> and this class, you just need to know
 </div><h2 id=q4-why-do-spurious-wakeups-happen>Q4: Why do spurious wakeups happen?</h2>
 <p>The reason I gave in tutorial might not be satisfying. This section is for those who want resources for a deeper explanation (which is very out of syllabus 💀).</p>
 <p>⚠️ Otherwise, for this class, you can just take it as &lsquo;they just happen&rsquo;. ⚠️</p>
-<h3 id=the-simple-answer-it-is-posix-standard>The simple answer: It is POSIX standard</h3>
+<h3 id=the-simple-answer-it-is-allowed-by-posix>The simple answer: It is allowed by POSIX</h3>
 <p>Under the hood (for Linux), condition_variable uses pthread&rsquo;s condition variable: <code>pthread_cond_t</code>.</p>
 <p>You can verify that pthread is used under the hood in your own compiler library in Linux. For my compiler (gcc):</p>
-<p><img src=./pthread_cond_t.png alt=pthread_cond_t.png></p>
+<figure class=figmd>
+<img src=./pthread_cond_t.png alt class=fignormal>
+<figcaption>gcc c++11 src code</figcaption>
+</figure>
 <p>So what? Spurious wakeups are <strong>defined behaviours</strong> in the <a href=https://pubs.opengroup.org/onlinepubs/9799919799/functions/pthread_cond_broadcast.html>IEEE POSIX standard</a>.</p>
 <p>Relevant quote:</p>
 <blockquote>
 <p>&mldr; POSIX.1-2024 explicitly documents that spurious wakeups may occur.</p>
 </blockquote>
-<p>You should probably give the linked doc a read, especially the &ldquo;Rationale/Multiple Awakenings by Condition Signal&rdquo; section. They provided a good example and why they allow this &lsquo;bug&rsquo; in the standard.</p>
+<p>You should probably give the linked doc a read, especially the &ldquo;Rationale -> Multiple Awakenings by Condition Signal&rdquo; section. They provided a good example of spurious wakeups and why they allow this &lsquo;bug&rsquo; in the POSIX standard.</p>
 <p>We know that the <strong>POSIX standard just allows spurious wakeups</strong>. (essentially &lsquo;Its a feature not a bug&rsquo;)<br>
 So we should expect spurious wakeups for <code>condition_variable</code> and wrap it in a while loop to deal with such wakeups.</p>
 <h3 id=not-satisfied>Not satisfied?</h3>
-<p>For your own exploration; This <a href=https://sites.google.com/site/embeddedmonologue/home/mutual-exclusion-and-synchronization/spurious-wakeup-and-infinite-waiting-on-condvar>blogpost</a> dives much <strong>much</strong> deeper, enumerating different reasons specific to pthreads. You don&rsquo;t need to know any of these for CS3211.</p>
+<p>For your own exploration; This <a href=https://sites.google.com/site/embeddedmonologue/home/mutual-exclusion-and-synchronization/spurious-wakeup-and-infinite-waiting-on-condvar>blogpost</a> dives much <strong>much</strong> deeper, enumerating different reasons (such as scheduling) specific to pthreads. You don&rsquo;t need to know any of these for CS3211.</p>
 <section class=footnotes role=doc-endnotes>
 <hr>
 <ol>
