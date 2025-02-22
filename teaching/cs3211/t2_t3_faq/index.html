@@ -2,12 +2,10 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CS3211 Spring 2025 - T09 | Nicholas Yek</title>
-<meta name=description content="Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)
- &nbsp README/Quickstart  Disclaimer ⚠️ The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is completely optional and supplementary.
-Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.
-Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content.">
-<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/>
+<title>Tutorial 3 QnA | Nicholas Yek</title>
+<meta name=description content="QnA for the Shared Pointer tutorial. Correct as at 21 Feb 2025.
+">
+<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/t2_t3_faq/>
 <link rel=stylesheet href=/css/style.css>
 <link rel=stylesheet href=/css/mainmenu.css>
 <link rel=stylesheet href=/css/fonts.css>
@@ -21,14 +19,22 @@ Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
 <script src=/js/expandable.js></script>
-<meta property="og:title" content="CS3211 Spring 2025 - T09">
-<meta property="og:description" content="Yet another quaint blog waffling on about code and technology.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css integrity=sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC crossorigin=anonymous>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js integrity=sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}]})})</script>
+<meta property="og:title" content="Tutorial 3 QnA">
+<meta property="og:description" content="QnA for the Shared Pointer tutorial. Correct as at 21 Feb 2025.
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/t2_t3_faq/"><meta property="article:section" content="teaching">
+<meta property="article:published_time" content="2025-02-21T00:00:00+00:00">
+<meta property="article:modified_time" content="2025-02-21T00:00:00+00:00">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="CS3211 Spring 2025 - T09">
-<meta name=twitter:description content="Yet another quaint blog waffling on about code and technology.">
+<meta name=twitter:title content="Tutorial 3 QnA">
+<meta name=twitter:description content="QnA for the Shared Pointer tutorial. Correct as at 21 Feb 2025.
+">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
 <div class=navcontainer><body>
@@ -138,77 +144,191 @@ Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/
 <div class=bodycontainer>
 <main>
 <section class=section>
-<h1 style=text-decoration:underline;margin-left:.75rem>CS3211 Spring 2025 - T09</h1>
-<div class=content style=margin-left:.75rem>
-<p>Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)</p>
-<details>
-<summary class=experienceSummary>
-&nbsp README/Quickstart
-        <br>
-</summary>
-<blockquote class=experienceBlockquote>
-<h3 id=disclaimer->Disclaimer ⚠️</h3>
-<p>The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is <strong>completely optional and supplementary</strong>.</p>
-<p>Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.</p>
-<p>Content <em>might</em> include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content. You&rsquo;re encouraged to <em>asynchronously</em> explore at your own convenience. You <strong>do not need to keep up with the extra stuff</strong>. In the spirit of exploration & tinkering, you might find that some of these content might be illuminating <em>after</em> finishing CS3211.</p>
-<h3 id=relevant-links->Relevant Links 🔗</h3>
-<p>Hide these under your pillow&mldr;</p>
+<div class=frontmatter>
+<h1 class="title, listTitleLink">Tutorial 3 QnA</h1>
+<div class=subtitle>
+<p>
+<time>📆 February 21, 2025</time>
+|
+⌛ 6 minutes read
+</p>
+</div>
+<p class=tags style=width:fit-content>📋 Tags:
+</p>
+</div>
+<hr>
+<div class=content>
+<h2 id=index>Index</h2>
 <ul>
-<li><a href=https://godbolt.org/>https://godbolt.org/</a> or <a href=http://fsmbolt-i.comp.nus.edu.sg:10240/>http://fsmbolt-i.comp.nus.edu.sg:10240/</a></li>
-<li><a href="https://drive.google.com/drive/folders/13-SQ2Cbjt27u56I3C3wYR8LiRjMZsOed?usp=sharing">Tutorial slides</a></li>
-<li><a href=https://en.cppreference.com/w/>C++ Reference</a></li>
+<li><a href=#index>Index</a></li>
+<li><a href=#q1-synchronises-with-is-not-symmetric>Q1: synchronises-with is not symmetric</a></li>
+<li><a href=#q2-when-increments-happen>Q2: When increments happen</a>
+<ul>
+<li><a href=#addendum-to-45-example>Addendum to 4.5 example</a></li>
 </ul>
+</li>
+<li><a href=#q3-release-sequences-revisited>Q3: Release Sequences Revisited</a>
+<ul>
+<li><a href=#relaxed-rmw-cannot-head-release-sequences>Relaxed RMW cannot head release sequences</a></li>
+<li><a href=#non-rmw-operations-break-release-sequence-chains>Non RMW operations break release sequence chains</a></li>
+<li><a href=#synchronises-with-inside-release-sequences>Synchronises-with inside release sequences</a></li>
+</ul>
+</li>
+</ul>
+<h2 id=q1-synchronises-with-is-not-symmetric>Q1: synchronises-with is not symmetric</h2>
+<blockquote>
+<p>Is synchronized-with a symmetric relation? That is, if X synchronizes with Y, then does Y synchronize with X too? My guess is that it&rsquo;s not, because for X to sync with Y, its release must be on the same memory location as Y&rsquo;s acquire, so this relationship is inherently directed. But if it&rsquo;s directed, then in Tut 3 slide 4.4 DON’T Relax Everything, how can we be sure that the sw arrow points right? What&rsquo;s stopping it from pointing left and leading to a data race?</p>
 </blockquote>
-</details>
+<p>This is an interesting question. The slide in question:</p>
+<figure class=figmd>
+<img src=sw_4.png alt class=figsmall>
+<figcaption>Figure A</figcaption>
+</figure>
+<p>You are right to say that synchronizes-with relationship is directed. We can infer this from cppreference about <a href=https://en.cppreference.com/w/cpp/atomic/memory_order>memory order</a>.</p>
+<p>For this example, because we included <code>acq_rel</code> constraints, we force a <code>hb</code> relationship between (b) and (p).
+As you correctly point out, there is nothing stopping &ldquo;<code>b hb p</code>&rdquo; or &ldquo;<code>p hb b</code>&rdquo;.</p>
+<p>But, we see that the structure of the <code>if</code> code means that (q) will always <em>happen after</em> the decrement that sees <code>old_count == 1</code>.</p>
+<p>Relevant code snippet:</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++>~SharedPtr4()
+{
+    size_t old_count = m_count-&gt;fetch_sub(<span style=color:#3677a9>1</span>, std::memory_order::acq_rel);
+    <span style=color:#6ab825;font-weight:700>if</span>(old_count == <span style=color:#3677a9>1</span>) <span style=color:#999;font-style:italic>// can only trigger for the last decrement in the example!
+</span><span style=color:#999;font-style:italic></span>    {
+        <span style=color:#6ab825;font-weight:700>delete</span> m_ptr;
+        <span style=color:#6ab825;font-weight:700>delete</span> m_count;
+    }
+}
+</code></pre></td></tr></table>
 </div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/t2_t3_faq/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Tutorial 3 QnA</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>QnA for the Shared Pointer tutorial. Correct as at 21 Feb 2025.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 21 Feb '25
-</p>
+</div><p>Since acq_rel orders the decrements and (q) must happen after the last decrement, we know where (q) will be in the coherence order.</p>
+<p>The only possible coherence orders given the constraints and structure of the code are:</p>
+<ul>
+<li>[a,s,b,p,q] <code>&lt;--- the tutorial example uses this, where b sw p</code></li>
+<li>[a,s,p,b,q] <code>&lt;--- it is possible that p sw b, leading to this</code></li>
+</ul>
+<p>Exercise for you: prove that any other coherence order will result in either a violation of the constraints or a situation where the shared pointer deletes itself before the next thread can be spawned to increment <code>m_count</code>.</p>
+<p>Can we say for sure which coherence order happens during runtime? <strong>No. Either can occur</strong>.</p>
+<p>So, if during runtime, b sw p, then we get Figure A.
+If p sw b, then the figure will look like this instead:
+<figure class=figmd>
+<img src=sw_alt.png alt class=figsmall>
+<figcaption>Figure B</figcaption>
+</figure></p>
+<p>For sake of discussion, the tutorial example fixes the coherence order to be the former to show how adding acq-rel enforces a hb relationship, preventing (q) from ever happening before a decrement.</p>
+<p>To sum up, the acq_rel constraints and <code>if</code> will force the coherence order to behave such that the delete must always happen after all the decrements, resolving the data race.</p>
+<h2 id=q2-when-increments-happen>Q2: When increments happen</h2>
+<blockquote>
+<p>In slide 4.4 Relax Everything, the one with the diagram with 5 boxes, where exactly does the increment of m_count from 1->2 happen?</p>
+</blockquote>
+<p>The slides for 4.4 have been updated to account for every increment from zero.</p>
+<h3 id=addendum-to-45-example>Addendum to 4.5 example</h3>
+<p>The example 4.5 in the tutorial sheet (html file) might cause confusion since the modificaion order does not start from 0.</p>
+<p>Some of you may be confused how this can happen based on shared pointer increments.</p>
+<p>So, I adapted<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> the example to start the count from zero, where thread 1 creates the <code>SharedPtr</code>. The adapted example is a bit more complicated but follows the exact same logic as the tutorial sheet&rsquo;s example to prove that (b) hb (u).</p>
+<p>The adapted example are on the slides for your reference, highlighted in yellow.</p>
+<h2 id=q3-release-sequences-revisited>Q3: Release Sequences Revisited</h2>
+<blockquote>
+<p>What are the possible release sequences? Why do we use (b) in 4.5 as the head?</p>
+</blockquote>
+<p>To answer the 1st qn, I will illustrate more clearly how we can get release sequences.</p>
+<p>Consider an arbitrary modification order, where:</p>
+<p>$
+A_{\text{acq-rel}}, B_{\text{acq-rel}}, C_{\text{acq-rel}}, D_{\text{acq-rel}}
+$</p>
+<p>Assume all the letters are <strong>read-modify-write</strong> operations.</p>
+<p>Recall:</p>
+<blockquote>
+<p>A release sequence headed by a release operation A on an atomic object M is a maximal contiguous sub-sequence of side effects in the modification order of M, where the first operation is A, and every subsequent operation is an atomic read-modify-write operation.</p>
+</blockquote>
+<p>The possible release sequences are any subset (in order!) of the chain:</p>
+<ul>
+<li>A,B,C,D (where A is the head)</li>
+<li>B,C,D (where B is the head)</li>
+<li>C,D (where C is the head)</li>
+</ul>
+<p>There are a few properties and caveats.</p>
+<h3 id=relaxed-rmw-cannot-head-release-sequences>Relaxed RMW cannot head release sequences</h3>
+<p><strong>If we change B to be relaxed, the release sequences are</strong>:</p>
+<ul>
+<li>A,B,C,D</li>
+<li>C,D</li>
+</ul>
+<p>Notice how B can no longer head the release sequence because it cannot be a release operation.</p>
+<p>Note that for acq_rel, <a href=https://en.cppreference.com/w/cpp/atomic/memory_order>cppreference</a> defines such operations as &ldquo;<strong>both an acquire operation and a release operation</strong>&rdquo;.</p>
+<h3 id=non-rmw-operations-break-release-sequence-chains>Non RMW operations break release sequence chains</h3>
+<p><strong>If we change B to be load/store, the release sequences in the ModO are</strong>:</p>
+<ul>
+<li>C,D</li>
+</ul>
+<p>Notice that B breaks the release sequence chain. Elements of a release sequence must ONLY be RMW operations.</p>
+<h3 id=synchronises-with-inside-release-sequences>Synchronises-with inside release sequences</h3>
+<p>Recall:</p>
+<blockquote>
+<p>An atomic operation A that performs a release operation on an atomic object M synchronizes with an atomic operation B that performs an acquire operation on M and takes its value from any side effect in the release sequence headed by A.</p>
+</blockquote>
+<p>Given a release sequence, we can basically say that the <strong>head</strong> will <strong>sw</strong> any element of the release sequence <strong>that is an acquire</strong>.</p>
+<p>For this modification order,<br>
+$
+A_{\text{acq-rel}}, B_{\text{acq-rel}}, C_{\text{acq-rel}}, D_{\text{acq-rel}}
+$</p>
+<p>Headed by A, we get:</p>
+<ul>
+<li>A sw B, A sw C, A sw D.</li>
+</ul>
+<p>Headed by B, we get:</p>
+<ul>
+<li>B sw C, B sw D</li>
+</ul>
+<p>Headed by C, we get:</p>
+<ul>
+<li>C sw D</li>
+</ul>
+<p><strong>If we change B to relaxed</strong>,<br>
+$
+A_{\text{acq-rel}}, B_{\text{relaxed}}, C_{\text{acq-rel}}, D_{\text{acq-rel}}
+$</p>
+<p>Note the changes to the relationships:</p>
+<p>Headed by A, we get:</p>
+<ul>
+<li><del>A sw B</del>, A sw C, A sw D.</li>
+</ul>
+<p><del>Headed by B, we get:</del> // We no longer have a release seq headed by B!</p>
+<ul>
+<li><del>B sw C, B sw D</del></li>
+</ul>
+<p>Headed by C, we get:</p>
+<ul>
+<li>C sw D</li>
+</ul>
+<p>Note that for A sw C, operation C can still read the side effect from B<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>.</p>
+<p>If these examples are clear, then you will understand how we got the release sequence for 4.5 and the sw relationships.</p>
+<p>So, <strong>why use (b) as the release sequence head</strong> in example 4.5?</p>
+<p>Out of the different release sequences possible for example 4.5, only the release sequence headed by (b) allows us to show that <code>(b) sw (t)</code>, therefore <code>(b) hb (u)</code>, showing that there&rsquo;s no data race between (b) and the nonatomic delete (u).</p>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p>I did this really quickly and verified that the ModO does obey all the constraints in the example. But I am only human so if you spot any issue, please let me know.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:2 role=doc-endnote>
+<p>Why? Refer to this part of the definition: &ldquo;(an RMW acquire in the release sequence) takes its value from any side effect in the release sequence headed by A&rdquo;&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 </div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/t1_faq/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Tutorial 0 & Tutorial 1 QnA</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>QnA for the first tutorial. Correct as at 9 Feb 2025.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 09 Feb '25
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/lambdas_revisited/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Lambdas (capture lists) Revisited</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A revisit into how simple C++ lambdas capture lists work with references and sample code.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 08 Feb '25
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/vexing_parse/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>The Most Vexing Parse rule</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A brief explanation why a particular C++ thread creation syntax
-does/doesn't work.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 05 Feb '25
-</p>
-</div>
-</div>
-<div class=paginatorinternal>
-<ul class=pagenav>
-<a class=pagenav_current , href=/teaching/cs3211/>1</a>
 </div>
 </section>
 </main>
