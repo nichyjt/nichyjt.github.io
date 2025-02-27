@@ -2,12 +2,10 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CS3211 Spring 2025 - T09 | Nicholas Yek</title>
-<meta name=description content="Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)
- &nbsp README/Quickstart  Disclaimer ⚠️ The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is completely optional and supplementary.
-Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.
-Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content.">
-<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/>
+<title>Tutorial 2 QnA | Nicholas Yek</title>
+<meta name=description content="QnA for the Atomics tutorial. Correct as at 27 Feb 2025.
+">
+<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/t2_faq/>
 <link rel=stylesheet href=/css/style.css>
 <link rel=stylesheet href=/css/mainmenu.css>
 <link rel=stylesheet href=/css/fonts.css>
@@ -21,14 +19,22 @@ Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
 <script src=/js/expandable.js></script>
-<meta property="og:title" content="CS3211 Spring 2025 - T09">
-<meta property="og:description" content="Yet another quaint blog waffling on about code and technology.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css integrity=sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC crossorigin=anonymous>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js integrity=sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja crossorigin=anonymous></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}]})})</script>
+<meta property="og:title" content="Tutorial 2 QnA">
+<meta property="og:description" content="QnA for the Atomics tutorial. Correct as at 27 Feb 2025.
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/t2_faq/"><meta property="article:section" content="teaching">
+<meta property="article:published_time" content="2025-02-27T00:00:00+00:00">
+<meta property="article:modified_time" content="2025-02-27T00:00:00+00:00">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="CS3211 Spring 2025 - T09">
-<meta name=twitter:description content="Yet another quaint blog waffling on about code and technology.">
+<meta name=twitter:title content="Tutorial 2 QnA">
+<meta name=twitter:description content="QnA for the Atomics tutorial. Correct as at 27 Feb 2025.
+">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
 <div class=navcontainer><body>
@@ -138,88 +144,251 @@ Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/
 <div class=bodycontainer>
 <main>
 <section class=section>
-<h1 style=text-decoration:underline;margin-left:.75rem>CS3211 Spring 2025 - T09</h1>
-<div class=content style=margin-left:.75rem>
-<p>Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)</p>
-<details>
-<summary class=experienceSummary>
-&nbsp README/Quickstart
-        <br>
-</summary>
-<blockquote class=experienceBlockquote>
-<h3 id=disclaimer->Disclaimer ⚠️</h3>
-<p>The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is <strong>completely optional and supplementary</strong>.</p>
-<p>Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.</p>
-<p>Content <em>might</em> include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content. You&rsquo;re encouraged to <em>asynchronously</em> explore at your own convenience. You <strong>do not need to keep up with the extra stuff</strong>. In the spirit of exploration & tinkering, you might find that some of these content might be illuminating <em>after</em> finishing CS3211.</p>
-<h3 id=relevant-links->Relevant Links 🔗</h3>
-<p>Hide these under your pillow&mldr;</p>
+<div class=frontmatter>
+<h1 class="title, listTitleLink">Tutorial 2 QnA</h1>
+<div class=subtitle>
+<p>
+<time>📆 February 27, 2025</time>
+|
+⌛ 3 minutes read
+</p>
+</div>
+<p class=tags style=width:fit-content>📋 Tags:
+</p>
+</div>
+<hr>
+<div class=content>
+<h2 id=index>Index</h2>
 <ul>
-<li><a href=https://godbolt.org/>https://godbolt.org/</a> or <a href=http://fsmbolt-i.comp.nus.edu.sg:10240/>http://fsmbolt-i.comp.nus.edu.sg:10240/</a></li>
-<li><a href="https://drive.google.com/drive/folders/13-SQ2Cbjt27u56I3C3wYR8LiRjMZsOed?usp=sharing">Tutorial slides</a></li>
-<li><a href=https://en.cppreference.com/w/>C++ Reference</a></li>
+<li><a href=#index>Index</a></li>
+<li><a href=#q1-synchronises-with-ifwhile>Q1: synchronises-with if/while</a></li>
+<li><a href=#optional-food-for-thought-pop-quiz-ambiguous-sw>Optional Food for thought pop quiz: ambiguous sw</a></li>
 </ul>
+<h2 id=q1-synchronises-with-ifwhile>Q1: synchronises-with if/while</h2>
+<blockquote>
+<p>Tutorial 2, question 4.1. Just to clarify, if we remove the while loop and replaced it with an if-statement, it will also not synchronize with right?</p>
 </blockquote>
-</details>
+<p>The snippet in question is:</p>
+<figure class=figmd>
+<img src=atomic4-1.png alt class=figsmall>
+</figure>
+<p>Not quite. If we remove the while loop and replace it with an if-statement, you <em>might</em> get a synchronize-with, based on what (x) actually reads.</p>
+<p>If <code>y.load</code> in (x) reads from (b) i.e. 2, then we have sw.<br>
+If <code>y.load</code> in (x) reads 0, then we do not have sw.</p>
+<p>Why? See the <a href=https://en.cppreference.com/w/cpp/atomic/memory_order>definition</a> of synchronizes-with:</p>
+<blockquote>
+<p>If an atomic store in thread A is a release operation, an atomic load in thread B from the same variable is an acquire operation, and <strong>the load in thread B reads a value written by the store in thread A</strong>, then the store in thread A synchronizes-with the load in thread B.</p>
+</blockquote>
+<p>For the tutorial examples, the <code>while</code> loop is a way to force a synchronizes-with relationship. In the example with the <code>while</code>, (x) may read 0 or (a), but it will always read (b) before breaking out of the spinlock. This guarantees us a sw relationship between (x) and (b).</p>
+<h2 id=optional-food-for-thought-pop-quiz-ambiguous-sw>Optional Food for thought pop quiz: ambiguous sw</h2>
+<p><code>while</code> are often used to force sw between threads. But don&rsquo;t blindly assume!</p>
+<div class=expandable-wrapper>
+<div class=expandable-header>
+<h3 class=expandable-title>FFT 1: multiple sw puzzle</h3>
+<div class=expandable-up-btn><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Arrow / Chevron_Up"><path id="Vector" d="M5 16l7-7 7 7" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
 </div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/t2_faq/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Tutorial 2 QnA</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>QnA for the Atomics tutorial. Correct as at 27 Feb 2025.
+<div class=expandable-down-btn><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title/><g id="Complete"><g id="F-Chevron"><polyline fill="none" id="Down" points="5 8.5 12 15.5 19 8.5" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g></g></svg>
+</div>
+</div>
+<div class=expandable-body-cont>
+<p>Consider this:</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#999;font-style:italic>// Thread 1
+</span><span style=color:#999;font-style:italic></span>x.store(<span style=color:#3677a9>2</span>, stdmo::release); <span style=color:#999;font-style:italic>// (a)
+</span><span style=color:#999;font-style:italic></span>
+<span style=color:#999;font-style:italic>// Thread 2
+</span><span style=color:#999;font-style:italic></span>x.store(<span style=color:#3677a9>2</span>, stdmo::release); <span style=color:#999;font-style:italic>// (b)
+</span><span style=color:#999;font-style:italic></span>
+<span style=color:#999;font-style:italic>// Thread 3
+</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>while</span>(x.load(stdmo::acquire) != <span style=color:#3677a9>2</span>); <span style=color:#999;font-style:italic>// (x)
+</span></code></pre></td></tr></table>
+</div>
+</div><p>What can we say about sw between the threads?</p>
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-1 name=quiz-option value="    A: (a) sw (x)">
+<label for=option-1>
+A: (a) sw (x)
+</label>
+</span>
 </p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 27 Feb '25
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-2 name=quiz-option value="    B: (b) sw (x)">
+<label for=option-2>
+B: (b) sw (x)
+</label>
+</span>
 </p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/t3_faq/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Tutorial 3 QnA</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>QnA for the Shared Pointer tutorial. Correct as at 22 Feb 2025.
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-3 name=quiz-option value="    C: None sw (x)">
+<label for=option-3>
+C: None sw (x)
+</label>
+</span>
 </p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 21 Feb '25
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-4 name=quiz-option value="    D: Both (a) and (b) sw (x)">
+<label for=option-4>
+D: Both (a) and (b) sw (x)
+</label>
+</span>
 </p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/t1_faq/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Tutorial 0 & Tutorial 1 QnA</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>QnA for the first tutorial. Correct as at 9 Feb 2025.
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-5 name=quiz-option value="    E: Cannot say for sure
+    ">
+<label for=option-5>
+E: Cannot say for sure
+</label>
+</span>
 </p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 09 Feb '25
+<br>
+<h3 style=margin-block:0>Answer:</h3>
+<span class=spoiler-hidden onclick=removeSpoiler(this)>
+<span class=spoiler-text>
+<p>E. It is possible for (x) to read from either (a) or (b) before moving on. There are also no synchronization constructs in place that will tell us for certain how (a) and (b) are ordered.</p>
+</span>
+</span>
+</div>
+</div>
+<p>^ the FFT here is tricky. I don&rsquo;t <em>think</em> this sort of puzzles will come out during exams/quizzes. It&rsquo;s just to verify your understanding of sw.</p>
+<div class=expandable-wrapper>
+<div class=expandable-header>
+<h3 class=expandable-title>FFT 2: A fundamental sw</h3>
+<div class=expandable-up-btn><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Arrow / Chevron_Up"><path id="Vector" d="M5 16l7-7 7 7" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+</div>
+<div class=expandable-down-btn><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title/><g id="Complete"><g id="F-Chevron"><polyline fill="none" id="Down" points="5 8.5 12 15.5 19 8.5" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></g></g></svg>
+</div>
+</div>
+<div class=expandable-body-cont>
+<p>This is a simpler one to test your understanding on the definition of sw.</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#999;font-style:italic>// Thread 1
+</span><span style=color:#999;font-style:italic></span>x.store(<span style=color:#3677a9>1</span>, stdmo::relaxed); <span style=color:#999;font-style:italic>// (a)
+</span><span style=color:#999;font-style:italic></span>
+<span style=color:#999;font-style:italic>// Thread 2
+</span><span style=color:#999;font-style:italic></span>y.store(<span style=color:#3677a9>2</span>, stdmo::release); <span style=color:#999;font-style:italic>// (b)
+</span><span style=color:#999;font-style:italic></span>
+<span style=color:#999;font-style:italic>// Thread 3 
+</span><span style=color:#999;font-style:italic></span>z.store(<span style=color:#3677a9>3</span>, stdmo::release); <span style=color:#999;font-style:italic>// (c)
+</span><span style=color:#999;font-style:italic></span>
+<span style=color:#999;font-style:italic>// Thread 3
+</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>while</span>(x.load(stdmo::acquire) != <span style=color:#3677a9>1</span>); <span style=color:#999;font-style:italic>// (p)
+</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>while</span>(y.load(stdmo::relaxed) != <span style=color:#3677a9>2</span>); <span style=color:#999;font-style:italic>// (q)
+</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>while</span>(z.load(stdmo::acquire) != <span style=color:#3677a9>3</span>); <span style=color:#999;font-style:italic>// (r)
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Which of these are true?</p>
+<ol>
+<li>a sw p</li>
+<li>b sw q</li>
+<li>c sw r</li>
+</ol>
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-1 name=quiz-option value="    A: 1 only">
+<label for=option-1>
+A: 1 only
+</label>
+</span>
 </p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/lambdas_revisited/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Lambdas (capture lists) Revisited</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A revisit into how simple C++ lambdas capture lists work with references and sample code.
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-2 name=quiz-option value="    B: 2 only">
+<label for=option-2>
+B: 2 only
+</label>
+</span>
 </p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 08 Feb '25
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-3 name=quiz-option value="    C: 3 only">
+<label for=option-3>
+C: 3 only
+</label>
+</span>
 </p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/teaching/cs3211/vexing_parse/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>The Most Vexing Parse rule</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A brief explanation why a particular C++ thread creation syntax
-does/doesn't work.
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-4 name=quiz-option value="    D: 1 and 2">
+<label for=option-4>
+D: 1 and 2
+</label>
+</span>
 </p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 05 Feb '25
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-5 name=quiz-option value="    E: 1 and 3">
+<label for=option-5>
+E: 1 and 3
+</label>
+</span>
 </p>
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-6 name=quiz-option value="    F: 2 and 3 ">
+<label for=option-6>
+F: 2 and 3
+</label>
+</span>
+</p>
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-7 name=quiz-option value="    G: All are true">
+<label for=option-7>
+G: All are true
+</label>
+</span>
+</p>
+<p style=margin-block:.15rem>
+<span>
+<input type=radio id=option-8 name=quiz-option value="    H: None are true
+    ">
+<label for=option-8>
+H: None are true
+</label>
+</span>
+</p>
+<br>
+<h3 style=margin-block:0>Answer:</h3>
+<span class=spoiler-hidden onclick=removeSpoiler(this)>
+<span class=spoiler-text>
+<p>C. Remember that sw requires an acquire to match a release.</p>
+</span>
+</span>
 </div>
 </div>
-<div class=paginatorinternal>
-<ul class=pagenav>
-<a class=pagenav_current , href=/teaching/cs3211/>1</a>
+</div>
 </div>
 </section>
 </main>
