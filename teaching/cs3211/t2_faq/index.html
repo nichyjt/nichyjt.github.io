@@ -180,7 +180,7 @@ If <code>y.load</code> in (x) reads 0, then we do not have sw.</p>
 <blockquote>
 <p>If an atomic store in thread A is a release operation, an atomic load in thread B from the same variable is an acquire operation, and <strong>the load in thread B reads a value written by the store in thread A</strong>, then the store in thread A synchronizes-with the load in thread B.</p>
 </blockquote>
-<p>For the tutorial examples, the <code>while</code> loop is a way to force a synchronizes-with relationship. In the example with the <code>while</code>, (x) may read 0 or (a), but it will always read (b) before breaking out of the spinlock. This guarantees us a sw relationship between (x) and (b).</p>
+<p>For the tutorial examples, the <code>while</code> loop is a way to force a synchronizes-with relationship. In the example with the <code>while</code>, (x) may read 0, but it will always read (b) before breaking out of the spinlock. This guarantees us a sw relationship between (x) and (b).</p>
 <h2 id=optional-food-for-thought-pop-quiz-ambiguous-sw>Optional Food for thought pop quiz: ambiguous sw</h2>
 <p><code>while</code> are often used to force sw between threads. But don&rsquo;t blindly assume!</p>
 <div class=expandable-wrapper>
