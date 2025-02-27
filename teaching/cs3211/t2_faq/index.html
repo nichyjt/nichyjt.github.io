@@ -211,7 +211,7 @@ If <code>y.load</code> in (x) reads 0, then we do not have sw.</p>
 <span style=color:#999;font-style:italic>// Thread 2
 </span><span style=color:#999;font-style:italic></span>x.store(<span style=color:#3677a9>2</span>, stdmo::release); <span style=color:#999;font-style:italic>// (b)
 </span><span style=color:#999;font-style:italic></span>
-<span style=color:#999;font-style:italic>// Thread 3
+<span style=color:#999;font-style:italic>// Thread 4
 </span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>while</span>(x.load(stdmo::acquire) != <span style=color:#3677a9>2</span>); <span style=color:#999;font-style:italic>// (x)
 </span></code></pre></td></tr></table>
 </div>
