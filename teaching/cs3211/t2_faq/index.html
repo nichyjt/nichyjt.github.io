@@ -172,7 +172,8 @@
 <figure class=figmd>
 <img src=atomic4-1.png alt class=figsmall>
 </figure>
-<p>Not quite. If we remove the while loop and replace it with an if-statement, you <em>might</em> get a synchronize-with, based on what (x) actually reads.</p>
+<p>I&rsquo;m assuming the question is asking if (b) sw (x) if we change while to if.</p>
+<p>If we remove the while loop and replace it with an if-statement, you <em>might</em> get a synchronize-with, based on what (x) actually reads.</p>
 <p>If <code>y.load</code> in (x) reads from (b) i.e. 2, then we have sw.<br>
 If <code>y.load</code> in (x) reads 0, then we do not have sw.</p>
 <p>Why? See the <a href=https://en.cppreference.com/w/cpp/atomic/memory_order>definition</a> of synchronizes-with:</p>
