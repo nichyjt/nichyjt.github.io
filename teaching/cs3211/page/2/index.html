@@ -2,9 +2,12 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Essays | Nicholas Yek</title>
-<meta name=description content="Essays on code, math, tech and everything in-between.">
-<link rel=canonical href=https://nichyjt.github.io/essays/>
+<title>CS3211 Spring 2025 - T09 | Nicholas Yek</title>
+<meta name=description content="Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)
+ &nbsp README/Quickstart  Disclaimer ⚠️ The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is completely optional and supplementary.
+Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.
+Content might include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content.">
+<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/>
 <link rel=stylesheet href=/css/style.css>
 <link rel=stylesheet href=/css/mainmenu.css>
 <link rel=stylesheet href=/css/fonts.css>
@@ -18,13 +21,13 @@
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
 <script src=/js/expandable.js></script>
-<meta property="og:title" content="Essays">
+<meta property="og:title" content="CS3211 Spring 2025 - T09">
 <meta property="og:description" content="Yet another quaint blog waffling on about code and technology.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://nichyjt.github.io/essays/">
+<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Essays">
+<meta name=twitter:title content="CS3211 Spring 2025 - T09">
 <meta name=twitter:description content="Yet another quaint blog waffling on about code and technology.">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
@@ -135,93 +138,45 @@
 <div class=bodycontainer>
 <main>
 <section class=section>
-<h1 style=text-decoration:underline;margin-left:.75rem>Essays</h1>
+<h1 style=text-decoration:underline;margin-left:.75rem>CS3211 Spring 2025 - T09</h1>
 <div class=content style=margin-left:.75rem>
-<p>Essays on code, math, tech and everything in-between.</p>
+<p>Welcome to Parallel & Concurrent Programming, Tutorial 09! (Thursdays 1600-1800)</p>
+<details>
+<summary class=experienceSummary>
+&nbsp README/Quickstart
+        <br>
+</summary>
+<blockquote class=experienceBlockquote>
+<h3 id=disclaimer->Disclaimer ⚠️</h3>
+<p>The default tutorial slides/sheets and canvas content are more than enough for you to do well in the class. Material here is <strong>completely optional and supplementary</strong>.</p>
+<p>Your TA aims to update this page with content that value-adds to your learning, based on class needs and how burnt out your TA is.</p>
+<p>Content <em>might</em> include FAQs, explainers, (maybe) pop quizzes and interesting C++/Go/Rust community content. You&rsquo;re encouraged to <em>asynchronously</em> explore at your own convenience. You <strong>do not need to keep up with the extra stuff</strong>. In the spirit of exploration & tinkering, you might find that some of these content might be illuminating <em>after</em> finishing CS3211.</p>
+<h3 id=relevant-links->Relevant Links 🔗</h3>
+<p>Hide these under your pillow&mldr;</p>
+<ul>
+<li><a href=https://godbolt.org/>https://godbolt.org/</a> or <a href=http://fsmbolt-i.comp.nus.edu.sg:10240/>http://fsmbolt-i.comp.nus.edu.sg:10240/</a></li>
+<li><a href="https://drive.google.com/drive/folders/13-SQ2Cbjt27u56I3C3wYR8LiRjMZsOed?usp=sharing">Tutorial slides</a></li>
+<li><a href=https://en.cppreference.com/w/>C++ Reference</a></li>
+</ul>
+</blockquote>
+</details>
 </div>
 <div class=listitem>
 <div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2025/rs_puzzle/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>A simple Rust puzzle about borrow checking</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>Why does some Rust code compile when it violates the borrow-checker rules? Hint: Non-lexical-lifetimes.
-Answering a common misconception from learners new to Rust.
+<a href=https://nichyjt.github.io/teaching/cs3211/vexing_parse/ , class=listTitleLink>
+<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>The Most Vexing Parse rule</h1>
+<p style=color:var(--color-text);margin:0;padding-block:.25rem>A brief explanation why a particular C++ thread creation syntax
+does/doesn't work.
 </p>
 </a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 05 Apr '25
-|
-📋
-<a href=https://nichyjt.github.io/tags/rust/ , style=color:var(--color-link)>Rust</a>
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2024/atomic-mq/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>MPMC Message Queue using only atomics</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A proof-of-concept MPMC message queue with only atomics for synchronization.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 16 Jun '24
-|
-📋
-<a href=https://nichyjt.github.io/tags/c/c++/ , style=color:var(--color-link)>C/C++</a>
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2024/caching/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Caching makes things fast - an embedded example (CG2271)</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>We built a race car for a RTOS course.
-We made it pretty responsive with some trivial state caching.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 01 Feb '24
-|
-📋
-<a href=https://nichyjt.github.io/tags/cg2271/ , style=color:var(--color-link)>CG2271</a>
-<a href=https://nichyjt.github.io/tags/rtos/ , style=color:var(--color-link)>RTOS</a>
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2024/kernel_duckery/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Hotswapping kernels like they're keyboard switches</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A guide to boot into different Linux kernels for whatever (cursed) reason.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 20 Jan '24
-|
-📋
-<a href=https://nichyjt.github.io/tags/essay/ , style=color:var(--color-link)>Essay</a>
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2023/atleastk/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Generalized CNF for "At Least k, given n variables"</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>Formula & questionable eyeball proof to convert "at least k" constraints to CNF
-for easier use with the resolution algorithm.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 28 Dec '23
-|
-📋
-<a href=https://nichyjt.github.io/tags/essay/ , style=color:var(--color-link)>Essay</a>
-<a href=https://nichyjt.github.io/tags/math/ , style=color:var(--color-link)>Math</a>
-<a href=https://nichyjt.github.io/tags/a.i./ , style=color:var(--color-link)>A.I.</a>
-<a href=https://nichyjt.github.io/tags/cs3243/ , style=color:var(--color-link)>CS3243</a>
+<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 05 Feb '25
 </p>
 </div>
 </div>
 <div class=paginatorinternal>
 <ul class=pagenav>
-<a class=pagenav_current , href=/essays/>1</a>
-<a class=pagenavitem , href=/essays/page/2/>2</a>
-<a class=pagenavitem , href=/essays/page/3/>3</a>
+<a class=pagenavitem , href=/teaching/cs3211/>1</a>
+<a class=pagenav_current , href=/teaching/cs3211/page/2/>2</a>
 </div>
 </section>
 </main>

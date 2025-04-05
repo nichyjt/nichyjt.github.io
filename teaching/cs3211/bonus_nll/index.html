@@ -2,9 +2,10 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Essays | Nicholas Yek</title>
-<meta name=description content="Essays on code, math, tech and everything in-between.">
-<link rel=canonical href=https://nichyjt.github.io/essays/>
+<title>BONUS: Borrowing Puzzles in Rust | Nicholas Yek</title>
+<meta name=description content="A deeper (slightly out of syllabus) look into the borrow checker in Rust with a puzzle.
+">
+<link rel=canonical href=https://nichyjt.github.io/teaching/cs3211/bonus_nll/>
 <link rel=stylesheet href=/css/style.css>
 <link rel=stylesheet href=/css/mainmenu.css>
 <link rel=stylesheet href=/css/fonts.css>
@@ -18,14 +19,18 @@
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
 <script src=/js/expandable.js></script>
-<meta property="og:title" content="Essays">
-<meta property="og:description" content="Yet another quaint blog waffling on about code and technology.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nichyjt.github.io/essays/">
+<meta property="og:title" content="BONUS: Borrowing Puzzles in Rust">
+<meta property="og:description" content="A deeper (slightly out of syllabus) look into the borrow checker in Rust with a puzzle.
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nichyjt.github.io/teaching/cs3211/bonus_nll/"><meta property="article:section" content="teaching">
+<meta property="article:published_time" content="2025-04-05T00:00:00+00:00">
+<meta property="article:modified_time" content="2025-04-05T00:00:00+00:00">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Essays">
-<meta name=twitter:description content="Yet another quaint blog waffling on about code and technology.">
+<meta name=twitter:title content="BONUS: Borrowing Puzzles in Rust">
+<meta name=twitter:description content="A deeper (slightly out of syllabus) look into the borrow checker in Rust with a puzzle.
+">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
 <div class=navcontainer><body>
@@ -135,93 +140,64 @@
 <div class=bodycontainer>
 <main>
 <section class=section>
-<h1 style=text-decoration:underline;margin-left:.75rem>Essays</h1>
-<div class=content style=margin-left:.75rem>
-<p>Essays on code, math, tech and everything in-between.</p>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2025/rs_puzzle/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>A simple Rust puzzle about borrow checking</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>Why does some Rust code compile when it violates the borrow-checker rules? Hint: Non-lexical-lifetimes.
-Answering a common misconception from learners new to Rust.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 05 Apr '25
+<div class=frontmatter>
+<h1 class="title, listTitleLink">BONUS: Borrowing Puzzles in Rust</h1>
+<div class=subtitle>
+<p>
+<time>📆 April 5, 2025</time>
 |
-📋
-<a href=https://nichyjt.github.io/tags/rust/ , style=color:var(--color-link)>Rust</a>
+⌛ 1 minute read
 </p>
 </div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2024/atomic-mq/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>MPMC Message Queue using only atomics</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A proof-of-concept MPMC message queue with only atomics for synchronization.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 16 Jun '24
-|
-📋
-<a href=https://nichyjt.github.io/tags/c/c++/ , style=color:var(--color-link)>C/C++</a>
+<p class=tags style=width:fit-content>📋 Tags:
 </p>
 </div>
+<hr>
+<div class=content>
+<p>In class, we discussed about Rust&rsquo;s shared-xor-mutable model.</p>
+<p>You can only have either:</p>
+<ul>
+<li>ONE mutable borrow</li>
+<li>Multiple immutable borrows</li>
+</ul>
+<p>There might be some common misconception if you are not aware of &lsquo;non-lexical-lifetimes&rsquo;.</p>
+<p>Consider this:</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
+</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
+</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>
+</span><span style=color:#666></span>x<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span><span style=color:#666>
+</span></code></pre></td></tr></table>
 </div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2024/caching/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Caching makes things fast - an embedded example (CG2271)</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>We built a race car for a RTOS course.
-We made it pretty responsive with some trivial state caching.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 01 Feb '24
-|
-📋
-<a href=https://nichyjt.github.io/tags/cg2271/ , style=color:var(--color-link)>CG2271</a>
-<a href=https://nichyjt.github.io/tags/rtos/ , style=color:var(--color-link)>RTOS</a>
-</p>
+</div><p>What will be the value of x?</p>
+<p>A: 2<br>
+B: Compile error<br>
+C: Panics</p>
+<p>Answer: <span class=spoiler-hidden onclick=removeSpoiler(this)>
+<span class=spoiler-text>
+x will successfully increment to 2!
+</span>
+</span></p>
+<p>If you don&rsquo;t believe the output, <a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=e436da301013742e11807f1b55684c7c">run it on the rust playground</a>.</p>
+<p>This happens because the lifetime of references for both <code>&mut</code> and <code>&</code> are tied to the last use of the reference. This is due to &lsquo;Non-Lexical-Lifetime&rsquo;.</p>
+<p>The <a href=https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html>Rust book</a>
+summarises this nicely:</p>
+<blockquote>
+<p>Note that a reference’s scope starts from where it is introduced
+and continues through the last time that reference is used.</p>
+</blockquote>
+<p>So, the scope/lifetime of y and z in the example are effectively just the line that they were created.</p>
+<p>This is typically not an issue you will face day-to-day while coding in Rust for your assignment or this class, but it is worth knowing this rule exists.</p>
+<p>I wrote a more in-depth technical article about this with many extra puzzles for you to test your understanding.
+Link <a href=/essays/2025/rs_puzzle>here</a>.</p>
 </div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2024/kernel_duckery/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Hotswapping kernels like they're keyboard switches</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A guide to boot into different Linux kernels for whatever (cursed) reason.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 20 Jan '24
-|
-📋
-<a href=https://nichyjt.github.io/tags/essay/ , style=color:var(--color-link)>Essay</a>
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2023/atleastk/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Generalized CNF for "At Least k, given n variables"</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>Formula & questionable eyeball proof to convert "at least k" constraints to CNF
-for easier use with the resolution algorithm.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 28 Dec '23
-|
-📋
-<a href=https://nichyjt.github.io/tags/essay/ , style=color:var(--color-link)>Essay</a>
-<a href=https://nichyjt.github.io/tags/math/ , style=color:var(--color-link)>Math</a>
-<a href=https://nichyjt.github.io/tags/a.i./ , style=color:var(--color-link)>A.I.</a>
-<a href=https://nichyjt.github.io/tags/cs3243/ , style=color:var(--color-link)>CS3243</a>
-</p>
-</div>
-</div>
-<div class=paginatorinternal>
-<ul class=pagenav>
-<a class=pagenav_current , href=/essays/>1</a>
-<a class=pagenavitem , href=/essays/page/2/>2</a>
-<a class=pagenavitem , href=/essays/page/3/>3</a>
 </div>
 </section>
 </main>
