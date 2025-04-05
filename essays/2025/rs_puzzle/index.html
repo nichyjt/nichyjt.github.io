@@ -302,7 +302,7 @@ x will successfully increment to 2!
 <p>You might not believe it, but this is perfectly in line with the borrow-checker rules.</p>
 <h2 id=a-closer-look>A closer look</h2>
 <p>We know via rule 4 we can either have one mutable reference XOR multiple immutable references.</p>
-<p><code>y</code> is a mutable reference to <code>x</code>. So, according to rule 4, we cannot have any more immutable references.<br>
+<p><code>y</code> is a mutable reference to <code>x</code>. So, according to rule 4, we cannot have any more immutable references.
 Yet, we can still add <code>let z = &x</code> and it compiles.</p>
 <p>Why is that the case? Let&rsquo;s create a slightly different version of our program to see what&rsquo;s going on.</p>
 <div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
