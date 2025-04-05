@@ -160,7 +160,8 @@ Answering a common misconception from learners new to Rust.
 <p>Rust is a cool language. But a small misconception can happen due a misunderstanding of borrowing and scoping rules for the language. Let me illustrate.</p>
 <p>For those unfamiliar, a big feature of Rust is its borrowing and ownership rules. The rules are quite elegant, and are enforced at compile-time with the compiler&rsquo;s borrow checker to ensure memory safety. I will summarise the rules here briefly:</p>
 <p><strong>Rule 1, Ownership</strong>:<br>
-One and only 1 owner can exist for any data that is allocated.</p>
+One and only one owner can exist for any data that is allocated.<br>
+Assignment &lsquo;=&rsquo; and <code>move</code> moves ownership of the data unless the datatype implements the <code>Copy</code> trait, but that&rsquo;s not really relevant for the puzzle later on.</p>
 <div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
 <pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
@@ -168,9 +169,9 @@ One and only 1 owner can exist for any data that is allocated.</p>
 </span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>x;<span style=color:#666> </span><span style=color:#999;font-style:italic>// ownership changes
-</span><span style=color:#999;font-style:italic></span>print!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>x);<span style=color:#666> </span><span style=color:#999;font-style:italic>// Compile error: x does not own 1
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#24909d>String</span>::from(<span style=color:#ed9d13>&#34;hello&#34;</span>);<span style=color:#666>
+</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>x;<span style=color:#666> </span><span style=color:#999;font-style:italic>// ownership moves to y
+</span><span style=color:#999;font-style:italic></span>println!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>x);<span style=color:#666> </span><span style=color:#999;font-style:italic>// Error: borrow of moved value `x`
 </span></code></pre></td></tr></table>
 </div>
 </div><p><strong>Rule 2, Multiple immutable references</strong>:<br>
@@ -190,7 +191,7 @@ Multiple immutable references can exist.</p>
 </span></code></pre></td></tr></table>
 </div>
 </div><p><strong>Rule 3, One mutable reference</strong>:<br>
-Only one mutable reference can exist. <br>
+Only one mutable reference can exist at a time. <br>
 This prevents a &lsquo;multiple writer&rsquo; problem.</p>
 <div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
@@ -267,7 +268,7 @@ The lifetime is the scope for which that reference is valid. References must not
 </span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
 </span><span style=color:#666>    </span>x<span style=color:#666> </span>=<span style=color:#666> </span>&amp;y;<span style=color:#666>
 </span><span style=color:#666></span>}<span style=color:#666>
-</span><span style=color:#666></span>print(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>x)<span style=color:#666> </span>;<span style=color:#666> </span><span style=color:#999;font-style:italic>// error! x lives longer than y.
+</span><span style=color:#666></span>print!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>x)<span style=color:#666> </span>;<span style=color:#666> </span><span style=color:#999;font-style:italic>// error! x lives longer than y.
 </span></code></pre></td></tr></table>
 </div>
 </div><p>These rules help ensure that at compile time, potential data races, dangling references and use-after-free never happen. Awesome.</p>
@@ -487,11 +488,12 @@ In fact, it seems to suggest that <code>z</code> bleeds into <code>y</code>&rsqu
 The life of mutable reference <code>y</code> overlaps with <code>z</code>, right?</p>
 <p>Not really. This is because of <strong><a href=https://rust-lang.github.io/rfcs/2094-nll.html#reborrow-constraints>non-lexical-lifetimes</a></strong> (NLL).</p>
 <h3 id=non-lexical-lifetimes>Non-Lexical-Lifetimes</h3>
-<p>NLL: The lifetime of a reference is tied to the &lsquo;control-flow-graph&rsquo; rather than its lexical scope.</p>
+<p>NLL: The lifetime of a reference is tied to the &lsquo;control-flow-graph&rsquo; rather than its lexical scope.
+The end of a reference&rsquo;s lifetime is tied to its last use.</p>
 <p>The <a href=https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html>rust book</a>
 summarises this nicely:</p>
 <blockquote>
-<p>Note that a reference’s scope starts from where it is introduced
+<p>Note that a reference&rsquo;s scope starts from where it is introduced
 and continues through the last time that reference is used.</p>
 </blockquote>
 <br>
@@ -543,9 +545,9 @@ and continues through the last time that reference is used.</p>
 </span><span style=color:#666>    </span>StorageLive(_1);<span style=color:#666>  </span><span style=color:#999;font-style:italic>// (x = _1) scope starts
 </span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_1<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
 </span><span style=color:#666>    </span>StorageLive(_2);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (y = &amp;mut x) scope starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_2<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_1;<span style=color:#666>    </span><span style=color:#999;font-style:italic>// y scope ends (no more use of y)
+</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_2<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_1;<span style=color:#666>    </span><span style=color:#999;font-style:italic>// y borrow scope ends (no more use of y)
 </span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>StorageLive(_3);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (z = &amp;x) scope starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_3<span style=color:#666> </span>=<span style=color:#666> </span>&amp;_1;<span style=color:#666>        </span><span style=color:#999;font-style:italic>// z scope ends (no more use of z)
+</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_3<span style=color:#666> </span>=<span style=color:#666> </span>&amp;_1;<span style=color:#666>        </span><span style=color:#999;font-style:italic>// z borrow scope ends (no more use of z)
 </span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_4<span style=color:#666> </span>=<span style=color:#666> </span>AddWithOverflow(copy<span style=color:#666> </span>_1,<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>);<span style=color:#666>
 </span><span style=color:#666>    </span>assert(!<span style=color:#6ab825;font-weight:700>move</span><span style=color:#666> </span>(_4.<span style=color:#3677a9>1</span>: <span style=color:#6ab825;font-weight:700>bool</span>),<span style=color:#666> </span><span style=color:#ed9d13>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>,<span style=color:#666> </span>copy<span style=color:#666> </span>_1,<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>)<span style=color:#666> </span>-&gt; [success: <span style=color:#447fcf;text-decoration:underline>bb1</span>,<span style=color:#666> </span>unwind<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>continue</span>];<span style=color:#666>
 </span><span style=color:#666></span>}<span style=color:#666>
@@ -603,7 +605,7 @@ and continues through the last time that reference is used.</p>
 </span><span style=color:#666>    </span>StorageLive(_2);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (y = &amp;mut x) scope starts
 </span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_2<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_1;<span style=color:#666>
 </span><span style=color:#666>    </span>StorageLive(_3);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (z = &amp;x)  scope starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_3<span style=color:#666> </span>=<span style=color:#666> </span>&amp;_1;<span style=color:#666>        </span><span style=color:#999;font-style:italic>// z scope ends
+</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_3<span style=color:#666> </span>=<span style=color:#666> </span>&amp;_1;<span style=color:#666>        </span><span style=color:#999;font-style:italic>// z borrow scope ends
 </span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_4<span style=color:#666> </span>=<span style=color:#666> </span>AddWithOverflow(copy<span style=color:#666> </span>(*_2),<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>);<span style=color:#666> </span><span style=color:#999;font-style:italic>// y is used here, so scope is extended, including this line 
 </span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>assert(!<span style=color:#6ab825;font-weight:700>move</span><span style=color:#666> </span>(_4.<span style=color:#3677a9>1</span>: <span style=color:#6ab825;font-weight:700>bool</span>),<span style=color:#666> </span><span style=color:#ed9d13>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>,<span style=color:#666> </span>copy<span style=color:#666> </span>(*_2),<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>)<span style=color:#666> </span>-&gt; [success: <span style=color:#447fcf;text-decoration:underline>bb1</span>,<span style=color:#666> </span>unwind<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>continue</span>];<span style=color:#666>
 </span><span style=color:#666></span>}<span style=color:#666>
