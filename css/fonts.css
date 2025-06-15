@@ -127,7 +127,11 @@ th {
     figcaption{
         font-size: 0.75rem;
     }
-    .menu-item-text, .home-text{
+    .menu-item-text {
+     font-size: 2rem;   
+     color: var(--color-accent-mobilemenu);
+    }
+    .home-text{
         font-size: 0.75rem;
     }
     .footertext{
