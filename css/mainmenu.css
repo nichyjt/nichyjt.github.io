@@ -41,8 +41,10 @@ main {
   color: var(--color-menuicon);
 } 
 /*Menu (Desktop) Hover Animation Logic*/
-.nav-item:hover, .home-item:hover{
-  background: var(--color-accent-active);
+@media (hover: hover) {
+    .nav-item:hover, .home-item:hover{
+    background: var(--color-accent-active);
+    }
 }
 
 /* SMALL SCREEN CSS FOR MOBILE-COMPATIBLE MENU */
