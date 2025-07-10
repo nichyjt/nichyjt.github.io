@@ -2,9 +2,10 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Linux | Nicholas Yek</title>
-<meta name=description content="Yet another blog about code and technology.">
-<link rel=canonical href=https://nichyjt.github.io/tags/linux/>
+<title>Docker is not a Virtual Machine | Nicholas Yek</title>
+<meta name=description content="What's the difference between Docker and VMs? A quick rundown.
+">
+<link rel=canonical href=https://nichyjt.github.io/essays/2025/docker_and_vms/>
 <link rel=stylesheet href=/css/style.css>
 <link rel=stylesheet href=/css/mainmenu.css>
 <link rel=stylesheet href=/css/fonts.css>
@@ -18,14 +19,18 @@
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
 <script src=/js/expandable.js></script>
-<meta property="og:title" content="Linux">
-<meta property="og:description" content="Yet another blog about code and technology.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nichyjt.github.io/tags/linux/">
+<meta property="og:title" content="Docker is not a Virtual Machine">
+<meta property="og:description" content="What's the difference between Docker and VMs? A quick rundown.
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nichyjt.github.io/essays/2025/docker_and_vms/"><meta property="article:section" content="essays">
+<meta property="article:published_time" content="2025-07-10T00:00:00+00:00">
+<meta property="article:modified_time" content="2025-07-10T00:00:00+00:00">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Linux">
-<meta name=twitter:description content="Yet another blog about code and technology.">
+<meta name=twitter:title content="Docker is not a Virtual Machine">
+<meta name=twitter:description content="What's the difference between Docker and VMs? A quick rundown.
+">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
 <div class=navcontainer><body>
@@ -138,91 +143,53 @@
 <div class=bodycontainer>
 <main>
 <section class=section>
-<h1 style=text-decoration:underline;margin-left:.75rem>Tag - Linux</h1>
-<div class=content style=margin-left:.75rem>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2025/docker_and_vms/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Docker is not a Virtual Machine</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>What's the difference between Docker and VMs? A quick rundown.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 10 Jul '25
+<div class=frontmatter>
+<h1 class="title, listTitleLink">Docker is not a Virtual Machine</h1>
+<div class=subtitle>
+<p>
+<time>📆 July 10, 2025</time>
 |
-📋
-<a href=https://nichyjt.github.io/tags/docker/ , style=color:var(--color-link)>Docker</a>
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
-<a href=https://nichyjt.github.io/tags/explainer/ , style=color:var(--color-link)>Explainer</a>
+⌛ 3 minutes read
 </p>
 </div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2024/kernel_duckery/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Hotswapping kernels like they're keyboard switches</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A guide to boot into different Linux kernels for whatever (cursed) reason.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 20 Jan '24
-|
-📋
-<a href=https://nichyjt.github.io/tags/essay/ , style=color:var(--color-link)>Essay</a>
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
+<p class=tags style=width:fit-content>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/docker> Docker</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/linux> Linux</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/explainer> Explainer</a>
 </p>
 </div>
+<hr>
+<div class=content>
+<p>Docker is not a VM. Neither is it a lightweight VM. But what&rsquo;s the difference? My dockerfile needs an <a href=https://hub.docker.com/_/ubuntu>image</a> of an OS (e.g. Ubuntu) to run, and virtual machines (such as VirtualBox) requires an image of an OS to also run, and both produce similar runtime environments for me to run the code in. Don&rsquo;t they do the same thing?</p>
+<p>The difference is <strong>what</strong> resources they virtualize.</p>
+<h3 id=hypervisors--virtual-machines-in-30s>Hypervisors & Virtual Machines in 30s</h3>
+<p>Hypervisors (Virtual Machine Managers) emulate <strong>hardware resources</strong>. They create virtual copies of the underlying machine (hence virtual machines 😉) They allow multiple operating systems to be run at the same time, isolated from one another.</p>
+<p>Guest operating systems running on top of a hypervisor get the illusion that the hardware resources (disk, cpu) belongs to them completely, but the hypervisor works as an invisible middleman to the hardware, intercepting requests for hardware resources from different guest operating systems and serving them.</p>
+<h3 id=docker--userlands-in-30s>Docker & userlands in 30s</h3>
+<p>Docker containers emulate <strong>userspace environments</strong>. They allow multiple userland processes to be run at the same time, isolated from one another with their own userland environements. All of these processes share the host operating system i.e. host kernel.</p>
+<p>The userland environment (container) includes a minimal filesystem <code>/, /etc, /bin, /lib</code> with userland tools <code>e.g. /bin/bash</code>. Dependencies that are installed on the environment such as <code>RUN apt-get install -y openssl</code> are installed specific to that environment<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>. Less dependency hell<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> for the developer!</p>
+<p>Docker is able to isolate these environments through <a href=https://www.oreilly.com/library/view/container-security/9781492056690/ch04.html>Linux kernel features</a> such as <code>namespaces</code>. The Docker daemon manages the lifetime of running userland environments, but does nothing to manage how the processes in the environment talk to the host kernel.</p>
+<h3 id=similarities-differences-confusion>Similarities, Differences, Confusion</h3>
+<p>The reason why Docker and VM gets confused is because both technologies emulate something that gives the effect of a common runtime environment, with isolation of these environments. The difference lies in what the runtime environment is.</p>
+<p>VMs provide isolated environments for <strong>Operating Systems</strong> and manages hardware resource access. Docker provides isolated environments for <strong>userland environments</strong> and manages the environment lifecycle.</p>
+<p>VMs do alot more than containers, which is why containers are much faster than VMs. But containers will not solve all compatability issues&mldr;</p>
+<h3 id=a-note-on-syscalls-compatability-and-the-need-for-vms>A note on syscalls, compatability and the need for VMs</h3>
+<p>Docker doesn&rsquo;t actually provide full cross-os compatability. It may seem possible at first, since Docker can be run on <code>Windows OS</code> to run an <code>Ubuntu</code> container. But this is a misconception!</p>
+<p>To reiterate, Docker containers still interact with the host kernel. When a container does syscalls like <code>open()</code> or <code>write()</code>,
+it actually calls those syscalls to talk to the host kernel.</p>
+<p>Windows has very different kernel API compared to Linux. <code>open()</code> in Linux != <code>open()</code> in Windows. Things will crash and burn.</p>
+<p>The reason why Docker on Windows works is because of <a href=https://learn.microsoft.com/en-us/windows/wsl/about>WSL</a>. It acts like a &lsquo;lightweight vm&rsquo; to <strong>actually run</strong> the linux kernel. For containers running on the WSL &lsquo;Linux VM&rsquo; on Windows, Linux syscalls like <code>open()</code> actually exist since the Linux kernel is the underlying OS in the POV of the container. The Linux Kernel here is a &lsquo;guest OS&rsquo; and does the whole shebang to actually access hardware resources.</p>
+<p>Matrix-level shit, man&mldr;</p>
+<p>So, perhaps VMs are not slow bloated useless things compared to containers.</p>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p>This is sometimes Docker image sizes can be <em>really</em> big.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:2 role=doc-endnote>
+<p>What do you mean <code>some_lib v1.0</code> is incompatible with <code>other_lib v1.1</code>?!&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 </div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2022/initramfs/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Recovering Linux from initramfs</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>If you boot into initramfs, chances are that your hard disk has some memory error. This essay talks about how to fix it.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 06 Dec '22
-|
-📋
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
-<a href=https://nichyjt.github.io/tags/tutorial/ , style=color:var(--color-link)>Tutorial</a>
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2022/popos_choose_os/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>How to choose which OS to boot into with systemd-boot</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>Guide for Pop!_OS or systemd-boot users to configure the menu to
-choose which OS to boot into.
-</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 13 Sep '22
-|
-📋
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
-<a href=https://nichyjt.github.io/tags/tutorial/ , style=color:var(--color-link)>Tutorial</a>
-</p>
-</div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/projects/snipnscan/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>SnipNScan 📷</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A winter break project to scan QR codes and text on desktop. Borne out of pdf pain and exasperation with people sending me images to debug code (please stop doing that).</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 26 Feb '22
-|
-📋
-<a href=https://nichyjt.github.io/tags/c/c++/ , style=color:var(--color-link)>C/C++</a>
-<a href=https://nichyjt.github.io/tags/opencv/ , style=color:var(--color-link)>OpenCV</a>
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
-<a href=https://nichyjt.github.io/tags/project/ , style=color:var(--color-link)>Project</a>
-</p>
-</div>
-</div>
-<div class=paginatorinternal>
-<ul class=pagenav>
-<a class=pagenav_current , href=/tags/linux/>1</a>
-<a class=pagenavitem , href=/tags/linux/page/2/>2</a>
 </div>
 </section>
 </main>
