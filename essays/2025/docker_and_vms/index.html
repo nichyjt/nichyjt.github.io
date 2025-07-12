@@ -174,9 +174,10 @@
 <p>Docker doesn&rsquo;t actually provide full cross-os compatability. It may seem possible at first, since Docker can be run on <code>Windows OS</code> to run an <code>Ubuntu</code> container. But this is a misconception!</p>
 <p>To reiterate, Docker containers still interact with the host kernel. When a container does syscalls like <code>open()</code> or <code>write()</code>,
 it actually calls those syscalls to talk to the host kernel.</p>
-<p>Windows has very different kernel API compared to Linux. <code>open()</code> in Linux != <code>open()</code> in Windows. Things will crash and burn.</p>
+<p>Windows has very different kernel API compared to Linux. <code>open()</code> in Linux != <code>open()</code> in Windows. Things will crash and burn if we just blindly tried to let things run.</p>
 <p>The reason why Docker on Windows works is because of <a href=https://learn.microsoft.com/en-us/windows/wsl/about>WSL</a>. It acts like a &lsquo;lightweight vm&rsquo; to <strong>actually run</strong> the linux kernel. For containers running on the WSL &lsquo;Linux VM&rsquo; on Windows, Linux syscalls like <code>open()</code> actually exist since the Linux kernel is the underlying OS in the POV of the container. The Linux Kernel here is a &lsquo;guest OS&rsquo; and does the whole shebang to actually access hardware resources.</p>
 <p>Matrix-level shit, man&mldr;</p>
+<p>On the other hand, Linux does not (afaik) allow running of a lightweight windows VM in a similar fashion which would allow windows docker images to be run on a Linux host.</p>
 <p>So, perhaps VMs are not slow bloated useless things compared to containers.</p>
 <section class=footnotes role=doc-endnotes>
 <hr>
