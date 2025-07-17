@@ -2,9 +2,10 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Linux | Nicholas Yek</title>
-<meta name=description content="Yet another blog about code and technology.">
-<link rel=canonical href=https://nichyjt.github.io/tags/linux/>
+<title>An observation about Docker iptables | Nicholas Yek</title>
+<meta name=description content="The docker daemon sets up alot of network config behind the scenes. I open the curtains a little here.
+">
+<link rel=canonical href=https://nichyjt.github.io/essays/2025/simple_docker_networks/>
 <link rel=stylesheet href=/css/style.css>
 <link rel=stylesheet href=/css/mainmenu.css>
 <link rel=stylesheet href=/css/fonts.css>
@@ -18,14 +19,18 @@
 <script src=/js/accordian.js></script>
 <script src=/js/spoiler.js></script>
 <script src=/js/expandable.js></script>
-<meta property="og:title" content="Linux">
-<meta property="og:description" content="Yet another blog about code and technology.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nichyjt.github.io/tags/linux/">
+<meta property="og:title" content="An observation about Docker iptables">
+<meta property="og:description" content="The docker daemon sets up alot of network config behind the scenes. I open the curtains a little here.
+">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nichyjt.github.io/essays/2025/simple_docker_networks/"><meta property="article:section" content="essays">
+<meta property="article:published_time" content="2025-07-17T00:00:00+00:00">
+<meta property="article:modified_time" content="2025-07-17T00:00:00+00:00">
 <meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Linux">
-<meta name=twitter:description content="Yet another blog about code and technology.">
+<meta name=twitter:title content="An observation about Docker iptables">
+<meta name=twitter:description content="The docker daemon sets up alot of network config behind the scenes. I open the curtains a little here.
+">
 <script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
 </head><body>
 <div class=navcontainer><body>
@@ -138,60 +143,173 @@
 <div class=bodycontainer>
 <main>
 <section class=section>
-<h1 style=text-decoration:underline;margin-left:.75rem>Tag - Linux</h1>
-<div class=content style=margin-left:.75rem>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/projects/snipnscan/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>SnipNScan 📷</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A winter break project to scan QR codes and text on desktop. Borne out of pdf pain and exasperation with people sending me images to debug code (please stop doing that).</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 26 Feb '22
+<div class=frontmatter>
+<h1 class="title, listTitleLink">An observation about Docker iptables</h1>
+<div class=subtitle>
+<p>
+<time>📆 July 17, 2025</time>
 |
-📋
-<a href=https://nichyjt.github.io/tags/c/c++/ , style=color:var(--color-link)>C/C++</a>
-<a href=https://nichyjt.github.io/tags/opencv/ , style=color:var(--color-link)>OpenCV</a>
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
-<a href=https://nichyjt.github.io/tags/project/ , style=color:var(--color-link)>Project</a>
+⌛ 5 minutes read
 </p>
 </div>
-</div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/projects/cnake/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Cnake 🐍</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>Recreating the classic Snake game with C, ncurses and Linked Lists.</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 06 Aug '21
-|
-📋
-<a href=https://nichyjt.github.io/tags/c/c++/ , style=color:var(--color-link)>C/C++</a>
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
-<a href=https://nichyjt.github.io/tags/data-structures/ , style=color:var(--color-link)>Data Structures</a>
-<a href=https://nichyjt.github.io/tags/project/ , style=color:var(--color-link)>Project</a>
+<p class=tags style=width:fit-content>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/docker> Docker</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/networking> Networking</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/linux> Linux</a>
 </p>
 </div>
+<hr>
+<div class=content>
+<p>&ldquo;How do Docker containers talk?&rdquo; is surprisingly interesting. The rabbit hole down containerization is deep. I skim the surface here very quickly. This should not be seen as incredibly technically complete.</p>
+<h1 id=container-networks-in-a-nutshell>Container networks in a nutshell</h1>
+<p><strong>Initialization</strong>:</p>
+<p>When you install Docker, the docker daemon creates a network interface, (e.g. default is <code>docker0</code>). This network interface is a bridge.</p>
+<p>This bridge typically has the &lsquo;gateway&rsquo; ip address &ldquo;<code>X.X.X.1</code>&rdquo;, and by default has a subnet of <code>/16</code>, meaning it can support 2^16 hosts.</p>
+<p>This bridge can be thought of as a &lsquo;switch&rsquo; or &lsquo;router&rsquo; - all containers (unless config otherwise) will be given an IP address under the
+bridge&rsquo;s subnet.</p>
+<p><strong>Container is launched</strong>:</p>
+<p>When a container is spun up, the daemon gets to work.</p>
+<p>It creates a virtual network interface for the container (something like <code>vethabc123</code>). This virtual network interface (usually a virtual ethernet device) are <a href=https://man7.org/linux/man-pages/man4/veth.4.html>tunnels</a> between network namespaces. This is used to map the <strong>veth interface on the host machine</strong> with the &lsquo;real&rsquo; eth interface <strong>in the container</strong>.</p>
+<p>The host machine&rsquo;s veth handle is connected to the docker bridge.</p>
+<p>Then, ip addresses are set. Inside the container, <code>eth0</code> is set to be part of the bridge&rsquo;s subnet. Its gateway address is set to be the bridge IP address. Note that the container also has a unique MAC address.</p>
+<p>The deamon sets up some extra routing rules on the host machine. It sets up some iptables (firewall) and NAT config to make sure everything can talk to each other.</p>
+<p>The topology is as such:</p>
+<figure class=figmd>
+<img src=topology.png alt class=figsmall>
+<figcaption>Sample topology, 2 container setup</figcaption>
+</figure>
+<h2 id=setup-demo>Setup Demo</h2>
+<p>To verify the topology, you can spin up a docker container in interactive mode: <code>$ docker run -it busybox sh</code>.</p>
+<p>Then, within the shell, <code>ifconfig</code> to see the container&rsquo;s IP address (inet addr):</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>/ # ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02  
+          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:44 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:5875 (5.7 KiB)  TX bytes:0 (0.0 B)
+
+</code></pre></td></tr></table>
 </div>
-<div class=listitem>
-<div class=listitem-cont>
-<a href=https://nichyjt.github.io/essays/2021/linux/ , class=listTitleLink>
-<h1 style=margin:0;padding-top:.75rem;padding-bottom:.25rem>Making Linux Home</h1>
-<p style=color:var(--color-text);margin:0;padding-block:.25rem>A gentle introduction to Linux, installing it (Pop!_OS), and making it cozy.</p>
-</a>
-<p style=color:var(--color-text);margin:0;padding-top:.5rem;padding-bottom:.75rem>📆 16 Jul '21
-|
-📋
-<a href=https://nichyjt.github.io/tags/linux/ , style=color:var(--color-link)>Linux</a>
-<a href=https://nichyjt.github.io/tags/tutorial/ , style=color:var(--color-link)>Tutorial</a>
-<a href=https://nichyjt.github.io/tags/essay/ , style=color:var(--color-link)>Essay</a>
-</p>
+</div><p>On the host machine, you can verify that the container&rsquo;s <strong>inet address</strong> is indeed the gateway (i.e. X.X.X.1):</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">9
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>host@machine:~$ ifconfig
+docker0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500 
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:beff:fe67:b35b  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 02:42:be:67:b3:5b  txqueuelen 0  (Ethernet)
+        RX packets 194  bytes 9287 (9.2 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 2033  bytes 283427 (283.4 KB)
+        TX errors 0  dropped 59 overruns 0  carrier 0  collisions 0
+
+</code></pre></td></tr></table>
 </div>
+</div><p>When you spin up the docker container, we can also see that the daemon sets up veth to the docker0 bridge via <code>dmesg</code>!</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>[38671.621454] veth95d99cc: entered allmulticast mode
+[38671.621557] veth95d99cc: entered promiscuous mode
+[38671.708957] eth0: renamed from veth4ec9b6b
+[38671.709288] docker0: port 1(veth95d99cc) entered blocking state
+[38671.709294] docker0: port 1(veth95d99cc) entered forwarding state
+</code></pre></td></tr></table>
 </div>
-<div class=paginatorinternal>
-<ul class=pagenav>
-<a class=pagenavitem , href=/tags/linux/>1</a>
-<a class=pagenav_current , href=/tags/linux/page/2/>2</a>
+</div><h2 id=routing-rules>Routing Rules</h2>
+<p>The daemon did some voodoo on the routing. Let&rsquo;s demystify it. We can see the firewall and routing config the daemon did by <code>$ iptables -t nat -L -n -v</code>!</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+ 1336  673K DOCKER     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
+
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DOCKER     all  --  *      *       0.0.0.0/0           !127.0.0.0/8          ADDRTYPE match dst-type LOCAL
+
+Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+   68  3889 MASQUERADE  all  --  *      !docker0  172.17.0.0/16        0.0.0.0/0           
+
+Chain DOCKER 
+ pkts bytes target     prot opt in     out     source               destination         
+   90  4140 RETURN     all  --  docker0 *       0.0.0.0/0            0.0.0.0/0
+</code></pre></td></tr></table>
+</div>
+</div><p>This is a pain to read. But this sets up the communication for the following cases.</p>
+<h3 id=case-1-traffic-from-container-to-the-internet>Case 1: Traffic from container to the internet</h3>
+<p>Packets from the container travel through its <code>eth0</code> to <code>vethX</code> which is mapped to the <code>docker0</code> bridge.</p>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+   68  3889 MASQUERADE  all  --  *      !docker0  172.17.0.0/16        0.0.0.0/0  
+</code></pre></td></tr></table>
+</div>
+</div><p>This rule is in play. The rule is essentially: any traffic from 172.17.0.0 (the docker subnet) that is not going to the docker0 interface should be masqueraded to the host&rsquo;s external IP (192.x.x.x)</p>
+<h3 id=case-2-traffic-from-container-to-another-container-on-the-same-subnet>Case 2: Traffic from container to another container on the same subnet</h3>
+<p>None of the NAT rules apply! The <code>docker0</code> bridge acts as a layer 2 switch to forward traffic automatically to the other container. This is possible because the bridge has been registered with the <code>veth</code> handles for the containers (assuming the docker containers ran without special networking config).</p>
+<p>For sake of brevity, I will stop here. There are many other interesting data flow cases that I could explore (what happens when a docker container runs a webapp and exposes a port to the internet) which may be worth a proper in-depth essay. Networking as always is a hell of a deep field.</p>
+</div>
 </div>
 </section>
 </main>
