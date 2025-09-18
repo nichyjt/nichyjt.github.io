@@ -149,7 +149,7 @@
 <p>
 <time>📆 June 3, 2025</time>
 |
-⌛ 4 minutes read
+⌛ 5 minutes read
 </p>
 </div>
 <p class=tags style=width:fit-content>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/c/c++> C/C++</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/concurrency> Concurrency</a>
@@ -177,10 +177,10 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>lock_xadd</span>(<span style=color:#6ab825;font-weight:700>int</span> *src, <span style=color:#6ab825;font-weight:700>int</span> *dst);
-<span style=color:#999;font-style:italic>// Atomically does the following
-</span><span style=color:#999;font-style:italic></span>{ 
-    temp = *src + *dst;
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>lock_xadd</span>(<span style=color:#6ab825;font-weight:700>int</span> *src, <span style=color:#6ab825;font-weight:700>int</span> *dst)
+{ 
+    <span style=color:#999;font-style:italic>// Atomically does the following
+</span><span style=color:#999;font-style:italic></span>    temp = *src + *dst;
     *src = *dst;
     *dst = temp;
 }
@@ -239,6 +239,10 @@
 </span><span style="margin-right:.4em;padding:0 .4em;color:#686868">45
 </span><span style="margin-right:.4em;padding:0 .4em;color:#686868">46
 </span><span style="margin-right:.4em;padding:0 .4em;color:#686868">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">51
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
 <pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>lock_xadd</span>(<span style=color:#6ab825;font-weight:700>int</span> *src, <span style=color:#6ab825;font-weight:700>int</span> *dst);
@@ -254,14 +258,15 @@
         <span style=color:#999;font-style:italic>// attempt to acquire the lock 
 </span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>int64_t</span> add = <span style=color:#3677a9>1</span>;
         lock_xadd(&amp;add, &amp;lock);
-        <span style=color:#6ab825;font-weight:700>if</span>(add == <span style=color:#3677a9>0</span>){
-            <span style=color:#999;font-style:italic>// we acquired the lock! 
+
+        <span style=color:#6ab825;font-weight:700>if</span>(add == <span style=color:#3677a9>0</span>) <span style=color:#999;font-style:italic>// we acquired the lock! 
 </span><span style=color:#999;font-style:italic></span>            <span style=color:#6ab825;font-weight:700>return</span>;
-        }
+        
         <span style=color:#999;font-style:italic>// we did not acquire the lock if test != 0.
 </span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// means that the lock was already acquired.
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>if</span>(add &lt; <span style=color:#3677a9>0</span>) panic(); <span style=color:#999;font-style:italic>// something terrible happened. 
-</span><span style=color:#999;font-style:italic></span>
+</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>if</span>(add &lt; <span style=color:#3677a9>0</span>) <span style=color:#999;font-style:italic>// something terrible happened
+</span><span style=color:#999;font-style:italic></span>            panic(); 
+
         <span style=color:#999;font-style:italic>// &#34;compare and swap&#34;
 </span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>while</span>(<span style=color:#3677a9>1</span>){
             <span style=color:#999;font-style:italic>// wait for tmp to return 0
@@ -269,8 +274,11 @@
 </span><span style=color:#999;font-style:italic></span>            <span style=color:#6ab825;font-weight:700>int64_t</span> tmp = <span style=color:#3677a9>0</span>; 
             lock_xadd(&amp;tmp, &amp;lock);
 
-            <span style=color:#6ab825;font-weight:700>if</span>(tmp == <span style=color:#3677a9>0</span>) <span style=color:#6ab825;font-weight:700>break</span>;
-            <span style=color:#6ab825;font-weight:700>if</span>(tmp &lt; <span style=color:#3677a9>0</span>) panic();
+            <span style=color:#6ab825;font-weight:700>if</span>(tmp == <span style=color:#3677a9>0</span>)
+                <span style=color:#6ab825;font-weight:700>break</span>;
+            
+            <span style=color:#6ab825;font-weight:700>if</span>(tmp &lt; <span style=color:#3677a9>0</span>)
+                panic();
             <span style=color:#999;font-style:italic>// lock state &gt; 0, so just keep spinning~
 </span><span style=color:#999;font-style:italic></span>        }
         <span style=color:#999;font-style:italic>// we still need to actually acquire the lock.
