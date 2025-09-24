@@ -164,10 +164,31 @@
 <h1 id=lorem-ipsum>Lorem Ipsum</h1>
 <p>If you found this on the live website, congratulations! You found an easter egg.<br>
 This page is a <code>lorem ipsum</code>-esque page to test the core functionality of the website and to do regression testing<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>&mldr;</p>
+<p>Let&rsquo;s see <strong>bold characters</strong>, also <em>italics</em> as well as <em><strong>both types</strong></em>.<br>
+When a mistake is made, we <del>strikethrough</del> it!</p>
 <h1 id=math>Math</h1>
 <p>This is enabled with Katex scripts being imported.</p>
 <p>$\sin(x) = \cos(x-\frac{\pi}{2})$</p>
-<h1 id=shortcode-showcase>Shortcode Showcase</h1>
+<h1 id=code>Code</h1>
+<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#999;font-style:italic>// Go is a blazingly fast language...
+</span><span style=color:#999;font-style:italic>// ...if you discount the runtime
+</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>go</span> <span style=color:#6ab825;font-weight:700>func</span> <span style=color:#447fcf>add</span>(a, b <span style=color:#6ab825;font-weight:700>int</span>, magic <span style=color:#6ab825;font-weight:700>int</span>) <span style=color:#6ab825;font-weight:700>int</span> {
+    fmt.<span style=color:#447fcf>Println</span>(<span style=color:#ed9d13>&#34;Magic number is... %d&#34;</span>, magic);
+    <span style=color:#6ab825;font-weight:700>return</span> a + b;
+}
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=shortcode-showcase>Shortcode Showcase</h1>
 <h2 id=spoiler>Spoiler</h2>
 <p>If we need to hide something, we have <span class=spoiler-hidden onclick=removeSpoiler(this)>
 <span class=spoiler-text>
