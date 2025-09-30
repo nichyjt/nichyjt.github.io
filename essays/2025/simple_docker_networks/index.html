@@ -178,20 +178,20 @@ bridge&rsquo;s subnet.</p>
 <h2 id=setup-demo>Setup Demo</h2>
 <p>To verify the topology, you can spin up a docker container in interactive mode: <code>$ docker run -it busybox sh</code>.</p>
 <p>Then, within the shell, <code>ifconfig</code> to see the container&rsquo;s IP address (inet addr):</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>/ # ifconfig
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>/ # ifconfig
 eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02  
           inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
@@ -203,21 +203,21 @@ eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02
 </code></pre></td></tr></table>
 </div>
 </div><p>On the host machine, you can verify that the container&rsquo;s <strong>inet address</strong> is indeed the gateway (i.e. X.X.X.1):</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">9
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>host@machine:~$ ifconfig
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>host@machine:~$ ifconfig
 docker0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500 
         inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
         inet6 fe80::42:beff:fe67:b35b  prefixlen 64  scopeid 0x20&lt;link&gt;
@@ -230,16 +230,16 @@ docker0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
 </code></pre></td></tr></table>
 </div>
 </div><p>When you spin up the docker container, we can also see that the daemon sets up veth to the docker0 bridge via <code>dmesg</code>!</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>[38671.621454] veth95d99cc: entered allmulticast mode
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>[38671.621454] veth95d99cc: entered allmulticast mode
 [38671.621557] veth95d99cc: entered promiscuous mode
 [38671.708957] eth0: renamed from veth4ec9b6b
 [38671.709288] docker0: port 1(veth95d99cc) entered blocking state
@@ -248,29 +248,29 @@ docker0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
 </div>
 </div><h2 id=routing-rules>Routing Rules</h2>
 <p>The daemon did some voodoo on the routing. Let&rsquo;s demystify it. We can see the firewall and routing config the daemon did by <code>$ iptables -t nat -L -n -v</code>!</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
  pkts bytes target     prot opt in     out     source               destination         
  1336  673K DOCKER     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
 
@@ -293,14 +293,14 @@ Chain DOCKER
 </div><p>This is a pain to read. But this sets up the communication for the following cases.</p>
 <h3 id=case-1-traffic-from-container-to-the-internet>Case 1: Traffic from container to the internet</h3>
 <p>Packets from the container travel through its <code>eth0</code> to <code>vethX</code> which is mapped to the <code>docker0</code> bridge.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)
  pkts bytes target     prot opt in     out     source               destination         
    68  3889 MASQUERADE  all  --  *      !docker0  172.17.0.0/16        0.0.0.0/0  
 </code></pre></td></tr></table>

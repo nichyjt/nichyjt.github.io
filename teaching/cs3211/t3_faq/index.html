@@ -192,26 +192,26 @@
 As you correctly point out, there is nothing stopping &ldquo;<code>b hb p</code>&rdquo; or &ldquo;<code>p hb b</code>&rdquo;.</p>
 <p>But, we see that the structure of the <code>if</code> code means that (q) will always <em>happen after</em> the decrement that sees <code>old_count == 1</code>.</p>
 <p>Relevant code snippet:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++>~SharedPtr4()
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#f92672>~</span>SharedPtr4()
 {
-    size_t old_count = m_count-&gt;fetch_sub(<span style=color:#3677a9>1</span>, std::memory_order::acq_rel);
-    <span style=color:#6ab825;font-weight:700>if</span>(old_count == <span style=color:#3677a9>1</span>) <span style=color:#999;font-style:italic>// can only trigger for the last decrement in the example!
-</span><span style=color:#999;font-style:italic></span>    {
-        <span style=color:#6ab825;font-weight:700>delete</span> m_ptr;
-        <span style=color:#6ab825;font-weight:700>delete</span> m_count;
+    size_t old_count <span style=color:#f92672>=</span> m_count<span style=color:#f92672>-&gt;</span>fetch_sub(<span style=color:#ae81ff>1</span>, std<span style=color:#f92672>::</span>memory_order<span style=color:#f92672>::</span>acq_rel);
+    <span style=color:#66d9ef>if</span>(old_count <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>) <span style=color:#75715e>// can only trigger for the last decrement in the example!
+</span><span style=color:#75715e></span>    {
+        <span style=color:#66d9ef>delete</span> m_ptr;
+        <span style=color:#66d9ef>delete</span> m_count;
     }
 }
 </code></pre></td></tr></table>

@@ -187,31 +187,31 @@ You can plug in different switches to get differnet functionality (clicky<sup id
 <figcaption>If you hate CLI, this installer is good. Also reduces the risk of shooting onself in the foot.</figcaption>
 </figure>
 <p>Otherwise, you&rsquo;ll have to manually install the kernel.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#999;font-style:italic># Install the latest kernel</span>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Install the latest kernel</span>
 $ sudo apt install linux-generic 
 
-<span style=color:#999;font-style:italic># Install a certain kernel, version here is arbitrary</span>
+<span style=color:#75715e># Install a certain kernel, version here is arbitrary</span>
 $ sudo apt install linux-image-5.4.0-26-generic
 </code></pre></td></tr></table>
 </div>
 </div><h3 id=2-create-some-initrd-object>2. Create some initrd object</h3>
 <p>I won&rsquo;t get into the specifics of <code>initrd</code>. Take it as a magic image file that is loaded during boot that bootstraps your kernel.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#999;font-style:italic># Create the objects for your kernel</span>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Create the objects for your kernel</span>
 $ sudo update-initramfs -u -k all
 </code></pre></td></tr></table>
 </div>
@@ -237,13 +237,13 @@ $ sudo update-initramfs -u -k all
 <p>Installed. That&rsquo;s it!</p>
 <h3 id=4-update-your-bootloader-file>4. Update your bootloader file</h3>
 <p>For the kernel to actually show up, you will need to edit the bootloader config.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#999;font-style:italic># Edit as necessary. Take reference from the existing entries!</span>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># Edit as necessary. Take reference from the existing entries!</span>
 sudo nano /boot/efi/loader/loader.conf
 </code></pre></td></tr></table>
 </div>

@@ -166,134 +166,134 @@
 <h2 id=another-spinlock-question>Another Spinlock Question</h2>
 <p>This question is adapted from my year&rsquo;s Advanced Operating Systems finals. I didn&rsquo;t check the answer scheme / results for this, but I&rsquo;m fairly confident this is somewhat correct. I&rsquo;m writing this to scratch that concurrency itch.</p>
 <p>Consider this atomic instruction: <code>lock-xadd()</code>, where it has the side effects of the following C code:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>lock_xadd</span>(<span style=color:#6ab825;font-weight:700>int</span> *src, <span style=color:#6ab825;font-weight:700>int</span> *dst)
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>lock_xadd</span>(<span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>src, <span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>dst)
 { 
-    <span style=color:#999;font-style:italic>// Atomically does the following
-</span><span style=color:#999;font-style:italic></span>    temp = *src + *dst;
-    *src = *dst;
-    *dst = temp;
+    <span style=color:#75715e>// Atomically does the following
+</span><span style=color:#75715e></span>    temp <span style=color:#f92672>=</span> <span style=color:#f92672>*</span>src <span style=color:#f92672>+</span> <span style=color:#f92672>*</span>dst;
+    <span style=color:#f92672>*</span>src <span style=color:#f92672>=</span> <span style=color:#f92672>*</span>dst;
+    <span style=color:#f92672>*</span>dst <span style=color:#f92672>=</span> temp;
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>Question: Implement <code>spin_lock()</code> and <code>spin_unlock()</code> in C using the <code>lock_xadd()</code> function.</p>
 <h2 id=implementation>Implementation</h2>
 <p>The insight: we can get the &lsquo;old&rsquo; state of the atomic operation, since <code>*src = *dst</code>. This means that we can implement this spinlock with a compare-and-swap pattern.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">51
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>lock_xadd</span>(<span style=color:#6ab825;font-weight:700>int</span> *src, <span style=color:#6ab825;font-weight:700>int</span> *dst);
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>lock_xadd</span>(<span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>src, <span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>dst);
 
-<span style=color:#999;font-style:italic>// Lock state: 
-</span><span style=color:#999;font-style:italic>//   0 is unlocked
-</span><span style=color:#999;font-style:italic>// &gt; 0 is locked
-</span><span style=color:#999;font-style:italic>// &lt; 0 is undefined (should never happen)
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>int64_t</span> lock = <span style=color:#3677a9>0</span>; <span style=color:#999;font-style:italic>// i am an evil global lock :)
-</span><span style=color:#999;font-style:italic></span>
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>spin_lock</span>() {
-    <span style=color:#6ab825;font-weight:700>while</span>(<span style=color:#3677a9>1</span>){
-        <span style=color:#999;font-style:italic>// attempt to acquire the lock 
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>int64_t</span> add = <span style=color:#3677a9>1</span>;
-        lock_xadd(&amp;add, &amp;lock);
+<span style=color:#75715e>// Lock state: 
+</span><span style=color:#75715e>//   0 is unlocked
+</span><span style=color:#75715e>// &gt; 0 is locked
+</span><span style=color:#75715e>// &lt; 0 is undefined (should never happen)
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int64_t</span> lock <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#75715e>// i am an evil global lock :)
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>spin_lock</span>() {
+    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>){
+        <span style=color:#75715e>// attempt to acquire the lock 
+</span><span style=color:#75715e></span>        <span style=color:#66d9ef>int64_t</span> add <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+        lock_xadd(<span style=color:#f92672>&amp;</span>add, <span style=color:#f92672>&amp;</span>lock);
 
-        <span style=color:#6ab825;font-weight:700>if</span>(add == <span style=color:#3677a9>0</span>) <span style=color:#999;font-style:italic>// we acquired the lock! 
-</span><span style=color:#999;font-style:italic></span>            <span style=color:#6ab825;font-weight:700>return</span>;
+        <span style=color:#66d9ef>if</span>(add <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) <span style=color:#75715e>// we acquired the lock! 
+</span><span style=color:#75715e></span>            <span style=color:#66d9ef>return</span>;
         
-        <span style=color:#999;font-style:italic>// we did not acquire the lock if test != 0.
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// means that the lock was already acquired.
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>if</span>(add &lt; <span style=color:#3677a9>0</span>) <span style=color:#999;font-style:italic>// something terrible happened
-</span><span style=color:#999;font-style:italic></span>            panic(); 
+        <span style=color:#75715e>// we did not acquire the lock if test != 0.
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// means that the lock was already acquired.
+</span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span>(add <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>) <span style=color:#75715e>// something terrible happened
+</span><span style=color:#75715e></span>            panic(); 
 
-        <span style=color:#999;font-style:italic>// &#34;compare and swap&#34;
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>while</span>(<span style=color:#3677a9>1</span>){
-            <span style=color:#999;font-style:italic>// wait for tmp to return 0
-</span><span style=color:#999;font-style:italic></span>            <span style=color:#999;font-style:italic>// (implies that spin_unlock did its shit)
-</span><span style=color:#999;font-style:italic></span>            <span style=color:#6ab825;font-weight:700>int64_t</span> tmp = <span style=color:#3677a9>0</span>; 
-            lock_xadd(&amp;tmp, &amp;lock);
+        <span style=color:#75715e>// &#34;compare and swap&#34;
+</span><span style=color:#75715e></span>        <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>){
+            <span style=color:#75715e>// wait for tmp to return 0
+</span><span style=color:#75715e></span>            <span style=color:#75715e>// (implies that spin_unlock did its shit)
+</span><span style=color:#75715e></span>            <span style=color:#66d9ef>int64_t</span> tmp <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; 
+            lock_xadd(<span style=color:#f92672>&amp;</span>tmp, <span style=color:#f92672>&amp;</span>lock);
 
-            <span style=color:#6ab825;font-weight:700>if</span>(tmp == <span style=color:#3677a9>0</span>)
-                <span style=color:#6ab825;font-weight:700>break</span>;
+            <span style=color:#66d9ef>if</span>(tmp <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>)
+                <span style=color:#66d9ef>break</span>;
             
-            <span style=color:#6ab825;font-weight:700>if</span>(tmp &lt; <span style=color:#3677a9>0</span>)
+            <span style=color:#66d9ef>if</span>(tmp <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>)
                 panic();
-            <span style=color:#999;font-style:italic>// lock state &gt; 0, so just keep spinning~
-</span><span style=color:#999;font-style:italic></span>        }
-        <span style=color:#999;font-style:italic>// we still need to actually acquire the lock.
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// so we re-try the acquire (add 1) operation!
-</span><span style=color:#999;font-style:italic></span>    }
+            <span style=color:#75715e>// lock state &gt; 0, so just keep spinning~
+</span><span style=color:#75715e></span>        }
+        <span style=color:#75715e>// we still need to actually acquire the lock.
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// so we re-try the acquire (add 1) operation!
+</span><span style=color:#75715e></span>    }
 }
 
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>spin_unlock</span>(){
-    <span style=color:#6ab825;font-weight:700>while</span>(<span style=color:#3677a9>1</span>){
-        <span style=color:#6ab825;font-weight:700>int64_t</span> dec = -<span style=color:#3677a9>1</span>;
-        lock_xadd(&amp;dec, &amp;lock);
-        <span style=color:#999;font-style:italic>// == 1 implies that prev atomic op had
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// decremented lock from 1 to 0 hence unlocked!
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>if</span>(dec == <span style=color:#3677a9>1</span>)
-            <span style=color:#6ab825;font-weight:700>break</span>; 
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>spin_unlock</span>(){
+    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>){
+        <span style=color:#66d9ef>int64_t</span> dec <span style=color:#f92672>=</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
+        lock_xadd(<span style=color:#f92672>&amp;</span>dec, <span style=color:#f92672>&amp;</span>lock);
+        <span style=color:#75715e>// == 1 implies that prev atomic op had
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// decremented lock from 1 to 0 hence unlocked!
+</span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span>(dec <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>)
+            <span style=color:#66d9ef>break</span>; 
     }
 }
 

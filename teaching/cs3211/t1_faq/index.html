@@ -254,45 +254,45 @@
 </ol>
 <h3 id=correction-moved-thread-is-not-joinable>Correction: moved thread is not joinable</h3>
 <p>I re-read the specs and tested on a minimal example. You cannot <code>join()</code> or <code>detach()</code> on the moved thread&rsquo;s old handle:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;thread&gt;</span><span style=color:#cd2828;font-weight:700>
-</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;iostream&gt;</span><span style=color:#cd2828;font-weight:700>
-</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;unistd.h&gt;</span><span style=color:#cd2828;font-weight:700>
-</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;cassert&gt;</span><span style=color:#cd2828;font-weight:700>
-</span><span style=color:#cd2828;font-weight:700></span>
-<span style=color:#6ab825;font-weight:700>int</span> <span style=color:#447fcf>main</span>(){
-    <span style=color:#6ab825;font-weight:700>int</span> local = <span style=color:#3677a9>0</span>;
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t1([](){
-        <span style=color:#999;font-style:italic>// do stuff
-</span><span style=color:#999;font-style:italic></span>        sleep(<span style=color:#3677a9>3</span>);
-        std::cout &lt;&lt; <span style=color:#ed9d13>&#34;done!</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>;
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;thread&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;unistd.h&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cassert&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(){
+    <span style=color:#66d9ef>int</span> local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t1([](){
+        <span style=color:#75715e>// do stuff
+</span><span style=color:#75715e></span>        sleep(<span style=color:#ae81ff>3</span>);
+        std<span style=color:#f92672>::</span>cout <span style=color:#f92672>&lt;&lt;</span> <span style=color:#e6db74>&#34;done!</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>;
     });
 
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t2 = std::move(t1); <span style=color:#999;font-style:italic>// Transfer ownership to t2
-</span><span style=color:#999;font-style:italic></span>    assert(!t1.joinable()); <span style=color:#999;font-style:italic>// this passes, meaning t1.joinable() is false.
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// This means that t1 cannot be joined or detached.
-</span><span style=color:#999;font-style:italic></span>    t2.join();
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t2 <span style=color:#f92672>=</span> std<span style=color:#f92672>::</span>move(t1); <span style=color:#75715e>// Transfer ownership to t2
+</span><span style=color:#75715e></span>    assert(<span style=color:#f92672>!</span>t1.joinable()); <span style=color:#75715e>// this passes, meaning t1.joinable() is false.
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// This means that t1 cannot be joined or detached.
+</span><span style=color:#75715e></span>    t2.join();
 }
 </code></pre></td></tr></table>
 </div>
@@ -315,35 +315,35 @@ In the context of <code>std::thread</code> and this class, you just need to know
 <h2 id=q3-lambdas---why-dont-we-use-the-argument-list--instead-of-capture-lists->Q3: Lambdas - why don&rsquo;t we use the argument list () instead of capture lists []?</h2>
 <p>You <em>can</em> use the argument list instead of capture lists, but the ergonomics is not as good (my opinion).</p>
 <p>The following will compile. Test on your own machine:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>foo</span>(){
-    <span style=color:#6ab825;font-weight:700>int</span> local = <span style=color:#3677a9>0</span>;
-    <span style=color:#999;font-style:italic>// the usual way
-</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t1([local](){
-        printf(<span style=color:#ed9d13>&#34;Local is %d </span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, local); <span style=color:#999;font-style:italic>// Local is 0
-</span><span style=color:#999;font-style:italic></span>    });  
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>foo</span>(){
+    <span style=color:#66d9ef>int</span> local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    <span style=color:#75715e>// the usual way
+</span><span style=color:#75715e></span>    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t1([local](){
+        printf(<span style=color:#e6db74>&#34;Local is %d </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, local); <span style=color:#75715e>// Local is 0
+</span><span style=color:#75715e></span>    });  
     t1.join();
 
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t2([](<span style=color:#6ab825;font-weight:700>int</span> my_local){
-        printf(<span style=color:#ed9d13>&#34;Local is %d </span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, my_local); <span style=color:#999;font-style:italic>// Local is 0
-</span><span style=color:#999;font-style:italic></span>    }, local); <span style=color:#999;font-style:italic>// pass local just like a fn argument
-</span><span style=color:#999;font-style:italic></span>    t2.join();
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t2([](<span style=color:#66d9ef>int</span> my_local){
+        printf(<span style=color:#e6db74>&#34;Local is %d </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, my_local); <span style=color:#75715e>// Local is 0
+</span><span style=color:#75715e></span>    }, local); <span style=color:#75715e>// pass local just like a fn argument
+</span><span style=color:#75715e></span>    t2.join();
 }
 </code></pre></td></tr></table>
 </div>

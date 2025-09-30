@@ -165,19 +165,19 @@
 </ul>
 <p>There might be some common misconception if you are not aware of &lsquo;non-lexical-lifetimes&rsquo;.</p>
 <p>Consider this:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>
-</span><span style=color:#666></span>x<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span><span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+<span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x;
+<span style=color:#66d9ef>let</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;
+x <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>What will be the value of x?</p>
 <p>A: 2<br>

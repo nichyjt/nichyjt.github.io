@@ -163,64 +163,64 @@ does/doesn't work.
 <p>You have learnt in lecture that there are many ways to create threads, and certain ways of creating threads actually don&rsquo;t work.</p>
 <p>Due to time constraints + how confusing this may be, this isn&rsquo;t covered in the tutorial.</p>
 <p>A brief recap of what you see in lecture:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">32
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;iostream&gt;</span><span style=color:#cd2828;font-weight:700>
-</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;thread&gt;</span><span style=color:#cd2828;font-weight:700>
-</span><span style=color:#cd2828;font-weight:700></span>
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>task</span>();        <span style=color:#999;font-style:italic>// assume this is implemented
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>class</span> <span style=color:#447fcf;text-decoration:underline>TaskClass</span> {  <span style=color:#999;font-style:italic>// callable type
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>public</span>:
-    <span style=color:#6ab825;font-weight:700>void</span> <span style=color:#6ab825;font-weight:700>operator</span>()() <span style=color:#6ab825;font-weight:700>const</span> {
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;thread&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>task</span>();        <span style=color:#75715e>// assume this is implemented
+</span><span style=color:#75715e></span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TaskClass</span> {  <span style=color:#75715e>// callable type
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>public</span><span style=color:#f92672>:</span>
+    <span style=color:#66d9ef>void</span> <span style=color:#66d9ef>operator</span>()() <span style=color:#66d9ef>const</span> {
         task();
     }
 };
 
-<span style=color:#6ab825;font-weight:700>int</span> <span style=color:#447fcf>main</span>() {
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t0(task);           <span style=color:#999;font-style:italic>// my favorite style. very RTOS-like.
-</span><span style=color:#999;font-style:italic></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>() {
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t0(task);           <span style=color:#75715e>// my favorite style. very RTOS-like.
+</span><span style=color:#75715e></span>
     TaskClass my_task;
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t1(my_task);        <span style=color:#999;font-style:italic>// callable object
-</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t2{my_task};        <span style=color:#999;font-style:italic>// recommended approach
-</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t3((TaskClass()));  <span style=color:#999;font-style:italic>// () hell
-</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t4{TaskClass()};    <span style=color:#999;font-style:italic>// recommended approach  
-</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> t5([](){            <span style=color:#999;font-style:italic>// lambdas are also recommended
-</span><span style=color:#999;font-style:italic></span>        task();
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t1(my_task);        <span style=color:#75715e>// callable object
+</span><span style=color:#75715e></span>    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t2{my_task};        <span style=color:#75715e>// recommended approach
+</span><span style=color:#75715e></span>    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t3((TaskClass()));  <span style=color:#75715e>// () hell
+</span><span style=color:#75715e></span>    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t4{TaskClass()};    <span style=color:#75715e>// recommended approach  
+</span><span style=color:#75715e></span>    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t5([](){            <span style=color:#75715e>// lambdas are also recommended
+</span><span style=color:#75715e></span>        task();
     });
 
     t0.join();
@@ -231,8 +231,8 @@ does/doesn't work.
     t5.join();
 }
 
-<span style=color:#999;font-style:italic>// WRONG: This returns a func that returns a std::thread object. wtf?
-</span><span style=color:#999;font-style:italic></span>std::<span style=color:#6ab825;font-weight:700>thread</span> t6(TaskClass());
+<span style=color:#75715e>// WRONG: This returns a func that returns a std::thread object. wtf?
+</span><span style=color:#75715e></span>std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t6(TaskClass());
 </code></pre></td></tr></table>
 </div>
 </div><p>The question is: why is this so cursed?</p>
@@ -241,14 +241,14 @@ does/doesn't work.
 <p>This results in some syntactical ambiguity on whether something is a parameter or a function type specification.</p>
 <p>The most vexing parse is a rule applied to handle such ambiguity.</p>
 <p>Consider this:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-style:italic>// Simple, right?
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>char</span> <span style=color:#447fcf>foo</span>(Bar());
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>// Simple, right?
+</span><span style=color:#75715e></span><span style=color:#66d9ef>char</span> <span style=color:#a6e22e>foo</span>(Bar());
 </code></pre></td></tr></table>
 </div>
 </div><p>What do you think line 2 means?</p>

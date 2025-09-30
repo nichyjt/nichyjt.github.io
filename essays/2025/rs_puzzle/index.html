@@ -152,7 +152,7 @@ Answering a common misconception from learners new to Rust.
 <p>
 <time>📆 April 5, 2025</time>
 |
-⌛ 9 minutes read
+⌛ 12 minutes read
 </p>
 </div>
 <p class=tags style=width:fit-content>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/rust> Rust</a>
@@ -165,131 +165,131 @@ Answering a common misconception from learners new to Rust.
 <p><strong>Rule 1, Ownership</strong>:<br>
 One and only one owner can exist for any data that is allocated.<br>
 Assignment &lsquo;=&rsquo; and <code>move</code> moves ownership of the data unless the datatype implements the <code>Copy</code> trait, but that&rsquo;s not really relevant for the puzzle later on.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#24909d>String</span>::from(<span style=color:#ed9d13>&#34;hello&#34;</span>);<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>x;<span style=color:#666> </span><span style=color:#999;font-style:italic>// ownership moves to y
-</span><span style=color:#999;font-style:italic></span>println!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>x);<span style=color:#666> </span><span style=color:#999;font-style:italic>// Error: borrow of moved value `x`
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> x <span style=color:#f92672>=</span> String::from(<span style=color:#e6db74>&#34;hello&#34;</span>);
+<span style=color:#66d9ef>let</span> y <span style=color:#f92672>=</span> x; <span style=color:#75715e>// ownership moves to y
+</span><span style=color:#75715e></span>println!(<span style=color:#e6db74>&#34;{}&#34;</span>, x); <span style=color:#75715e>// Error: borrow of moved value `x`
 </span></code></pre></td></tr></table>
 </div>
 </div><p><strong>Rule 2, Multiple immutable references</strong>:<br>
 Multiple immutable references can exist.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666> </span><span style=color:#999;font-style:italic>// immutable reference to x
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666> </span><span style=color:#999;font-style:italic>// immutable reference to x
-</span><span style=color:#999;font-style:italic></span>print!(<span style=color:#ed9d13>&#34;{},{},{}&#34;</span>,<span style=color:#666> </span>x,y,z);<span style=color:#666> </span><span style=color:#999;font-style:italic>// OK!
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+<span style=color:#66d9ef>let</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x; <span style=color:#75715e>// immutable reference to x
+</span><span style=color:#75715e></span><span style=color:#66d9ef>let</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x; <span style=color:#75715e>// immutable reference to x
+</span><span style=color:#75715e></span>print!(<span style=color:#e6db74>&#34;{},{},{}&#34;</span>, x,y,z); <span style=color:#75715e>// OK!
 </span></code></pre></td></tr></table>
 </div>
 </div><p><strong>Rule 3, One mutable reference</strong>:<br>
 Only one mutable reference can exist at a time. <br>
 This prevents a &lsquo;multiple writer&rsquo; problem.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666> 
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666> </span><span style=color:#999;font-style:italic>// error!
-</span><span style=color:#999;font-style:italic></span>*y<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span>*z<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666> </span><span style=color:#999;font-style:italic>// error!
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+<span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x; 
+<span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x; <span style=color:#75715e>// error!
+</span><span style=color:#75715e></span><span style=color:#f92672>*</span>y <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>;
+<span style=color:#f92672>*</span>z <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>; <span style=color:#75715e>// error!
 </span></code></pre></td></tr></table>
 </div>
 </div><p><strong>Rule 4, (Rule 2) XOR (Rule 3)</strong>:<br>
 i.e. shared-xor-mutable.<br>
 Only 1 mutable reference can exist, or<br>
 Only N immutable references can exist.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span>{<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
-</span><span style=color:#666>    </span>*y<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span><span style=color:#666></span>{<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>q<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>r<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666> 
-</span><span style=color:#666></span>}<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#999;font-style:italic>// never a combination of &amp;mut and &amp;x!
-</span><span style=color:#999;font-style:italic></span>{<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>
-</span><span style=color:#666>    </span>*y<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666> </span><span style=color:#999;font-style:italic>// error!
-</span><span style=color:#999;font-style:italic></span>}<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+{
+    <span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x;
+    <span style=color:#f92672>*</span>y <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>;
+}
+{
+    <span style=color:#66d9ef>let</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;
+    <span style=color:#66d9ef>let</span> q <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;
+    <span style=color:#66d9ef>let</span> r <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x; 
+}
+<span style=color:#75715e>// never a combination of &amp;mut and &amp;x!
+</span><span style=color:#75715e></span>{
+    <span style=color:#66d9ef>let</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x;
+    <span style=color:#66d9ef>let</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;
+    <span style=color:#f92672>*</span>y <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>; <span style=color:#75715e>// error!
+</span><span style=color:#75715e></span>}
+</code></pre></td></tr></table>
 </div>
 </div><p><strong>Rule 5, Every reference in Rust has a lifetime</strong>:<br>
 The lifetime is the scope for which that reference is valid. References must not live longer than the resource they refer to.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>x: <span style=color:#6ab825>&amp;</span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666> </span><span style=color:#999;font-style:italic>// x is an uninitialized immutable reference to an i32
-</span><span style=color:#999;font-style:italic></span>{<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666>    </span>x<span style=color:#666> </span>=<span style=color:#666> </span>&amp;y;<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span><span style=color:#666></span>print!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>x)<span style=color:#666> </span>;<span style=color:#666> </span><span style=color:#999;font-style:italic>// error! x lives longer than y.
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> x: <span style=color:#66d9ef>&amp;</span><span style=color:#66d9ef>i32</span>; <span style=color:#75715e>// x is an uninitialized immutable reference to an i32
+</span><span style=color:#75715e></span>{
+    <span style=color:#66d9ef>let</span> y <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+    x <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>y;
+}
+print!(<span style=color:#e6db74>&#34;{}&#34;</span>, x) ; <span style=color:#75715e>// error! x lives longer than y.
 </span></code></pre></td></tr></table>
 </div>
 </div><p>These rules help ensure that at compile time, potential data races, dangling references and use-after-free never happen. Awesome.</p>
 <p>Now that we understand the basic rules, let&rsquo;s try this puzzle out:</p>
 <h1 id=a-simple-borrow-checking-puzzle>A simple(?) borrow checking puzzle</h1>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>
-</span><span style=color:#666></span>x<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span><span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+<span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x;
+<span style=color:#66d9ef>let</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;
+x <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>What will be the value of x?</p>
 <p>A: 2<br>
@@ -309,46 +309,46 @@ x will successfully increment to 2!
 <p><code>y</code> is a mutable reference to <code>x</code>. So, according to rule 4, we cannot have any more immutable references.
 Yet, we can still add <code>let z = &x</code> and it compiles.</p>
 <p>Why is that the case? Let&rsquo;s create a slightly different version of our program to see what&rsquo;s going on.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#999;font-style:italic>// NOTOK.rs
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>
-</span><span style=color:#666></span>y<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span><span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#75715e>// NOTOK.rs
+</span><span style=color:#75715e></span><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+<span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x;
+<span style=color:#66d9ef>let</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;
+y <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+</code></pre></td></tr></table>
 </div>
 </div><p>In this case, the compiler will complain and give the error we expect:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>error[E0502]: <span style=color:#447fcf;text-decoration:underline>cannot</span><span style=color:#666> </span>borrow<span style=color:#666> </span><span style=color:#a61717;background-color:#e3d2d2>`</span>x<span style=color:#a61717;background-color:#e3d2d2>`</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>as</span><span style=color:#666> </span>immutable<span style=color:#666> </span>because<span style=color:#666> </span>it<span style=color:#666> </span>is<span style=color:#666> </span>also<span style=color:#666> </span>borrowed<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>as</span><span style=color:#666> </span>mutable<span style=color:#666>
-</span><span style=color:#666> </span>--&gt; <span style=color:#447fcf;text-decoration:underline>nok</span>.rs:<span style=color:#3677a9>4</span>:<span style=color:#3677a9>13</span><span style=color:#666>
-</span><span style=color:#666>  </span>|<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#3677a9>3</span><span style=color:#666> </span>|<span style=color:#666>     </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
-</span><span style=color:#666>  </span>|<span style=color:#666>                 </span>------<span style=color:#666> </span>mutable<span style=color:#666> </span>borrow<span style=color:#666> </span>occurs<span style=color:#666> </span>here<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#3677a9>4</span><span style=color:#666> </span>|<span style=color:#666>     </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>
-</span><span style=color:#666>  </span>|<span style=color:#666>             </span>^^<span style=color:#666> </span>immutable<span style=color:#666> </span>borrow<span style=color:#666> </span>occurs<span style=color:#666> </span>here<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#3677a9>5</span><span style=color:#666> </span>|<span style=color:#666>     </span>*y<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666>  </span>|<span style=color:#666>     </span>-------<span style=color:#666> </span>mutable<span style=color:#666> </span>borrow<span style=color:#666> </span>later<span style=color:#666> </span>used<span style=color:#666> </span>here<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>error[E0502]: <span style=color:#a6e22e>cannot</span> borrow <span style=color:#960050;background-color:#1e0010>`</span>x<span style=color:#960050;background-color:#1e0010>`</span> <span style=color:#66d9ef>as</span> immutable because it is also borrowed <span style=color:#66d9ef>as</span> mutable
+ <span style=color:#f92672>-</span>-&gt; <span style=color:#a6e22e>nok</span>.rs:<span style=color:#ae81ff>4</span>:<span style=color:#ae81ff>13</span>
+  <span style=color:#f92672>|</span>
+<span style=color:#ae81ff>3</span> <span style=color:#f92672>|</span>     <span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x;
+  <span style=color:#f92672>|</span>                 <span style=color:#f92672>------</span> mutable borrow occurs here
+<span style=color:#ae81ff>4</span> <span style=color:#f92672>|</span>     <span style=color:#66d9ef>let</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;
+  <span style=color:#f92672>|</span>             <span style=color:#f92672>^^</span> immutable borrow occurs here
+<span style=color:#ae81ff>5</span> <span style=color:#f92672>|</span>     <span style=color:#f92672>*</span>y <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>;
+  <span style=color:#f92672>|</span>     <span style=color:#f92672>-------</span> mutable borrow later used here
+</code></pre></td></tr></table>
 </div>
 </div><p>Why is this the case?</p>
 <h2 id=lifetimes>Lifetimes</h2>
@@ -362,130 +362,130 @@ MIR is a simplified representation of Rust in middle of the compile process to u
 <p>This generates a bunch of MIR files to let us see the program in the compile process.
 One artefact that MIR gives us is the <strong>lexical scope</strong> of the program.</p>
 <p>Funnily, the lexical scope generated by the MIR is the same for both programs:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>scope<span style=color:#666> </span><span style=color:#3677a9>1</span><span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>    </span>debug<span style=color:#666> </span>x<span style=color:#666> </span>=&gt;<span style=color:#666> </span>_1;<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_2: <span style=color:#6ab825>&amp;</span><span style=color:#447fcf;text-decoration:underline>mut</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>    </span>scope<span style=color:#666> </span><span style=color:#3677a9>2</span><span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>        </span>debug<span style=color:#666> </span>y<span style=color:#666> </span>=&gt;<span style=color:#666> </span>_2;<span style=color:#666>
-</span><span style=color:#666>        </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>_3: <span style=color:#6ab825>&amp;</span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>        </span>scope<span style=color:#666> </span><span style=color:#3677a9>3</span><span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>            </span>debug<span style=color:#666> </span>z<span style=color:#666> </span>=&gt;<span style=color:#666> </span>_3;<span style=color:#666>
-</span><span style=color:#666>        </span>}<span style=color:#666>
-</span><span style=color:#666>    </span>}<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>scope <span style=color:#ae81ff>1</span> {
+    debug x <span style=color:#f92672>=&gt;</span> _1;
+    <span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> _2: <span style=color:#66d9ef>&amp;</span><span style=color:#a6e22e>mut</span> <span style=color:#66d9ef>i32</span>;
+    scope <span style=color:#ae81ff>2</span> {
+        debug y <span style=color:#f92672>=&gt;</span> _2;
+        <span style=color:#66d9ef>let</span> _3: <span style=color:#66d9ef>&amp;</span><span style=color:#66d9ef>i32</span>;
+        scope <span style=color:#ae81ff>3</span> {
+            debug z <span style=color:#f92672>=&gt;</span> _3;
+        }
+    }
+}
+</code></pre></td></tr></table>
 </div>
 </div><p>So, this does not tell us anything useful.
 In fact, it seems to suggest that <code>z</code> bleeds into <code>y</code>&rsquo;s scope which violates the shared-xor-mutable rule!</p>
 <p>Wait, what is <code>_1</code>, <code>_2</code>, <code>_3</code>? We can think of these as handles to the actual data.</p>
 <p>The MIR tells us much more regarding this. The following block of operations generated by rust allows us to attach meaning to the lifetimes of the variables. For the version that compiles:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#999;font-style:italic>// COMPILES
-</span><span style=color:#999;font-style:italic></span>bb0: {<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_1);<span style=color:#666>  </span><span style=color:#999;font-style:italic>// (x = _1) life starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_1<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_2);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (y = &amp;mut x) life starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_2<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_1;<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_3);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (z = &amp;x) life starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_3<span style=color:#666> </span>=<span style=color:#666> </span>&amp;_1;<span style=color:#666>
-</span><span style=color:#666>    </span>_4<span style=color:#666> </span>=<span style=color:#666> </span>AddWithOverflow(copy<span style=color:#666> </span>_1,<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>);<span style=color:#666>
-</span><span style=color:#666>    </span>assert(!<span style=color:#6ab825;font-weight:700>move</span><span style=color:#666> </span>(_4.<span style=color:#3677a9>1</span>: <span style=color:#6ab825;font-weight:700>bool</span>),<span style=color:#666> </span><span style=color:#ed9d13>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>,<span style=color:#666> </span>copy<span style=color:#666> </span>_1,<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>)<span style=color:#666> </span>-&gt; [success: <span style=color:#447fcf;text-decoration:underline>bb1</span>,<span style=color:#666> </span>unwind<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>continue</span>];<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span><span style=color:#666>
-</span><span style=color:#666></span>bb1: {<span style=color:#666>
-</span><span style=color:#666>    </span>_1<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>move</span><span style=color:#666> </span>(_4.<span style=color:#3677a9>0</span>: <span style=color:#6ab825;font-weight:700>i32</span>);<span style=color:#666>
-</span><span style=color:#666>    </span>_0<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span>();<span style=color:#666>
-</span><span style=color:#666>    </span>StorageDead(_3);<span style=color:#666> </span><span style=color:#999;font-style:italic>// z life ends
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>StorageDead(_2);<span style=color:#666> </span><span style=color:#999;font-style:italic>// y life ends
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>StorageDead(_1);<span style=color:#666> </span><span style=color:#999;font-style:italic>// x life ends
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>return</span>;<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#75715e>// COMPILES
+</span><span style=color:#75715e></span>bb0: {
+    StorageLive(_1);  <span style=color:#75715e>// (x = _1) life starts
+</span><span style=color:#75715e></span>    _1 <span style=color:#f92672>=</span> <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>;
+    StorageLive(_2); <span style=color:#75715e>// (y = &amp;mut x) life starts
+</span><span style=color:#75715e></span>    _2 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> _1;
+    StorageLive(_3); <span style=color:#75715e>// (z = &amp;x) life starts
+</span><span style=color:#75715e></span>    _3 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>_1;
+    _4 <span style=color:#f92672>=</span> AddWithOverflow(copy _1, <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>);
+    assert(<span style=color:#f92672>!</span><span style=color:#66d9ef>move</span> (_4.<span style=color:#ae81ff>1</span>: <span style=color:#66d9ef>bool</span>), <span style=color:#e6db74>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>, copy _1, <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>) -&gt; [success: <span style=color:#a6e22e>bb1</span>, unwind <span style=color:#66d9ef>continue</span>];
+}
+
+bb1: {
+    _1 <span style=color:#f92672>=</span> <span style=color:#66d9ef>move</span> (_4.<span style=color:#ae81ff>0</span>: <span style=color:#66d9ef>i32</span>);
+    _0 <span style=color:#f92672>=</span> <span style=color:#66d9ef>const</span> ();
+    StorageDead(_3); <span style=color:#75715e>// z life ends
+</span><span style=color:#75715e></span>    StorageDead(_2); <span style=color:#75715e>// y life ends
+</span><span style=color:#75715e></span>    StorageDead(_1); <span style=color:#75715e>// x life ends
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span>;
+}
+</code></pre></td></tr></table>
 </div>
 </div><p>For the version that fails to compile:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#999;font-style:italic>// DOES NOT COMPILE
-</span><span style=color:#999;font-style:italic></span>bb0: {<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_1);<span style=color:#666>  </span><span style=color:#999;font-style:italic>// (x = _1) life starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_1<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_2);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (y = &amp;mut x) life starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_2<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_1;<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_3);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (z = &amp;x) life starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_3<span style=color:#666> </span>=<span style=color:#666> </span>&amp;_1;<span style=color:#666>
-</span><span style=color:#666>    </span>_4<span style=color:#666> </span>=<span style=color:#666> </span>AddWithOverflow(copy<span style=color:#666> </span>(*_2),<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>);<span style=color:#666>
-</span><span style=color:#666>    </span>assert(!<span style=color:#6ab825;font-weight:700>move</span><span style=color:#666> </span>(_4.<span style=color:#3677a9>1</span>: <span style=color:#6ab825;font-weight:700>bool</span>),<span style=color:#666> </span><span style=color:#ed9d13>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>,<span style=color:#666> </span>copy<span style=color:#666> </span>(*_2),<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>)<span style=color:#666> </span>-&gt; [success: <span style=color:#447fcf;text-decoration:underline>bb1</span>,<span style=color:#666> </span>unwind<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>continue</span>];<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span><span style=color:#666>
-</span><span style=color:#666></span>bb1: {<span style=color:#666>
-</span><span style=color:#666>    </span>(*_2)<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>move</span><span style=color:#666> </span>(_4.<span style=color:#3677a9>0</span>: <span style=color:#6ab825;font-weight:700>i32</span>);<span style=color:#666>
-</span><span style=color:#666>    </span>_0<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span>();<span style=color:#666>
-</span><span style=color:#666>    </span>StorageDead(_3);<span style=color:#666> </span><span style=color:#999;font-style:italic>// z life ends
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>StorageDead(_2);<span style=color:#666> </span><span style=color:#999;font-style:italic>// y life ends
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>StorageDead(_1);<span style=color:#666> </span><span style=color:#999;font-style:italic>// x life ends
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>return</span>;<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#75715e>// DOES NOT COMPILE
+</span><span style=color:#75715e></span>bb0: {
+    StorageLive(_1);  <span style=color:#75715e>// (x = _1) life starts
+</span><span style=color:#75715e></span>    _1 <span style=color:#f92672>=</span> <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>;
+    StorageLive(_2); <span style=color:#75715e>// (y = &amp;mut x) life starts
+</span><span style=color:#75715e></span>    _2 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> _1;
+    StorageLive(_3); <span style=color:#75715e>// (z = &amp;x) life starts
+</span><span style=color:#75715e></span>    _3 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>_1;
+    _4 <span style=color:#f92672>=</span> AddWithOverflow(copy (<span style=color:#f92672>*</span>_2), <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>);
+    assert(<span style=color:#f92672>!</span><span style=color:#66d9ef>move</span> (_4.<span style=color:#ae81ff>1</span>: <span style=color:#66d9ef>bool</span>), <span style=color:#e6db74>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>, copy (<span style=color:#f92672>*</span>_2), <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>) -&gt; [success: <span style=color:#a6e22e>bb1</span>, unwind <span style=color:#66d9ef>continue</span>];
+}
+
+bb1: {
+    (<span style=color:#f92672>*</span>_2) <span style=color:#f92672>=</span> <span style=color:#66d9ef>move</span> (_4.<span style=color:#ae81ff>0</span>: <span style=color:#66d9ef>i32</span>);
+    _0 <span style=color:#f92672>=</span> <span style=color:#66d9ef>const</span> ();
+    StorageDead(_3); <span style=color:#75715e>// z life ends
+</span><span style=color:#75715e></span>    StorageDead(_2); <span style=color:#75715e>// y life ends
+</span><span style=color:#75715e></span>    StorageDead(_1); <span style=color:#75715e>// x life ends
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span>;
+}
+</code></pre></td></tr></table>
 </div>
 </div><p>Damn. Basically the same. Even for the compilable version, the lifetimes of x,y,z dont make sense!
 The life of mutable reference <code>y</code> overlaps with <code>z</code>, right?</p>
@@ -500,185 +500,185 @@ summarises this nicely:</p>
 and continues through the last time that reference is used.</p>
 </blockquote>
 <br>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">9
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#999;font-style:italic>// lifted from the rust book
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>s<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#24909d>String</span>::from(<span style=color:#ed9d13>&#34;hello&#34;</span>);<span style=color:#666>
-</span><span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>r1<span style=color:#666> </span>=<span style=color:#666> </span>&amp;s;<span style=color:#666> </span><span style=color:#999;font-style:italic>// no problem
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>r2<span style=color:#666> </span>=<span style=color:#666> </span>&amp;s;<span style=color:#666> </span><span style=color:#999;font-style:italic>// no problem
-</span><span style=color:#999;font-style:italic></span>println!(<span style=color:#ed9d13>&#34;{r1} and {r2}&#34;</span>);<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#999;font-style:italic>// variables r1 and r2 will not be used after this point
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>r3<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>s;<span style=color:#666> </span><span style=color:#999;font-style:italic>// no problem
-</span><span style=color:#999;font-style:italic></span>println!(<span style=color:#ed9d13>&#34;{r3}&#34;</span>);<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#75715e>// lifted from the rust book
+</span><span style=color:#75715e></span><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> s <span style=color:#f92672>=</span> String::from(<span style=color:#e6db74>&#34;hello&#34;</span>);
+
+<span style=color:#66d9ef>let</span> r1 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>s; <span style=color:#75715e>// no problem
+</span><span style=color:#75715e></span><span style=color:#66d9ef>let</span> r2 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>s; <span style=color:#75715e>// no problem
+</span><span style=color:#75715e></span>println!(<span style=color:#e6db74>&#34;{r1} and {r2}&#34;</span>);
+<span style=color:#75715e>// variables r1 and r2 will not be used after this point
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>let</span> r3 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> s; <span style=color:#75715e>// no problem
+</span><span style=color:#75715e></span>println!(<span style=color:#e6db74>&#34;{r3}&#34;</span>);
+</code></pre></td></tr></table>
 </div>
 </div><p>This concept tends to be overlooked at when we have discussions about shared-xor-mutable (my personal observation). It is also a source of confusion to people trying to learn about the language.</p>
 <p>Ok, so it seems that the MIR does not give us the full picture.</p>
 <p>Shared-xor-mutable rule should be applied to the NLL scope rather than lexical scope.</p>
 <p>So, going by the definition above, let&rsquo;s manually annotate the MIR code with the NLL:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">9
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>bb0: {<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_1);<span style=color:#666>  </span><span style=color:#999;font-style:italic>// (x = _1) scope starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_1<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_2);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (y = &amp;mut x) scope starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_2<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_1;<span style=color:#666>    </span><span style=color:#999;font-style:italic>// y borrow scope ends (no more use of y)
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>StorageLive(_3);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (z = &amp;x) scope starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_3<span style=color:#666> </span>=<span style=color:#666> </span>&amp;_1;<span style=color:#666>        </span><span style=color:#999;font-style:italic>// z borrow scope ends (no more use of z)
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_4<span style=color:#666> </span>=<span style=color:#666> </span>AddWithOverflow(copy<span style=color:#666> </span>_1,<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>);<span style=color:#666>
-</span><span style=color:#666>    </span>assert(!<span style=color:#6ab825;font-weight:700>move</span><span style=color:#666> </span>(_4.<span style=color:#3677a9>1</span>: <span style=color:#6ab825;font-weight:700>bool</span>),<span style=color:#666> </span><span style=color:#ed9d13>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>,<span style=color:#666> </span>copy<span style=color:#666> </span>_1,<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>)<span style=color:#666> </span>-&gt; [success: <span style=color:#447fcf;text-decoration:underline>bb1</span>,<span style=color:#666> </span>unwind<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>continue</span>];<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>bb0: {
+    StorageLive(_1);  <span style=color:#75715e>// (x = _1) scope starts
+</span><span style=color:#75715e></span>    _1 <span style=color:#f92672>=</span> <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>;
+    StorageLive(_2); <span style=color:#75715e>// (y = &amp;mut x) scope starts
+</span><span style=color:#75715e></span>    _2 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> _1;    <span style=color:#75715e>// y borrow scope ends (no more use of y)
+</span><span style=color:#75715e></span>    StorageLive(_3); <span style=color:#75715e>// (z = &amp;x) scope starts
+</span><span style=color:#75715e></span>    _3 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>_1;        <span style=color:#75715e>// z borrow scope ends (no more use of z)
+</span><span style=color:#75715e></span>    _4 <span style=color:#f92672>=</span> AddWithOverflow(copy _1, <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>);
+    assert(<span style=color:#f92672>!</span><span style=color:#66d9ef>move</span> (_4.<span style=color:#ae81ff>1</span>: <span style=color:#66d9ef>bool</span>), <span style=color:#e6db74>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>, copy _1, <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>) -&gt; [success: <span style=color:#a6e22e>bb1</span>, unwind <span style=color:#66d9ef>continue</span>];
+}
+</code></pre></td></tr></table>
 </div>
 </div><p>This makes more sense. If we use the same syntax as the lexical scope block, then the NLL would probably look like this:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#999;font-style:italic>// My take on what the scope will look like
-</span><span style=color:#999;font-style:italic></span>scope<span style=color:#666> </span><span style=color:#3677a9>1</span><span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>    </span>debug<span style=color:#666> </span>x<span style=color:#666> </span>=&gt;<span style=color:#666> </span>_1;<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_2: <span style=color:#6ab825>&amp;</span><span style=color:#447fcf;text-decoration:underline>mut</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>    </span>scope<span style=color:#666> </span><span style=color:#3677a9>2</span><span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>        </span>debug<span style=color:#666> </span>y<span style=color:#666> </span>=&gt;<span style=color:#666> </span>_2;<span style=color:#666> </span><span style=color:#999;font-style:italic>// OK! 1 owner, 1 mutable borrow
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>}<span style=color:#666> </span><span style=color:#999;font-style:italic>// y goes out of scope
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>_3: <span style=color:#6ab825>&amp;</span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>    </span>scope<span style=color:#666> </span><span style=color:#3677a9>3</span><span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>        </span>debug<span style=color:#666> </span>z<span style=color:#666> </span>=&gt;<span style=color:#666> </span>_3;<span style=color:#666> </span><span style=color:#999;font-style:italic>// OK! 1 owner, 1 immutable borrow
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>}<span style=color:#666> </span><span style=color:#999;font-style:italic>// z goes out of scope
-</span><span style=color:#999;font-style:italic></span>}<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#75715e>// My take on what the scope will look like
+</span><span style=color:#75715e></span>scope <span style=color:#ae81ff>1</span> {
+    debug x <span style=color:#f92672>=&gt;</span> _1;
+    <span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> _2: <span style=color:#66d9ef>&amp;</span><span style=color:#a6e22e>mut</span> <span style=color:#66d9ef>i32</span>;
+    scope <span style=color:#ae81ff>2</span> {
+        debug y <span style=color:#f92672>=&gt;</span> _2; <span style=color:#75715e>// OK! 1 owner, 1 mutable borrow
+</span><span style=color:#75715e></span>    } <span style=color:#75715e>// y goes out of scope
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> _3: <span style=color:#66d9ef>&amp;</span><span style=color:#66d9ef>i32</span>;
+    scope <span style=color:#ae81ff>3</span> {
+        debug z <span style=color:#f92672>=&gt;</span> _3; <span style=color:#75715e>// OK! 1 owner, 1 immutable borrow
+</span><span style=color:#75715e></span>    } <span style=color:#75715e>// z goes out of scope
+</span><span style=color:#75715e></span>}
+</code></pre></td></tr></table>
 </div>
 </div><p>But for the non-compileable version, we see that <code>y</code> is used in the addition, which extends the scope of y.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">9
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>bb0: {<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_1);<span style=color:#666>  </span><span style=color:#999;font-style:italic>// (x = _1) scope starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_1<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_2);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (y = &amp;mut x) scope starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_2<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_1;<span style=color:#666>
-</span><span style=color:#666>    </span>StorageLive(_3);<span style=color:#666> </span><span style=color:#999;font-style:italic>// (z = &amp;x)  scope starts
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_3<span style=color:#666> </span>=<span style=color:#666> </span>&amp;_1;<span style=color:#666>        </span><span style=color:#999;font-style:italic>// z borrow scope ends
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>_4<span style=color:#666> </span>=<span style=color:#666> </span>AddWithOverflow(copy<span style=color:#666> </span>(*_2),<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>);<span style=color:#666> </span><span style=color:#999;font-style:italic>// y is used here, so scope is extended, including this line 
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>assert(!<span style=color:#6ab825;font-weight:700>move</span><span style=color:#666> </span>(_4.<span style=color:#3677a9>1</span>: <span style=color:#6ab825;font-weight:700>bool</span>),<span style=color:#666> </span><span style=color:#ed9d13>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>,<span style=color:#666> </span>copy<span style=color:#666> </span>(*_2),<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>const</span><span style=color:#666> </span><span style=color:#3677a9>1_</span><span style=color:#6ab825;font-weight:700>i32</span>)<span style=color:#666> </span>-&gt; [success: <span style=color:#447fcf;text-decoration:underline>bb1</span>,<span style=color:#666> </span>unwind<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>continue</span>];<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>bb0: {
+    StorageLive(_1);  <span style=color:#75715e>// (x = _1) scope starts
+</span><span style=color:#75715e></span>    _1 <span style=color:#f92672>=</span> <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>;
+    StorageLive(_2); <span style=color:#75715e>// (y = &amp;mut x) scope starts
+</span><span style=color:#75715e></span>    _2 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> _1;
+    StorageLive(_3); <span style=color:#75715e>// (z = &amp;x)  scope starts
+</span><span style=color:#75715e></span>    _3 <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>_1;        <span style=color:#75715e>// z borrow scope ends
+</span><span style=color:#75715e></span>    _4 <span style=color:#f92672>=</span> AddWithOverflow(copy (<span style=color:#f92672>*</span>_2), <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>); <span style=color:#75715e>// y is used here, so scope is extended, including this line 
+</span><span style=color:#75715e></span>    assert(<span style=color:#f92672>!</span><span style=color:#66d9ef>move</span> (_4.<span style=color:#ae81ff>1</span>: <span style=color:#66d9ef>bool</span>), <span style=color:#e6db74>&#34;attempt to compute `{} + {}`, which would overflow&#34;</span>, copy (<span style=color:#f92672>*</span>_2), <span style=color:#66d9ef>const</span> <span style=color:#ae81ff>1_</span><span style=color:#66d9ef>i32</span>) -&gt; [success: <span style=color:#a6e22e>bb1</span>, unwind <span style=color:#66d9ef>continue</span>];
+}
+</code></pre></td></tr></table>
 </div>
 </div><p>This means that it translates to our original:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>scope<span style=color:#666> </span><span style=color:#3677a9>1</span><span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>    </span>debug<span style=color:#666> </span>x<span style=color:#666> </span>=&gt;<span style=color:#666> </span>_1;<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>_2: <span style=color:#6ab825>&amp;</span><span style=color:#447fcf;text-decoration:underline>mut</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>    </span>scope<span style=color:#666> </span><span style=color:#3677a9>2</span><span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>        </span>debug<span style=color:#666> </span>y<span style=color:#666> </span>=&gt;<span style=color:#666> </span>_2;<span style=color:#666>
-</span><span style=color:#666>        </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>_3: <span style=color:#6ab825>&amp;</span><span style=color:#6ab825;font-weight:700>i32</span>;<span style=color:#666>
-</span><span style=color:#666>        </span>scope<span style=color:#666> </span><span style=color:#3677a9>3</span><span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>            </span>debug<span style=color:#666> </span>z<span style=color:#666> </span>=&gt;<span style=color:#666> </span>_3;<span style=color:#666> </span><span style=color:#999;font-style:italic>// NOT OK! mutable &amp; immutable borrows exist simultaneously
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>        </span>}<span style=color:#666>
-</span><span style=color:#666>    </span>}<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>scope <span style=color:#ae81ff>1</span> {
+    debug x <span style=color:#f92672>=&gt;</span> _1;
+    <span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> _2: <span style=color:#66d9ef>&amp;</span><span style=color:#a6e22e>mut</span> <span style=color:#66d9ef>i32</span>;
+    scope <span style=color:#ae81ff>2</span> {
+        debug y <span style=color:#f92672>=&gt;</span> _2;
+        <span style=color:#66d9ef>let</span> _3: <span style=color:#66d9ef>&amp;</span><span style=color:#66d9ef>i32</span>;
+        scope <span style=color:#ae81ff>3</span> {
+            debug z <span style=color:#f92672>=&gt;</span> _3; <span style=color:#75715e>// NOT OK! mutable &amp; immutable borrows exist simultaneously
+</span><span style=color:#75715e></span>        }
+    }
+}
+</code></pre></td></tr></table>
 </div>
 </div><p>Which is buggy since z is a immutable borrow but in that scope, the scope of mutable borrow y exists.
 This violates the shared-xor-mutable rule.</p>
 <h2 id=applying-scoping>Applying Scoping</h2>
 <p>Ok, maybe using MIR to explain is unnecessarily verbose.</p>
 <p>Let&rsquo;s make it more readable. Because of NLL, the scoping is as such:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>{<span style=color:#666>   </span><span style=color:#999;font-style:italic>// compiles
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>      </span><span style=color:#999;font-style:italic>// x scope start
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666> </span><span style=color:#999;font-style:italic>// y scope start and end (since no other use)
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>         </span><span style=color:#999;font-style:italic>// z scope start and end (since no other use)
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>                        </span><span style=color:#999;font-style:italic>// x scope end
-</span><span style=color:#999;font-style:italic></span>}<span style=color:#666>
-</span><span style=color:#666></span>{<span style=color:#666>   </span><span style=color:#999;font-style:italic>// fail
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>      </span><span style=color:#999;font-style:italic>// x scope start
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666> </span><span style=color:#999;font-style:italic>// y scope start
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>z<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>         </span><span style=color:#999;font-style:italic>// z scope start and end (since no other use)
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>    </span>y<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span><span style=color:#666>              </span><span style=color:#999;font-style:italic>// y scope end
-</span><span style=color:#999;font-style:italic></span><span style=color:#666>                        </span><span style=color:#999;font-style:italic>// x scope end
-</span><span style=color:#999;font-style:italic></span>}<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust>{   <span style=color:#75715e>// compiles
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;      <span style=color:#75715e>// x scope start
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x; <span style=color:#75715e>// y scope start and end (since no other use)
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;         <span style=color:#75715e>// z scope start and end (since no other use)
+</span><span style=color:#75715e></span>                        <span style=color:#75715e>// x scope end
+</span><span style=color:#75715e></span>}
+{   <span style=color:#75715e>// fail
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;      <span style=color:#75715e>// x scope start
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x; <span style=color:#75715e>// y scope start
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>let</span> z <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;         <span style=color:#75715e>// z scope start and end (since no other use)
+</span><span style=color:#75715e></span>    y <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>              <span style=color:#75715e>// y scope end
+</span><span style=color:#75715e></span>                        <span style=color:#75715e>// x scope end
+</span><span style=color:#75715e></span>}
+</code></pre></td></tr></table>
 </div>
 </div><p>For the failed section, we see clearly that z is stuck between y&rsquo;s scope.
 The existence of z violates shared-xor-mutable, therefore it fails the borrow checker.</p>
@@ -698,21 +698,21 @@ Disclaimer: Some of these are generated by LLMs (because I have better things to
 </div>
 <div class=expandable-body-cont>
 <p>What is the program output?</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>10</span>;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>a<span style=color:#666> </span>=<span style=color:#666> </span>&amp;x;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>b<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
-</span><span style=color:#666></span>println!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>a);<span style=color:#666>
-</span><span style=color:#666></span>*b<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span>;
+<span style=color:#66d9ef>let</span> a <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>x;
+<span style=color:#66d9ef>let</span> b <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x;
+println!(<span style=color:#e6db74>&#34;{}&#34;</span>, a);
+<span style=color:#f92672>*</span>b <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>;
+</code></pre></td></tr></table>
 </div>
 </div><p><a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&code=fn+main%28%29+%7B%0A++++let+mut+x+%3D+10%3B%0A++++let+a+%3D+%26x%3B%0A++++let+b+%3D+%26mut+x%3B%0A++++println%21%28%22%7B%7D%22%2C+a%29%3B%0A++++*b+%2B%3D+1%3B%0A%7D">Playground</a></p>
 <p style=margin-block:.15rem>
@@ -759,19 +759,19 @@ C: Compile Error
 </div>
 <div class=expandable-body-cont>
 <p>What is the program output?</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>7</span>;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
-</span><span style=color:#666></span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>42</span>;<span style=color:#666>
-</span><span style=color:#666></span>println!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>x);<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>7</span>;
+<span style=color:#66d9ef>let</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x;
+x <span style=color:#f92672>=</span> <span style=color:#ae81ff>42</span>;
+println!(<span style=color:#e6db74>&#34;{}&#34;</span>, x);
+</code></pre></td></tr></table>
 </div>
 </div><p><a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&code=fn+main%28%29+%7B%0A++++let+mut+x+%3D+7%3B%0A++++let+y+%3D+%26mut+x%3B%0A++++x+%3D+42%3B%0A++++println%21%28%22%7B%7D%22%2C+x%29%3B%0A%7D">Playground</a></p>
 <p style=margin-block:.15rem>
@@ -818,19 +818,19 @@ C: Compile Error
 </div>
 <div class=expandable-body-cont>
 <p>What is the program output?</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>7</span>;<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>y<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>x;<span style=color:#666>
-</span><span style=color:#666></span>x<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>42</span>;<span style=color:#666>
-</span><span style=color:#666></span>println!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>x);<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> x <span style=color:#f92672>=</span> <span style=color:#ae81ff>7</span>;
+<span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> y <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> x;
+x <span style=color:#f92672>=</span> <span style=color:#ae81ff>42</span>;
+println!(<span style=color:#e6db74>&#34;{}&#34;</span>, x);
+</code></pre></td></tr></table>
 </div>
 </div><p><a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&code=fn+main%28%29+%7B%0A++++let+mut+x+%3D+7%3B%0A++++let+y+%3D+%26mut+x%3B%0A++++x+%3D+42%3B%0A++++println%21%28%22%7B%7D%22%2C+x%29%3B%0A%7D">Playground</a></p>
 <p style=margin-block:.15rem>
@@ -877,27 +877,27 @@ C: Compile Error
 </div>
 <div class=expandable-body-cont>
 <p>What is the program output?</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>val<span style=color:#666> </span>=<span style=color:#666> </span><span style=color:#3677a9>3</span>;<span style=color:#666>
-</span><span style=color:#666></span>{<span style=color:#666>
-</span><span style=color:#666>    </span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>r<span style=color:#666> </span>=<span style=color:#666> </span>&amp;val;<span style=color:#666>
-</span><span style=color:#666>    </span>print!(<span style=color:#ed9d13>&#34;{},&#34;</span>,<span style=color:#666> </span>r);<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>m<span style=color:#666> </span>=<span style=color:#666> </span>&amp;<span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>val;<span style=color:#666>
-</span><span style=color:#666></span>*m<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span>print!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>val);<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> val <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>;
+{
+    <span style=color:#66d9ef>let</span> r <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>val;
+    print!(<span style=color:#e6db74>&#34;{},&#34;</span>, r);
+}
+<span style=color:#66d9ef>let</span> m <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span><span style=color:#66d9ef>mut</span> val;
+<span style=color:#f92672>*</span>m <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>;
+print!(<span style=color:#e6db74>&#34;{}&#34;</span>, val);
+</code></pre></td></tr></table>
 </div>
 </div><p><a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&code=fn+main%28%29+%7B%0A++++let+mut+val+%3D+3%3B%0A++++%7B%0A++++++++let+r+%3D+%26val%3B%0A++++++++print%21%28%22%7B%7D%2C%22%2C+r%29%3B%0A++++%7D%0A++++let+m+%3D+%26mut+val%3B%0A++++*m+%2B%3D+1%3B%0A++++print%21%28%22%7B%7D%22%2C+val%29%3B%0A%7D">Playground</a></p>
 <p style=margin-block:.15rem>
@@ -952,19 +952,19 @@ C: Compile Error
 </div>
 <div class=expandable-body-cont>
 <p>What is the program output?</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>v<span style=color:#666> </span>=<span style=color:#666> </span>vec![<span style=color:#3677a9>1</span>,<span style=color:#666> </span><span style=color:#3677a9>2</span>,<span style=color:#666> </span><span style=color:#3677a9>3</span>];<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>a<span style=color:#666> </span>=<span style=color:#666> </span>&amp;v[<span style=color:#3677a9>0</span>];<span style=color:#666>
-</span><span style=color:#666></span>v.push(<span style=color:#3677a9>4</span>);<span style=color:#666>
-</span><span style=color:#666></span>println!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>a);<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> v <span style=color:#f92672>=</span> vec![<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>];
+<span style=color:#66d9ef>let</span> a <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>v[<span style=color:#ae81ff>0</span>];
+v.push(<span style=color:#ae81ff>4</span>);
+println!(<span style=color:#e6db74>&#34;{}&#34;</span>, a);
+</code></pre></td></tr></table>
 </div>
 </div><p><a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&code=fn+main%28%29+%7B%0A++++let+mut+v+%3D+vec%21%5B1%2C+2%2C+3%5D%3B%0A++++let+a+%3D+%26v%5B0%5D%3B%0A++++v.push%284%29%3B%0A++++println%21%28%22%7B%7D%22%2C+a%29%3B%0A%7D">Playground</a></p>
 <p style=margin-block:.15rem>
@@ -1011,19 +1011,19 @@ C: Compile Error
 </div>
 <div class=expandable-body-cont>
 <p>What is the program output?</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>v<span style=color:#666> </span>=<span style=color:#666> </span>vec![<span style=color:#3677a9>1</span>,<span style=color:#666> </span><span style=color:#3677a9>2</span>,<span style=color:#666> </span><span style=color:#3677a9>3</span>];<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>a<span style=color:#666> </span>=<span style=color:#666> </span>&amp;v[<span style=color:#3677a9>0</span>];<span style=color:#666>
-</span><span style=color:#666></span>println!(<span style=color:#ed9d13>&#34;{a}&#34;</span>);<span style=color:#666>
-</span><span style=color:#666></span>v.push(<span style=color:#3677a9>4</span>);<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> v <span style=color:#f92672>=</span> vec![<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>];
+<span style=color:#66d9ef>let</span> a <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>v[<span style=color:#ae81ff>0</span>];
+println!(<span style=color:#e6db74>&#34;{a}&#34;</span>);
+v.push(<span style=color:#ae81ff>4</span>);
+</code></pre></td></tr></table>
 </div>
 </div><p><a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&code=fn+main%28%29+%7B%0A++++let+mut+v+%3D+vec%21%5B1%2C+2%2C+3%5D%3B%0A++++let+a+%3D+%26v%5B0%5D%3B%0A++++println%21%28%22%7Ba%7D%22%29%3B%0A++++v.push%284%29%3B%0A%7D">Playground</a></p>
 <p style=margin-block:.15rem>
@@ -1079,27 +1079,27 @@ D: Compile Error
 </div>
 <div class=expandable-body-cont>
 <p>What is the program output?</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span><span style=color:#6ab825;font-weight:700>mut</span><span style=color:#666> </span>v<span style=color:#666> </span>=<span style=color:#666> </span>vec![<span style=color:#3677a9>10</span>,<span style=color:#666> </span><span style=color:#3677a9>20</span>,<span style=color:#666> </span><span style=color:#3677a9>30</span>];<span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>let</span><span style=color:#666> </span>first<span style=color:#666> </span>=<span style=color:#666> </span>&amp;v[<span style=color:#3677a9>0</span>];<span style=color:#666>
-</span><span style=color:#666>
-</span><span style=color:#666></span><span style=color:#6ab825;font-weight:700>for</span><span style=color:#666> </span>i<span style=color:#666> </span><span style=color:#6ab825;font-weight:700>in</span><span style=color:#666> </span><span style=color:#3677a9>1</span>..v.len()<span style=color:#666> </span>{<span style=color:#666>
-</span><span style=color:#666>    </span>v[i]<span style=color:#666> </span>+=<span style=color:#666> </span><span style=color:#3677a9>1</span>;<span style=color:#666>
-</span><span style=color:#666></span>}<span style=color:#666>
-</span><span style=color:#666>
-</span><span style=color:#666></span>println!(<span style=color:#ed9d13>&#34;{}&#34;</span>,<span style=color:#666> </span>first);<span style=color:#666>
-</span></code></pre></td></tr></table>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rust data-lang=rust><span style=color:#66d9ef>let</span> <span style=color:#66d9ef>mut</span> v <span style=color:#f92672>=</span> vec![<span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>20</span>, <span style=color:#ae81ff>30</span>];
+<span style=color:#66d9ef>let</span> first <span style=color:#f92672>=</span> <span style=color:#f92672>&amp;</span>v[<span style=color:#ae81ff>0</span>];
+
+<span style=color:#66d9ef>for</span> i <span style=color:#66d9ef>in</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>..</span>v.len() {
+    v[i] <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>;
+}
+
+println!(<span style=color:#e6db74>&#34;{}&#34;</span>, first);
+</code></pre></td></tr></table>
 </div>
 </div><p><a href="https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&code=fn+main%28%29+%7B%0A++++let+mut+v+%3D+vec%21%5B10%2C+20%2C+30%5D%3B%0A++++let+first+%3D+%26v%5B0%5D%3B%0A++++%0A++++for+i+in+1..v.len%28%29+%7B%0A++++++++v%5Bi%5D+%2B%3D+1%3B%0A++++%7D%0A++++%0A++++println%21%28%22%7B%7D%22%2C+first%29%3B%0A%7D">Playground</a></p>
 <p>Ref: <a href=https://doc.rust-lang.org/std/ops/trait.IndexMut.html>IndexMut</a>

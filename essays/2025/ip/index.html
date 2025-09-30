@@ -187,24 +187,24 @@ Valid members of this network can be: <code>192.168.100.3</code> (the last 8 bit
 <p>Consider <code>192.168.100.0/24</code>. Typically, the FIRST address of this subnet is used as the gateway address (typically, the router&rsquo;s address). i.e. <code>192.168.100.1</code></p>
 <h3 id=demo-with-ip-tools>Demo with ip tools</h3>
 <p>Linux typically comes with <code>ip</code>. We will use this to explore a Linux machine&rsquo;s (my linux machine&mldr;) ip config.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ ip address
-<span style=color:#999;font-style:italic># ... output truncated :)</span>
-2: enp8s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style=color:#3677a9>1500</span> qdisc fq_codel state UP group default qlen <span style=color:#3677a9>1000</span>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ ip address
+<span style=color:#75715e># ... output truncated :)</span>
+2: enp8s0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style=color:#ae81ff>1500</span> qdisc fq_codel state UP group default qlen <span style=color:#ae81ff>1000</span>
     link/ether 10:ff:e0:20:4e:ea brd ff:ff:ff:ff:ff:ff
     inet 192.168.88.15/24 brd 192.168.88.255 scope global dynamic noprefixroute enp8s0
        valid_lft 4800sec preferred_lft 4800sec
-<span style=color:#999;font-style:italic># ...output truncated :)</span>
+<span style=color:#75715e># ...output truncated :)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>The important/interesting bits:</p>
@@ -227,16 +227,16 @@ Queueing Discipline <code>qdisc</code> describes how packets queue up at the net
 <li>dynamic -> uses DHCP</li>
 </ul>
 <p>What about the gateway?</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ ip r
-default via 192.168.88.1 dev enp8s0 proto dhcp metric <span style=color:#3677a9>100</span>
-<span style=color:#999;font-style:italic># ... output truncated :)</span>
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ ip r
+default via 192.168.88.1 dev enp8s0 proto dhcp metric <span style=color:#ae81ff>100</span>
+<span style=color:#75715e># ... output truncated :)</span>
 </code></pre></td></tr></table>
 </div>
 </div><p><code>ip r</code> tells us that the enp8s0 interface uses DHCP and routes packets through to the router with gateway address <code>192.168.88.1</code>.</p>

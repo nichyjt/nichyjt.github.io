@@ -183,23 +183,23 @@
 </figure>
 <p>We will need to store the roll, pitch and yaw as config.</p>
 <p>The simplest way is to use an integer array.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-style:italic>// Which is roll, pitch and yaw? 
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>int</span> drone_params[] = {<span style=color:#3677a9>42</span>, <span style=color:#3677a9>100</span>, <span style=color:#3677a9>254</span>}; <span style=color:#999;font-style:italic>// dummy values
-</span><span style=color:#999;font-style:italic></span>
-drone_params[<span style=color:#3677a9>0</span>] = read_input_pitch();
-drone_params[<span style=color:#3677a9>1</span>] = read_input_roll();
-drone_params[<span style=color:#3677a9>2</span>] = read_input_yaw();
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#75715e>// Which is roll, pitch and yaw? 
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> drone_params[] <span style=color:#f92672>=</span> {<span style=color:#ae81ff>42</span>, <span style=color:#ae81ff>100</span>, <span style=color:#ae81ff>254</span>}; <span style=color:#75715e>// dummy values
+</span><span style=color:#75715e></span>
+drone_params[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> read_input_pitch();
+drone_params[<span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> read_input_roll();
+drone_params[<span style=color:#ae81ff>2</span>] <span style=color:#f92672>=</span> read_input_yaw();
 
 </code></pre></td></tr></table>
 </div>
@@ -207,30 +207,30 @@ drone_params[<span style=color:#3677a9>2</span>] = read_input_yaw();
 <p>We can <strong>infer</strong> that <code>drone_params[0] == pitch</code> and so on. But is it really? Only the person who wrote the line of code knows.</p>
 <p>Other people who read it will be confused and won&rsquo;t really be able to work on the project. We also run the risk of index errors <del>if</del> when we accidentally use 1-based indexing (e.g. <code>drone_params[3]</code>)<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>.</p>
 <p>What if we used a <code>struct</code> instead?</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">9
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#6ab825;font-weight:700>struct</span> FlightParams {
-    <span style=color:#6ab825;font-weight:700>int</span> roll;
-    <span style=color:#6ab825;font-weight:700>int</span> pitch;
-    <span style=color:#6ab825;font-weight:700>int</span> yaw;
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>struct</span> FlightParams {
+    <span style=color:#66d9ef>int</span> roll;
+    <span style=color:#66d9ef>int</span> pitch;
+    <span style=color:#66d9ef>int</span> yaw;
 };
 
-<span style=color:#6ab825;font-weight:700>struct</span> FlightParams drone_params;
-drone_params.pitch = read_input_pitch();
-drone_params.roll = read_input_roll();
-drone_params.yaw = read_input_yaw();
+<span style=color:#66d9ef>struct</span> FlightParams drone_params;
+drone_params.pitch <span style=color:#f92672>=</span> read_input_pitch();
+drone_params.roll <span style=color:#f92672>=</span> read_input_roll();
+drone_params.yaw <span style=color:#f92672>=</span> read_input_yaw();
 </code></pre></td></tr></table>
 </div>
 </div><p>Much better. This type of readability is especially good if you are inheriting someone else&rsquo;s code. Instead of magical values like <code>0,1,2</code>, anyone that reads it will know exactly what&rsquo;s going on.</p>
@@ -243,42 +243,42 @@ drone_params.yaw = read_input_yaw();
 <p>Copying can be slow<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>. C++ (which Arduino uses) has a feature called &ldquo;Pass by reference&rdquo; (no more pointers!). Do this by appending &lsquo;&&rsquo; before the argument name. You can think of pass by reference as a &lsquo;pseudo pointer&rsquo;, where the actual variable is passed into the function rather than copying it. This saves you time and is useful when you need to actually modify the data. You will find this concept particularly useful in CS2040C.</p>
 <p>Any modifications made to the referenced variable in the function will persist once the function call ends.</p>
 <p><a href=https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-cpp/>Reference documentation</a> for pass by reference.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#6ab825;font-weight:700>struct</span> <span style=color:#447fcf;text-decoration:underline>Foo</span> {
-    <span style=color:#6ab825;font-weight:700>int</span> bar;
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>Foo</span> {
+    <span style=color:#66d9ef>int</span> bar;
 };
 
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>func</span>(Foo&amp; foo){
-    <span style=color:#999;font-style:italic>// process foo and change its state
-</span><span style=color:#999;font-style:italic></span>    foo.bar = <span style=color:#3677a9>1</span>;
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>func</span>(Foo<span style=color:#f92672>&amp;</span> foo){
+    <span style=color:#75715e>// process foo and change its state
+</span><span style=color:#75715e></span>    foo.bar <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
 } 
 
-<span style=color:#6ab825;font-weight:700>int</span> <span style=color:#447fcf>main</span>(){
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(){
     Foo foo;
-    foo.bar = <span style=color:#3677a9>0</span>;
-    printf(<span style=color:#ed9d13>&#34;%d </span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, foo.bar); <span style=color:#999;font-style:italic>// prints 0
-</span><span style=color:#999;font-style:italic></span>    func(foo);
-    printf(<span style=color:#ed9d13>&#34;%d </span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, foo.bar); <span style=color:#999;font-style:italic>// prints 1
-</span><span style=color:#999;font-style:italic></span>}
+    foo.bar <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    printf(<span style=color:#e6db74>&#34;%d </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, foo.bar); <span style=color:#75715e>// prints 0
+</span><span style=color:#75715e></span>    func(foo);
+    printf(<span style=color:#e6db74>&#34;%d </span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, foo.bar); <span style=color:#75715e>// prints 1
+</span><span style=color:#75715e></span>}
 </code></pre></td></tr></table>
 </div>
 </div><h2 id=3-avoid-magic-literals>3. Avoid magic literals</h2>
@@ -286,25 +286,25 @@ drone_params.yaw = read_input_yaw();
 <p>There is no obvious meaning to its value.</p>
 <p>You will learn this more in-depth later on in <a href=https://nus-cs2113-ay2324s1.github.io/website/se-book-adapted/chapters/codeQuality.html#avoid-magic-numbers>CS2113</a>. But here&rsquo;s a simple example.</p>
 <p>Let&rsquo;s say we need to calculate the resistance of a copper wire.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#6ab825;font-weight:700>double</span> <span style=color:#447fcf>calc_wire_resistance</span>(<span style=color:#6ab825;font-weight:700>float</span> length, <span style=color:#6ab825;font-weight:700>float</span> area){
-    <span style=color:#999;font-style:italic>// What does 1.77e-8 represent?
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>return</span> (<span style=color:#3677a9>1.77e-8</span>) * length/area;
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#66d9ef>double</span> <span style=color:#a6e22e>calc_wire_resistance</span>(<span style=color:#66d9ef>float</span> length, <span style=color:#66d9ef>float</span> area){
+    <span style=color:#75715e>// What does 1.77e-8 represent?
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>return</span> (<span style=color:#ae81ff>1.77e-8</span>) <span style=color:#f92672>*</span> length<span style=color:#f92672>/</span>area;
 }
 
-<span style=color:#6ab825;font-weight:700>double</span> <span style=color:#447fcf>calc_conductivity</span>(){
-    <span style=color:#6ab825;font-weight:700>return</span> <span style=color:#3677a9>1</span>/(<span style=color:#3677a9>1.77e-8</span>);
+<span style=color:#66d9ef>double</span> <span style=color:#a6e22e>calc_conductivity</span>(){
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>/</span>(<span style=color:#ae81ff>1.77e-8</span>);
 }
 </code></pre></td></tr></table>
 </div>
@@ -320,27 +320,27 @@ How will this affect all the functions that use the literal?</p>
 <li><strong>Do not scale</strong> well, especially if frequently used</li>
 </ol>
 <p>Let&rsquo;s refactor the code with a <strong>named constant</strong> (you can opt for a <code>#define</code> macro too).</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">8
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#6ab825;font-weight:700>const</span> <span style=color:#6ab825;font-weight:700>double</span> RESISTIVITY = <span style=color:#3677a9>1.77</span>*(<span style=color:#3677a9>10e-8</span>);
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>double</span> RESISTIVITY <span style=color:#f92672>=</span> <span style=color:#ae81ff>1.77</span><span style=color:#f92672>*</span>(<span style=color:#ae81ff>10e-8</span>);
 
-<span style=color:#6ab825;font-weight:700>double</span> <span style=color:#447fcf>calc_wire_resistance</span>(<span style=color:#6ab825;font-weight:700>float</span> length, <span style=color:#6ab825;font-weight:700>float</span> area){
-    <span style=color:#6ab825;font-weight:700>return</span> RESISTIVITY*length/area;
+<span style=color:#66d9ef>double</span> <span style=color:#a6e22e>calc_wire_resistance</span>(<span style=color:#66d9ef>float</span> length, <span style=color:#66d9ef>float</span> area){
+    <span style=color:#66d9ef>return</span> RESISTIVITY<span style=color:#f92672>*</span>length<span style=color:#f92672>/</span>area;
 }
 
-<span style=color:#6ab825;font-weight:700>double</span> <span style=color:#447fcf>calc_conductivity</span>() {
-    <span style=color:#6ab825;font-weight:700>return</span> <span style=color:#3677a9>1</span>/RESISTIVITY;
+<span style=color:#66d9ef>double</span> <span style=color:#a6e22e>calc_conductivity</span>() {
+    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>/</span>RESISTIVITY;
 }
 </code></pre></td></tr></table>
 </div>
@@ -352,38 +352,38 @@ How will this affect all the functions that use the literal?</p>
 <p>If you have tons of constants, it might get messy.</p>
 <p>You can consider using enums to group together constants that make sense semantically.</p>
 <p><a href=https://www.geeksforgeeks.org/enumeration-in-cpp/>Learn more about C++ enums</a>.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#6ab825;font-weight:700>enum</span> <span style=color:#447fcf;text-decoration:underline>COLORS</span> {
-    COLOR_NONE = <span style=color:#3677a9>0</span>,
-    COLOR_RED  = <span style=color:#3677a9>1</span>,
-    COLOR_GREEN = <span style=color:#3677a9>2</span>,
-    COLOR_BLUE = <span style=color:#3677a9>3</span>,
-    COLOR_PURPLE = <span style=color:#3677a9>4</span>,
-    COLOR_ORANGE = <span style=color:#3677a9>5</span>,
-    COLOR_WHITE = <span style=color:#3677a9>6</span>,
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#66d9ef>enum</span> <span style=color:#a6e22e>COLORS</span> {
+    COLOR_NONE <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>,
+    COLOR_RED  <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>,
+    COLOR_GREEN <span style=color:#f92672>=</span> <span style=color:#ae81ff>2</span>,
+    COLOR_BLUE <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>,
+    COLOR_PURPLE <span style=color:#f92672>=</span> <span style=color:#ae81ff>4</span>,
+    COLOR_ORANGE <span style=color:#f92672>=</span> <span style=color:#ae81ff>5</span>,
+    COLOR_WHITE <span style=color:#f92672>=</span> <span style=color:#ae81ff>6</span>,
 };
 
-<span style=color:#999;font-style:italic>// Sample usage
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>bool</span> <span style=color:#447fcf>isWhite</span>(<span style=color:#6ab825;font-weight:700>enum</span> <span style=color:#447fcf;text-decoration:underline>COLORS</span> color){
-    <span style=color:#6ab825;font-weight:700>return</span> (color == COLOR_WHITE);
+<span style=color:#75715e>// Sample usage
+</span><span style=color:#75715e></span><span style=color:#66d9ef>bool</span> <span style=color:#a6e22e>isWhite</span>(<span style=color:#66d9ef>enum</span> <span style=color:#a6e22e>COLORS</span> color){
+    <span style=color:#66d9ef>return</span> (color <span style=color:#f92672>==</span> COLOR_WHITE);
 }
 
 </code></pre></td></tr></table>

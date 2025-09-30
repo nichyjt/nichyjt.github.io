@@ -196,51 +196,51 @@ Check the PS4 controller state, and send the appropriate command packet. Simple!
 <p>Unfortunately, our implementation was sending out command packets to the KL25 MCU at every loop iteration, which has an upper bound of <a href=https://www.mouser.com/datasheet/2/891/esp-wroom-32_datasheet_en-1223836.pdf>80MHz</a> (the lower bound of clock speeds for the ESP).</p>
 <p>TLDR; we are spamming our KL25 with command packets.</p>
 <p>Here&rsquo;s the first cut of our code (abridged and redacted HEAVILY for readability)&mldr;</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C++ data-lang=C++><span style=color:#999;font-style:italic>// We were using ESP32 Arduino, hence the arduino loop() 
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>loop</span>() {
-    <span style=color:#6ab825;font-weight:700>if</span> (PS4.isConnected()) {
-        <span style=color:#999;font-style:italic>// if PS4 current input is a certain direction, 
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// send that command to KL25 via Serial2
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>if</span> (PS4.Up()) {
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C++ data-lang=C++><span style=color:#75715e>// We were using ESP32 Arduino, hence the arduino loop() 
+</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>loop</span>() {
+    <span style=color:#66d9ef>if</span> (PS4.isConnected()) {
+        <span style=color:#75715e>// if PS4 current input is a certain direction, 
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// send that command to KL25 via Serial2
+</span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span> (PS4.Up()) {
             Serial2.write(DXN_FWD);
         }
-        <span style=color:#6ab825;font-weight:700>else</span> <span style=color:#6ab825;font-weight:700>if</span> (PS4.Down()) {
+        <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (PS4.Down()) {
             Serial2.write(DXN_BACK);
         }
-        <span style=color:#6ab825;font-weight:700>else</span> <span style=color:#6ab825;font-weight:700>if</span> (PS4.Left()) {
+        <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (PS4.Left()) {
             Serial2.write(DXN_LEFT);
         }
-        <span style=color:#6ab825;font-weight:700>else</span> <span style=color:#6ab825;font-weight:700>if</span> (PS4.Right()) {
+        <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (PS4.Right()) {
             Serial2.write(DXN_RIGHT);
         }
-        <span style=color:#6ab825;font-weight:700>else</span> { <span style=color:#999;font-style:italic>// fallback
-</span><span style=color:#999;font-style:italic></span>            Serial2.write(DXN_STOP);
+        <span style=color:#66d9ef>else</span> { <span style=color:#75715e>// fallback
+</span><span style=color:#75715e></span>            Serial2.write(DXN_STOP);
         }
     }
 }
@@ -259,63 +259,63 @@ Check the PS4 controller state, and send the appropriate command packet. Simple!
 <p>When trying to optimize the code, I realised that many redundant states were being sent.</p>
 <p>For example, when the racecar is idling, the state will always be <code>DXN_STOP</code>. Every loop iter will send <code>DXN_STOP</code> packets. The duplicate packets/messages being sent was useless!</p>
 <p>Partially inspired by dynamic programming, I introduced a simple optimization.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">27
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#999;font-style:italic>// Our state tracker (cache)
-</span><span style=color:#999;font-style:italic></span>uint8 prev = DXN_INIT;
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#75715e>// Our state tracker (cache)
+</span><span style=color:#75715e></span>uint8 prev <span style=color:#f92672>=</span> DXN_INIT;
 
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>loop</span>() {
-    <span style=color:#999;font-style:italic>// default direction
-</span><span style=color:#999;font-style:italic></span>    uint8 curr = DXN_STOP;
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>loop</span>() {
+    <span style=color:#75715e>// default direction
+</span><span style=color:#75715e></span>    uint8 curr <span style=color:#f92672>=</span> DXN_STOP;
 
-    <span style=color:#6ab825;font-weight:700>if</span> (PS4.isConnected()) {
-        <span style=color:#6ab825;font-weight:700>if</span> (PS4.Up()) {
-            curr = DXN_FWD;
+    <span style=color:#66d9ef>if</span> (PS4.isConnected()) {
+        <span style=color:#66d9ef>if</span> (PS4.Up()) {
+            curr <span style=color:#f92672>=</span> DXN_FWD;
         }
-        <span style=color:#6ab825;font-weight:700>else</span> <span style=color:#6ab825;font-weight:700>if</span> (PS4.Down()) {
-            curr = DXN_BACK;
+        <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (PS4.Down()) {
+            curr <span style=color:#f92672>=</span> DXN_BACK;
         }
-        <span style=color:#6ab825;font-weight:700>else</span> <span style=color:#6ab825;font-weight:700>if</span> (PS4.Left()) {
-            curr = DXN_LEFT;
+        <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (PS4.Left()) {
+            curr <span style=color:#f92672>=</span> DXN_LEFT;
         }
-        <span style=color:#6ab825;font-weight:700>else</span> <span style=color:#6ab825;font-weight:700>if</span> (PS4.Right()) {
-            curr = DXN_RIGHT;
+        <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (PS4.Right()) {
+            curr <span style=color:#f92672>=</span> DXN_RIGHT;
         }
 
-        <span style=color:#999;font-style:italic>// Only send a packet if there is a change in state
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#6ab825;font-weight:700>if</span> (prev != curr) {
+        <span style=color:#75715e>// Only send a packet if there is a change in state
+</span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span> (prev <span style=color:#f92672>!=</span> curr) {
             Serial2.write(curr);
-            prev = curr;
+            prev <span style=color:#f92672>=</span> curr;
         }
     }
 }

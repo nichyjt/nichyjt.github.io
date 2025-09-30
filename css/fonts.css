@@ -3,14 +3,14 @@
 @font-face {
     font-family: MenuFont;
     src:
-        url("https://fonts.bunny.net/raleway/files/raleway-latin-600-normal.woff2") format('woff2'),
+        url("https://fonts.bunny.net/poppins/files/poppins-latin-500-normal.woff2") format('woff2'),
         url("/fonts/Raleway/Raleway-Bold.ttf");
 }
 
 @font-face {
     font-family: MainTitle;
     src:
-        url("https://fonts.bunny.net/raleway/files/raleway-latin-600-normal.woff2") format('woff2'),
+        url("https://fonts.bunny.net/poppins/files/poppins-latin-500-normal.woff2") format('woff2'),
         url("/fonts/Raleway/Raleway-SemiBold.ttf");
 }
 
@@ -18,7 +18,7 @@
     font-family: MainBody;
     /*Include Regular, Bold, BoldItalic, Italic*/
     src:
-        url(https://fonts.bunny.net/open-sans/files/open-sans-latin-400-normal.woff2) format('woff2'),
+        url("https://fonts.bunny.net/open-sans/files/open-sans-latin-400-normal.woff2") format('woff2'),
         url("/fonts/OpenSans/OpenSans-Regular.ttf"),
         url("/fonts/OpenSans/OpenSans-Bold.ttf"),
         url("/fonts/OpenSans/OpenSans-BoldItalic.ttf"),
@@ -29,7 +29,7 @@
 @font-face {
     font-family: MainMonospace;
     src: 
-        url(https://fonts.bunny.net/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2) format('woff2')
+        url("https://fonts.bunny.net/fira-mono/files/fira-mono-latin-400-normal.woff2") format('woff2')
 }
 
 /*Preload menu font to avoid ugly loading delay*/
@@ -75,7 +75,7 @@ ul{
 /*Support up to 4 headers, add more if necessary*/
 code{
     font-family: MainMonospace, monospace;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 figcaption{
     text-decoration: underline;

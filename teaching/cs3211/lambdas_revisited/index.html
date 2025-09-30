@@ -170,64 +170,64 @@ Focus on the &ldquo;Explanation&rdquo; section.</p>
 <p><code>=</code> means variables with automatic storage duration are captured by copy by default.</p>
 <p><code>&foo</code>, where <code>foo</code> is a variable indicates that the variable is explicitly captured by reference.</p>
 <p><code>=foo</code>, where <code>foo</code> is a variable indicates that the variable is explicitly captured by copy.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#999;font-style:italic>// Pass by copy
-</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>int</span> foo = <span style=color:#3677a9>0</span>;
-std::<span style=color:#6ab825;font-weight:700>thread</span> t1([=](){
-    printf(<span style=color:#ed9d13>&#34;%d</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, foo);    <span style=color:#999;font-style:italic>// ok
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// foo++                // this is not possible
-</span><span style=color:#999;font-style:italic></span>    do_something(foo);      <span style=color:#999;font-style:italic>// ok
-</span><span style=color:#999;font-style:italic></span>})
-<span style=color:#999;font-style:italic>// Pass by reference
-</span><span style=color:#999;font-style:italic></span>foo = <span style=color:#3677a9>0</span>;
-std::<span style=color:#6ab825;font-weight:700>thread</span> t1([&amp;](){
-    printf(<span style=color:#ed9d13>&#34;%d</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, foo);    <span style=color:#999;font-style:italic>// ok
-</span><span style=color:#999;font-style:italic></span>    foo++                   <span style=color:#999;font-style:italic>// ok
-</span><span style=color:#999;font-style:italic></span>    do_something(foo);      <span style=color:#999;font-style:italic>// ok
-</span><span style=color:#999;font-style:italic></span>})
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#75715e>// Pass by copy
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> foo <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t1([<span style=color:#f92672>=</span>](){
+    printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, foo);    <span style=color:#75715e>// ok
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// foo++                // this is not possible
+</span><span style=color:#75715e></span>    do_something(foo);      <span style=color:#75715e>// ok
+</span><span style=color:#75715e></span>})
+<span style=color:#75715e>// Pass by reference
+</span><span style=color:#75715e></span>foo <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t1([<span style=color:#f92672>&amp;</span>](){
+    printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, foo);    <span style=color:#75715e>// ok
+</span><span style=color:#75715e></span>    foo<span style=color:#f92672>++</span>                   <span style=color:#75715e>// ok
+</span><span style=color:#75715e></span>    do_something(foo);      <span style=color:#75715e>// ok
+</span><span style=color:#75715e></span>})
 
 </code></pre></td></tr></table>
 </div>
 </div><p>This does not deviate much from what was covered in the tutorial.</p>
 <h3 id=1-default-behaviour-of->1. Default behaviour of &ldquo;[]&rdquo;</h3>
 <p>Nothing is captured. But this does not apply to global variables. The reason is covered in &lsquo;2.&rsquo;</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">7
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#6ab825;font-weight:700>int</span> global = <span style=color:#3677a9>0</span>;
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>foo</span>() {
-    <span style=color:#6ab825;font-weight:700>int</span> local = <span style=color:#3677a9>0</span>;
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t1([](){
-        <span style=color:#999;font-style:italic>// do_something(local); // not possible as [] does not capture anything, including local
-</span><span style=color:#999;font-style:italic></span>        do_something(global);   <span style=color:#999;font-style:italic>// possible since global has static storage duration
-</span><span style=color:#999;font-style:italic></span>    })
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#66d9ef>int</span> global <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>foo</span>() {
+    <span style=color:#66d9ef>int</span> local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t1([](){
+        <span style=color:#75715e>// do_something(local); // not possible as [] does not capture anything, including local
+</span><span style=color:#75715e></span>        do_something(global);   <span style=color:#75715e>// possible since global has static storage duration
+</span><span style=color:#75715e></span>    })
 }
 </code></pre></td></tr></table>
 </div>
@@ -239,32 +239,32 @@ std::<span style=color:#6ab825;font-weight:700>thread</span> t1([&amp;](){
 is a non-local variable or has <strong>static</strong> or thread-local <strong>storage duration</strong></p>
 </blockquote>
 <p>Global variables have <a href=https://en.cppreference.com/w/cpp/language/storage_duration>static storage duration</a>. So,</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#6ab825;font-weight:700>int</span> global = <span style=color:#3677a9>0</span>;
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#66d9ef>int</span> global <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>foo</span>() {
-    <span style=color:#6ab825;font-weight:700>int</span> local = <span style=color:#3677a9>0</span>;
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t1([=](){
-        <span style=color:#6ab825;font-weight:700>int</span> lambda_local = <span style=color:#3677a9>0</span>;
-        lambda_local++; <span style=color:#999;font-style:italic>// OK
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// local++;     // NOT OK, local captured as const copy
-</span><span style=color:#999;font-style:italic></span>        global++;       <span style=color:#999;font-style:italic>// OK - global 
-</span><span style=color:#999;font-style:italic></span>    })
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>foo</span>() {
+    <span style=color:#66d9ef>int</span> local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t1([<span style=color:#f92672>=</span>](){
+        <span style=color:#66d9ef>int</span> lambda_local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+        lambda_local<span style=color:#f92672>++</span>; <span style=color:#75715e>// OK
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// local++;     // NOT OK, local captured as const copy
+</span><span style=color:#75715e></span>        global<span style=color:#f92672>++</span>;       <span style=color:#75715e>// OK - global 
+</span><span style=color:#75715e></span>    })
 }
 
 </code></pre></td></tr></table>
@@ -272,58 +272,58 @@ is a non-local variable or has <strong>static</strong> or thread-local <strong>s
 </div><h3 id=3-mixing---and-more>3. Mixing =, & and more</h3>
 <p>There are combinations of reference and copy you can use.</p>
 <p>You can explicitly say that you want to capture a variable by reference or copy:</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">24
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++>    <span style=color:#999;font-style:italic>// foo, bar, baz are NOT global variables here
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#6ab825;font-weight:700>int</span> foo = <span style=color:#3677a9>0</span>;
-    <span style=color:#6ab825;font-weight:700>int</span> bar = <span style=color:#3677a9>0</span>;
-    <span style=color:#6ab825;font-weight:700>int</span> baz = <span style=color:#3677a9>0</span>;
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t2([&amp;foo, bar](){
-        <span style=color:#999;font-style:italic>// foo is captured by reference
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// bar is captured by copy
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// baz is NOT captured 
-</span><span style=color:#999;font-style:italic></span>        do_something(foo, bar);
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++>    <span style=color:#75715e>// foo, bar, baz are NOT global variables here
+</span><span style=color:#75715e></span>    <span style=color:#66d9ef>int</span> foo <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    <span style=color:#66d9ef>int</span> bar <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    <span style=color:#66d9ef>int</span> baz <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t2([<span style=color:#f92672>&amp;</span>foo, bar](){
+        <span style=color:#75715e>// foo is captured by reference
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// bar is captured by copy
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// baz is NOT captured 
+</span><span style=color:#75715e></span>        do_something(foo, bar);
     });
 
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t3([=, &amp;foo](){
-        <span style=color:#999;font-style:italic>// foo is captured by reference
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// bar is captured by copy (by default due to =)
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// baz is captured by copy (by default due to =)
-</span><span style=color:#999;font-style:italic></span>        do_something_else(foo, bar, baz);
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t3([<span style=color:#f92672>=</span>, <span style=color:#f92672>&amp;</span>foo](){
+        <span style=color:#75715e>// foo is captured by reference
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// bar is captured by copy (by default due to =)
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// baz is captured by copy (by default due to =)
+</span><span style=color:#75715e></span>        do_something_else(foo, bar, baz);
     });
 
-    std::<span style=color:#6ab825;font-weight:700>thread</span> t4([&amp;, bar](){
-        <span style=color:#999;font-style:italic>// foo is captured by reference (by default due to &amp;)
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// bar is captured by copy
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// baz is captured by reference (by default due to &amp;)
-</span><span style=color:#999;font-style:italic></span>        do_another_thing(foo, bar, baz);
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> t4([<span style=color:#f92672>&amp;</span>, bar](){
+        <span style=color:#75715e>// foo is captured by reference (by default due to &amp;)
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// bar is captured by copy
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// baz is captured by reference (by default due to &amp;)
+</span><span style=color:#75715e></span>        do_another_thing(foo, bar, baz);
     });
 
 </code></pre></td></tr></table>
@@ -332,346 +332,346 @@ is a non-local variable or has <strong>static</strong> or thread-local <strong>s
 <h3 id=compileable-code-for-reference>Compileable code for reference</h3>
 <p>This script illustrates the capture behaviour for [=], [&] and [].
 Mixing explicitly capturing by copy or reference is omitted in this example for simplicity.</p>
-<div class=highlight><div style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#686868">  0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">  1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">  2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">  3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">  4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">  5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">  6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">  7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">  8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">  9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 65
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 66
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 67
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 68
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 69
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 70
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 71
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 72
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 73
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 74
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 75
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 76
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 77
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 78
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 79
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 80
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 81
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 82
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 83
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 84
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 85
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 86
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 87
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 88
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 89
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 90
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 91
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 92
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 93
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 94
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 95
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 96
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 97
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 98
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 99
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">100
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">101
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">102
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">103
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">104
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">105
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">106
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">107
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">108
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">109
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">110
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">111
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">112
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">113
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">114
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">115
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">116
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">117
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">118
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">119
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">120
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">121
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">122
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">123
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">124
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">125
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">126
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">127
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">128
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">129
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">130
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">131
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">132
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">133
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">134
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">135
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">136
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">137
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">138
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">139
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">140
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">141
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">142
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">143
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">144
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">145
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">146
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">147
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">148
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">149
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">150
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">151
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">152
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">153
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">154
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">155
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">156
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">157
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">158
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">159
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">160
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">161
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">162
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">163
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">164
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">165
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">166
-</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">167
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  0
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">151
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">152
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">153
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">154
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">155
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">156
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">157
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">158
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">159
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">160
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">161
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">162
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">163
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">164
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">165
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">166
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">167
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;thread&gt;</span><span style=color:#cd2828;font-weight:700>
-</span><span style=color:#cd2828;font-weight:700>#include</span> <span style=color:#cd2828;font-weight:700>&lt;iostream&gt;</span><span style=color:#cd2828;font-weight:700>
-</span><span style=color:#cd2828;font-weight:700></span>
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>print_n</span>(<span style=color:#6ab825;font-weight:700>int</span> n){
-    printf(<span style=color:#ed9d13>&#34;%d</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, n);
+<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c++ data-lang=c++><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;thread&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>print_n</span>(<span style=color:#66d9ef>int</span> n){
+    printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, n);
 }
 
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>add_one_print_n</span>(<span style=color:#6ab825;font-weight:700>int</span> n){
-    n++;
-    printf(<span style=color:#ed9d13>&#34;%d</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, n);
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>add_one_print_n</span>(<span style=color:#66d9ef>int</span> n){
+    n<span style=color:#f92672>++</span>;
+    printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, n);
 }
 
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>print_n_ref</span>(<span style=color:#6ab825;font-weight:700>int</span>&amp; n){
-    printf(<span style=color:#ed9d13>&#34;%d</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, n);
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>print_n_ref</span>(<span style=color:#66d9ef>int</span><span style=color:#f92672>&amp;</span> n){
+    printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, n);
 }
 
-<span style=color:#6ab825;font-weight:700>void</span> <span style=color:#447fcf>add_one_print_n_ref</span>(<span style=color:#6ab825;font-weight:700>int</span>&amp; n){
-    n++;
-    printf(<span style=color:#ed9d13>&#34;%d</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>, n);
+<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>add_one_print_n_ref</span>(<span style=color:#66d9ef>int</span><span style=color:#f92672>&amp;</span> n){
+    n<span style=color:#f92672>++</span>;
+    printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, n);
 }
 
-<span style=color:#6ab825;font-weight:700>int</span> global = <span style=color:#3677a9>0</span>; <span style=color:#999;font-style:italic>// zero initialize this
-</span><span style=color:#999;font-style:italic></span>
-<span style=color:#6ab825;font-weight:700>int</span> <span style=color:#447fcf>main</span>() {
-    <span style=color:#6ab825;font-weight:700>int</span> local = <span style=color:#3677a9>0</span>;
+<span style=color:#66d9ef>int</span> global <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#75715e>// zero initialize this
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#66d9ef>int</span> local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
-    <span style=color:#999;font-style:italic>// DEFAULT BEHAVIOUR (Empty capture list)
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// Notice how `local` in the adjacent scope of main() cannot be captured 
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// So, the default behaviour is NOT PASS BY COPY. You simply just can&#39;t capture.
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// This is resolved with the later examples &#34;[=]&#34; and &#34;[&amp;]&#34;,
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// where the default behaviour is specified.
-</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> default_t1([](){
-        printf(<span style=color:#ed9d13>&#34;=== Empty capture list ===</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        <span style=color:#6ab825;font-weight:700>int</span> lambda_local = <span style=color:#3677a9>0</span>;
+    <span style=color:#75715e>// DEFAULT BEHAVIOUR (Empty capture list)
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// Notice how `local` in the adjacent scope of main() cannot be captured 
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// So, the default behaviour is NOT PASS BY COPY. You simply just can&#39;t capture.
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// This is resolved with the later examples &#34;[=]&#34; and &#34;[&amp;]&#34;,
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// where the default behaviour is specified.
+</span><span style=color:#75715e></span>    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> default_t1([](){
+        printf(<span style=color:#e6db74>&#34;=== Empty capture list ===</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        <span style=color:#66d9ef>int</span> lambda_local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
-        <span style=color:#999;font-style:italic>// Can we modify the state inside the lambda body?
-</span><span style=color:#999;font-style:italic></span>        lambda_local++;         <span style=color:#999;font-style:italic>// OK! 0-&gt;1
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// local++;             // Compile Err! local is not captured.
-</span><span style=color:#999;font-style:italic></span>        global++;               <span style=color:#999;font-style:italic>// OK! 0-&gt;1
-</span><span style=color:#999;font-style:italic></span>
-        <span style=color:#999;font-style:italic>// What about functions that pass by copy?
-</span><span style=color:#999;font-style:italic></span>        printf(<span style=color:#ed9d13>&#34;Pass by copy into fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        print_n(lambda_local);  <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// print_n(local);      // Compile Err! local not captured.
-</span><span style=color:#999;font-style:italic></span>        print_n(global);        <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>
-        <span style=color:#999;font-style:italic>// What about functions that pass by reference?
-</span><span style=color:#999;font-style:italic></span>        printf(<span style=color:#ed9d13>&#34;Pass by reference into fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        print_n_ref(lambda_local); <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// print_n_ref(local);     // Compile Err!
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(global);       <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>
-        <span style=color:#999;font-style:italic>// What about functions that modify state but pass by copy?
-</span><span style=color:#999;font-style:italic></span>        printf(<span style=color:#ed9d13>&#34;Pass by copy into fn, state modified in fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        add_one_print_n(lambda_local); <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(lambda_local);         <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// add_one_print_n(local);     // err!
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// print_n(local);             // err!
-</span><span style=color:#999;font-style:italic></span>        add_one_print_n(global);       <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(global);               <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>
-        printf(<span style=color:#ed9d13>&#34;Pass by ref into fn, state modified in fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        add_one_print_n_ref(lambda_local);  <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(lambda_local);          <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(lambda_local);              <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// add_one_print_n_ref(local);      // Compile err!
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// print_n_ref(local);              // Compile err!
-</span><span style=color:#999;font-style:italic></span>        add_one_print_n_ref(global);        <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(global);                <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(global);                    <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>    });
-    default_t1.join(); <span style=color:#999;font-style:italic>// synchronize
-</span><span style=color:#999;font-style:italic></span>
-    <span style=color:#999;font-style:italic>// reset variables
-</span><span style=color:#999;font-style:italic></span>    global = <span style=color:#3677a9>0</span>; local = <span style=color:#3677a9>0</span>;
+        <span style=color:#75715e>// Can we modify the state inside the lambda body?
+</span><span style=color:#75715e></span>        lambda_local<span style=color:#f92672>++</span>;         <span style=color:#75715e>// OK! 0-&gt;1
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// local++;             // Compile Err! local is not captured.
+</span><span style=color:#75715e></span>        global<span style=color:#f92672>++</span>;               <span style=color:#75715e>// OK! 0-&gt;1
+</span><span style=color:#75715e></span>
+        <span style=color:#75715e>// What about functions that pass by copy?
+</span><span style=color:#75715e></span>        printf(<span style=color:#e6db74>&#34;Pass by copy into fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        print_n(lambda_local);  <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// print_n(local);      // Compile Err! local not captured.
+</span><span style=color:#75715e></span>        print_n(global);        <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>
+        <span style=color:#75715e>// What about functions that pass by reference?
+</span><span style=color:#75715e></span>        printf(<span style=color:#e6db74>&#34;Pass by reference into fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        print_n_ref(lambda_local); <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// print_n_ref(local);     // Compile Err!
+</span><span style=color:#75715e></span>        print_n_ref(global);       <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>
+        <span style=color:#75715e>// What about functions that modify state but pass by copy?
+</span><span style=color:#75715e></span>        printf(<span style=color:#e6db74>&#34;Pass by copy into fn, state modified in fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        add_one_print_n(lambda_local); <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(lambda_local);         <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// add_one_print_n(local);     // err!
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// print_n(local);             // err!
+</span><span style=color:#75715e></span>        add_one_print_n(global);       <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(global);               <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>
+        printf(<span style=color:#e6db74>&#34;Pass by ref into fn, state modified in fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        add_one_print_n_ref(lambda_local);  <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n_ref(lambda_local);          <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(lambda_local);              <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// add_one_print_n_ref(local);      // Compile err!
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// print_n_ref(local);              // Compile err!
+</span><span style=color:#75715e></span>        add_one_print_n_ref(global);        <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n_ref(global);                <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(global);                    <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>    });
+    default_t1.join(); <span style=color:#75715e>// synchronize
+</span><span style=color:#75715e></span>
+    <span style=color:#75715e>// reset variables
+</span><span style=color:#75715e></span>    global <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
-    <span style=color:#999;font-style:italic>// DEFAULT CAPTURE BY COPY
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// Variables being captured in the scope of main()
-</span><span style=color:#999;font-style:italic></span>    <span style=color:#999;font-style:italic>// are done by copy. 
-</span><span style=color:#999;font-style:italic></span>    std::<span style=color:#6ab825;font-weight:700>thread</span> copy_default_t1([=](){
-        printf(<span style=color:#ed9d13>&#34;=== Default copy capture list ===</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        <span style=color:#6ab825;font-weight:700>int</span> lambda_local = <span style=color:#3677a9>0</span>;
+    <span style=color:#75715e>// DEFAULT CAPTURE BY COPY
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// Variables being captured in the scope of main()
+</span><span style=color:#75715e></span>    <span style=color:#75715e>// are done by copy. 
+</span><span style=color:#75715e></span>    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> copy_default_t1([<span style=color:#f92672>=</span>](){
+        printf(<span style=color:#e6db74>&#34;=== Default copy capture list ===</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        <span style=color:#66d9ef>int</span> lambda_local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
-        <span style=color:#999;font-style:italic>// Can we modify the state inside the lambda body?
-</span><span style=color:#999;font-style:italic></span>        lambda_local++;         <span style=color:#999;font-style:italic>// OK! 0-&gt;1
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// local++;             // Compile Err! local is captured as const (cannot be modified)
-</span><span style=color:#999;font-style:italic></span>        global++;               <span style=color:#999;font-style:italic>// OK! 0-&gt;1
-</span><span style=color:#999;font-style:italic></span>
-        <span style=color:#999;font-style:italic>// What about functions that pass by copy?
-</span><span style=color:#999;font-style:italic></span>        printf(<span style=color:#ed9d13>&#34;Pass by copy into fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        print_n(lambda_local);  <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        print_n(local);         <span style=color:#999;font-style:italic>// 0
-</span><span style=color:#999;font-style:italic></span>        print_n(global);        <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>
-        <span style=color:#999;font-style:italic>// What about functions that pass by reference?
-</span><span style=color:#999;font-style:italic></span>        printf(<span style=color:#ed9d13>&#34;Pass by reference into fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        print_n_ref(lambda_local); <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// print_n_ref(local);     // Compile Err! cannot pass int const as int &amp;
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(global);       <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>
-        <span style=color:#999;font-style:italic>// What about functions that modify state but pass by copy?
-</span><span style=color:#999;font-style:italic></span>        printf(<span style=color:#ed9d13>&#34;Pass by copy into fn, state modified in fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        add_one_print_n(lambda_local); <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(lambda_local);         <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        add_one_print_n(local);        <span style=color:#999;font-style:italic>// 1, OK - const local is copied 
-</span><span style=color:#999;font-style:italic></span>        print_n(local);                <span style=color:#999;font-style:italic>// 0
-</span><span style=color:#999;font-style:italic></span>        add_one_print_n(global);       <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(global);               <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>
-        printf(<span style=color:#ed9d13>&#34;Pass by ref into fn, state modified in fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        add_one_print_n_ref(lambda_local);  <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(lambda_local);          <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(lambda_local);              <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// add_one_print_n_ref(local);      // Compile err! cannot pass int const as int &amp;
-</span><span style=color:#999;font-style:italic></span>        <span style=color:#999;font-style:italic>// print_n_ref(local);              // Compile err! cannot pass int const as int &amp;
-</span><span style=color:#999;font-style:italic></span>        add_one_print_n_ref(global);        <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(global);                <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(global);                    <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>    });
+        <span style=color:#75715e>// Can we modify the state inside the lambda body?
+</span><span style=color:#75715e></span>        lambda_local<span style=color:#f92672>++</span>;         <span style=color:#75715e>// OK! 0-&gt;1
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// local++;             // Compile Err! local is captured as const (cannot be modified)
+</span><span style=color:#75715e></span>        global<span style=color:#f92672>++</span>;               <span style=color:#75715e>// OK! 0-&gt;1
+</span><span style=color:#75715e></span>
+        <span style=color:#75715e>// What about functions that pass by copy?
+</span><span style=color:#75715e></span>        printf(<span style=color:#e6db74>&#34;Pass by copy into fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        print_n(lambda_local);  <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        print_n(local);         <span style=color:#75715e>// 0
+</span><span style=color:#75715e></span>        print_n(global);        <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>
+        <span style=color:#75715e>// What about functions that pass by reference?
+</span><span style=color:#75715e></span>        printf(<span style=color:#e6db74>&#34;Pass by reference into fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        print_n_ref(lambda_local); <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// print_n_ref(local);     // Compile Err! cannot pass int const as int &amp;
+</span><span style=color:#75715e></span>        print_n_ref(global);       <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>
+        <span style=color:#75715e>// What about functions that modify state but pass by copy?
+</span><span style=color:#75715e></span>        printf(<span style=color:#e6db74>&#34;Pass by copy into fn, state modified in fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        add_one_print_n(lambda_local); <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(lambda_local);         <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        add_one_print_n(local);        <span style=color:#75715e>// 1, OK - const local is copied 
+</span><span style=color:#75715e></span>        print_n(local);                <span style=color:#75715e>// 0
+</span><span style=color:#75715e></span>        add_one_print_n(global);       <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(global);               <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>
+        printf(<span style=color:#e6db74>&#34;Pass by ref into fn, state modified in fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        add_one_print_n_ref(lambda_local);  <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n_ref(lambda_local);          <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(lambda_local);              <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// add_one_print_n_ref(local);      // Compile err! cannot pass int const as int &amp;
+</span><span style=color:#75715e></span>        <span style=color:#75715e>// print_n_ref(local);              // Compile err! cannot pass int const as int &amp;
+</span><span style=color:#75715e></span>        add_one_print_n_ref(global);        <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n_ref(global);                <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(global);                    <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>    });
     copy_default_t1.join();
 
-    <span style=color:#999;font-style:italic>// reset variables
-</span><span style=color:#999;font-style:italic></span>    global = <span style=color:#3677a9>0</span>; local = <span style=color:#3677a9>0</span>;
+    <span style=color:#75715e>// reset variables
+</span><span style=color:#75715e></span>    global <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
-    std::<span style=color:#6ab825;font-weight:700>thread</span> ref_default_t1([&amp;](){
-        printf(<span style=color:#ed9d13>&#34;=== Default ref capture list ===</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        <span style=color:#6ab825;font-weight:700>int</span> lambda_local = <span style=color:#3677a9>0</span>;
+    std<span style=color:#f92672>::</span><span style=color:#66d9ef>thread</span> ref_default_t1([<span style=color:#f92672>&amp;</span>](){
+        printf(<span style=color:#e6db74>&#34;=== Default ref capture list ===</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        <span style=color:#66d9ef>int</span> lambda_local <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
-        <span style=color:#999;font-style:italic>// Can we modify the state inside the lambda body?
-</span><span style=color:#999;font-style:italic></span>        lambda_local++;         <span style=color:#999;font-style:italic>// OK! 0-&gt;1
-</span><span style=color:#999;font-style:italic></span>        local++;                <span style=color:#999;font-style:italic>// OK! 0-&gt;1, local is captured by ref
-</span><span style=color:#999;font-style:italic></span>        global++;               <span style=color:#999;font-style:italic>// OK! 0-&gt;1
-</span><span style=color:#999;font-style:italic></span>
-        <span style=color:#999;font-style:italic>// What about functions that pass by copy?
-</span><span style=color:#999;font-style:italic></span>        printf(<span style=color:#ed9d13>&#34;Pass by copy into fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        print_n(lambda_local);  <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        print_n(local);         <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        print_n(global);        <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>
-        <span style=color:#999;font-style:italic>// What about functions that pass by reference?
-</span><span style=color:#999;font-style:italic></span>        printf(<span style=color:#ed9d13>&#34;Pass by reference into fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        print_n_ref(lambda_local); <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(local);        <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(global);       <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>
-        <span style=color:#999;font-style:italic>// What about functions that modify state but pass by copy?
-</span><span style=color:#999;font-style:italic></span>        printf(<span style=color:#ed9d13>&#34;Pass by copy into fn, state modified in fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        add_one_print_n(lambda_local); <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(lambda_local);         <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        add_one_print_n(local);        <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(local);                <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>        add_one_print_n(global);       <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(global);               <span style=color:#999;font-style:italic>// 1
-</span><span style=color:#999;font-style:italic></span>
-        printf(<span style=color:#ed9d13>&#34;Pass by ref into fn, state modified in fn:</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
-        add_one_print_n_ref(lambda_local);  <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(lambda_local);          <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(lambda_local);              <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        add_one_print_n_ref(local);         <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(local);                 <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        add_one_print_n_ref(global);        <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n_ref(global);                <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>        print_n(global);                    <span style=color:#999;font-style:italic>// 2
-</span><span style=color:#999;font-style:italic></span>    });
+        <span style=color:#75715e>// Can we modify the state inside the lambda body?
+</span><span style=color:#75715e></span>        lambda_local<span style=color:#f92672>++</span>;         <span style=color:#75715e>// OK! 0-&gt;1
+</span><span style=color:#75715e></span>        local<span style=color:#f92672>++</span>;                <span style=color:#75715e>// OK! 0-&gt;1, local is captured by ref
+</span><span style=color:#75715e></span>        global<span style=color:#f92672>++</span>;               <span style=color:#75715e>// OK! 0-&gt;1
+</span><span style=color:#75715e></span>
+        <span style=color:#75715e>// What about functions that pass by copy?
+</span><span style=color:#75715e></span>        printf(<span style=color:#e6db74>&#34;Pass by copy into fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        print_n(lambda_local);  <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        print_n(local);         <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        print_n(global);        <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>
+        <span style=color:#75715e>// What about functions that pass by reference?
+</span><span style=color:#75715e></span>        printf(<span style=color:#e6db74>&#34;Pass by reference into fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        print_n_ref(lambda_local); <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        print_n_ref(local);        <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        print_n_ref(global);       <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>
+        <span style=color:#75715e>// What about functions that modify state but pass by copy?
+</span><span style=color:#75715e></span>        printf(<span style=color:#e6db74>&#34;Pass by copy into fn, state modified in fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        add_one_print_n(lambda_local); <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(lambda_local);         <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        add_one_print_n(local);        <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(local);                <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>        add_one_print_n(global);       <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(global);               <span style=color:#75715e>// 1
+</span><span style=color:#75715e></span>
+        printf(<span style=color:#e6db74>&#34;Pass by ref into fn, state modified in fn:</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+        add_one_print_n_ref(lambda_local);  <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n_ref(lambda_local);          <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(lambda_local);              <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        add_one_print_n_ref(local);         <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n_ref(local);                 <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        add_one_print_n_ref(global);        <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n_ref(global);                <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>        print_n(global);                    <span style=color:#75715e>// 2
+</span><span style=color:#75715e></span>    });
     ref_default_t1.join();
 
 
-} <span style=color:#999;font-style:italic>// main
+} <span style=color:#75715e>// main
 </span></code></pre></td></tr></table>
 </div>
 </div>
