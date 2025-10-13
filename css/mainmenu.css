@@ -237,6 +237,7 @@ main {
     align-items: center;
     height: 4rem;
     width: 100%;
+    text-decoration: none;
     transition: var(--transition-speed);
   }
   .nav-item, .home-item{

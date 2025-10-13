@@ -125,6 +125,30 @@
     align-items: center;
 }
 
+.exp-divider-text {
+    text-align: center; 
+    border-left: 2px solid var(--color-accent);
+    margin-left: 6px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: var(--color-accent);
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+}
+
+.exp-divider-text::before {
+    content: ''; 
+    flex-grow: 1;
+    border-top: 2px dashed var(--color-accent); 
+}
+
+.exp-divider-text::after {
+    content: ''; /* Required for pseudo-elements */
+    flex-grow: 1; /* Allows the line to take up available space */
+    border-top: 2px dashed var(--color-accent); 
+}
+
 @media only screen and (max-width:650px) {
     .coyLogo {
         max-height: 48px;
