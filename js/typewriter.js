@@ -8,6 +8,8 @@ const colorSelect = (index) => {
 }
 
 let taglines = [
+    "Reliability Engineer 📳",
+    "Homelab sysadmin 💾",
     "Computer Engineer.",
     "cat enthusiast 🐱",
     "\{software\} engineer.",
