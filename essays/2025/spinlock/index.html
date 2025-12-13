@@ -1,349 +1,153 @@
-<!doctype html><html lang=en-sg>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Yet another spinlock implementation | Nicholas Yek</title>
+<!doctype html><html lang=en-sg><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Yet another spinlock implementation | Nicholas Yek</title>
 <meta name=description content="Implementing spinlock from one atomic instruction. Inspired by an advanced OS class.
-">
-<link rel=canonical href=https://nichyjt.github.io/essays/2025/spinlock/>
-<link rel=stylesheet href=../../../css/style.css>
-<link rel=stylesheet href=../../../css/mainmenu.css>
-<link rel=stylesheet href=../../../css/fonts.css>
-<link rel=stylesheet href=../../../css/colours.css>
-<link rel=stylesheet href=../../../css/pagenav.css>
-<link rel=stylesheet href=../../../css/homepage.css>
-<link rel=stylesheet href=../../../css/featured.css>
-<link rel=stylesheet href=../../../css/shortcodes.css>
-<link rel=stylesheet href=../../../css/badgeicon.css>
-<link rel=stylesheet href=../../../css/expandable.css>
-<script src=../../../js/accordian.js></script>
-<script src=../../../js/spoiler.js></script>
-<script src=../../../js/expandable.js></script>
-<meta property="og:title" content="Yet another spinlock implementation">
-<meta property="og:description" content="Implementing spinlock from one atomic instruction. Inspired by an advanced OS class.
-">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://nichyjt.github.io/essays/2025/spinlock/"><meta property="article:section" content="essays">
-<meta property="article:published_time" content="2025-06-03T00:00:00+00:00">
-<meta property="article:modified_time" content="2025-06-03T00:00:00+00:00">
-<meta property="og:image" content="https://nichyjt.github.io/favicon_main.png">
-<meta name=twitter:card content="summary">
-<meta name=twitter:title content="Yet another spinlock implementation">
-<meta name=twitter:description content="Implementing spinlock from one atomic instruction. Inspired by an advanced OS class.
-">
-<script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script>
-</head><body>
-<div class=navcontainer><body>
-<nav class=navbar>
-<div class=home-item>
-<a href=https://nichyjt.github.io class=home-link><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" class="svg-inline--fa fa-home fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentcolor" d="M280.37 148.26 96 300.11V464a16 16 0 0016 16l112.06-.29a16 16 0 0015.92-16V368a16 16 0 0116-16h64a16 16 0 0116 16v95.64a16 16 0 0016 16.05L464 480a16 16 0 0016-16V3e2L295.67 148.26a12.19 12.19.0 00-15.3.0zM571.6 251.47 488 182.56V44.05a12 12 0 00-12-12h-56a12 12 0 00-12 12v72.61L318.47 43a48 48 0 00-61 0L4.34 251.47a12 12 0 00-1.6 16.9l25.5 31A12 12 0 0045.15 301l235.22-193.74a12.19 12.19.0 0115.3.0L530.9 301a12 12 0 0016.9-1.6l25.5-31a12 12 0 00-1.7-16.93z"/></svg>
-<span class=home-text>HOME</span>
-</a>
-</div>
-<ul class=navbar-large>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+"><link rel=canonical href=https://nichyjt.github.io/essays/2025/spinlock/><link rel=stylesheet href=../../../css/style.css><link rel=stylesheet href=../../../css/mainmenu.css><link rel=stylesheet href=../../../css/fonts.css><link rel=stylesheet href=../../../css/colours.css><link rel=stylesheet href=../../../css/pagenav.css><link rel=stylesheet href=../../../css/homepage.css><link rel=stylesheet href=../../../css/featured.css><link rel=stylesheet href=../../../css/shortcodes.css><link rel=stylesheet href=../../../css/badgeicon.css><link rel=stylesheet href=../../../css/expandable.css><script src=../../../js/accordian.js></script><script src=../../../js/spoiler.js></script><script src=../../../js/expandable.js></script><meta property="og:title" content="Yet another spinlock implementation"><meta property="og:description" content="Implementing spinlock from one atomic instruction. Inspired by an advanced OS class.
+"><meta property="og:type" content="article"><meta property="og:url" content="https://nichyjt.github.io/essays/2025/spinlock/"><meta property="article:section" content="essays"><meta property="article:published_time" content="2025-06-03T00:00:00+00:00"><meta property="article:modified_time" content="2025-06-03T00:00:00+00:00"><meta property="og:image" content="https://nichyjt.github.io/favicon_main.png"><meta name=twitter:card content="summary"><meta name=twitter:title content="Yet another spinlock implementation"><meta name=twitter:description content="Implementing spinlock from one atomic instruction. Inspired by an advanced OS class.
+"><script>localStorage.getItem("theme")||localStorage.setItem("theme","lightmode")</script></head><body><div class=navcontainer><body><nav class=navbar><div class=home-item><a href=https://nichyjt.github.io/ class=home-link><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="home" class="svg-inline--fa fa-home fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentcolor" d="M280.37 148.26 96 300.11V464a16 16 0 0016 16l112.06-.29a16 16 0 0015.92-16V368a16 16 0 0116-16h64a16 16 0 0116 16v95.64a16 16 0 0016 16.05L464 480a16 16 0 0016-16V3e2L295.67 148.26a12.19 12.19.0 00-15.3.0zM571.6 251.47 488 182.56V44.05a12 12 0 00-12-12h-56a12 12 0 00-12 12v72.61L318.47 43a48 48 0 00-61 0L4.34 251.47a12 12 0 00-1.6 16.9l25.5 31A12 12 0 0045.15 301l235.22-193.74a12.19 12.19.0 0115.3.0L530.9 301a12 12 0 0016.9-1.6l25.5-31a12 12 0 00-1.7-16.93z"/></svg>
+<span class=home-text>HOME</span></a></div><ul class=navbar-large><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../about/ , class=menu-item , style=text-decoration:none><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="address-card" class="svg-inline--fa fa-address-card fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentcolor" d="M528 32H48C21.5 32 0 53.5.0 80v352c0 26.5 21.5 48 48 48h480c26.5.0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm0 4e2H48V80h480v352zM208 256c35.3.0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm-89.6 128h179.2c12.4.0 22.4-8.6 22.4-19.2v-19.2c0-31.8-30.1-57.6-67.2-57.6-10.8.0-18.7 8-44.8 8-26.9.0-33.4-8-44.8-8-37.1.0-67.2 25.8-67.2 57.6v19.2c0 10.6 10 19.2 22.4 19.2zM360 320h112c4.4.0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H360c-4.4.0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0-64h112c4.4.0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H360c-4.4.0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0-64h112c4.4.0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H360c-4.4.0-8 3.6-8 8v16c0 4.4 3.6 8 8 8z"></path></svg>
-<span class=menu-item-text>ABOUT</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+<span class=menu-item-text>ABOUT</span></a></button></li><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../essays/ , class=menu-item , style=text-decoration:none><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen" class="svg-inline--fa fa-pen fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06-60.11-60.11c-18.75-18.75-49.16-18.75-67.91.0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16.0-67.91z"></path></svg>
-<span class=menu-item-text>ESSAYS</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+<span class=menu-item-text>ESSAYS</span></a></button></li><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../projects/ , class=menu-item , style=text-decoration:none><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="robot" class="svg-inline--fa fa-robot fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentcolor" d="M32 224H64V416H32A31.96166 31.96166.0 010 384V256a31.96166 31.96166.0 0132-32zm512-48V448a64.06328 64.06328.0 01-64 64H160a64.06328 64.06328.0 01-64-64V176a79.974 79.974.0 0180-80H288V32a32 32 0 0164 0V96H464a79.974 79.974.0 0180 80zM264 256a40 40 0 10-40 40 39.997 39.997.0 0040-40zm-8 128H192v32h64zm96 0H288v32h64zM456 256a40 40 0 10-40 40 39.997 39.997.0 0040-40zm-8 128H384v32h64zM640 256V384a31.96166 31.96166.0 01-32 32H576V224h32a31.96166 31.96166.0 0132 32z"></path></svg>
-<span class=menu-item-text>PROJECTS</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+<span class=menu-item-text>PROJECTS</span></a></button></li><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../teaching/ , class=menu-item , style=text-decoration:none><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ic_fluent_whiteboard_24_filled</title><desc>Created with Sketch.</desc><g id="🔍-Product-Icons" stroke="none" stroke-width="1" fill="currentcolor" fill-rule="evenodd"><g id="ic_fluent_whiteboard_24_filled" fill="currentcolor" fill-rule="nonzero"><path d="M15.9889014 4 12.9218926 7.062672C12.584361 7.39965048 12.3198662 7.80144684 12.1437848 8.24291696L12.0631831 8.46684175 11.324259 10.761696C11.184559 11.1955581 11.1799219 11.6616177 11.3109617 12.0981735 11.6526819 13.2366056 12.8152702 13.9038843 13.957309 13.6471052L14.1128352 13.6063197l2.3275683-.6986601C16.9149418 12.7652187 17.3529095 12.5239389 17.7259682 12.2007334L17.9069572 12.0323818 22 7.946v8.808591c0 1.7949254-1.4550746 3.25-3.25 3.25H5.25c-1.79492544.0-3.25009858-1.4550746-3.25009858-3.25L2.00028801 12.555215 2.07593132 12.5235888 2.1491174 12.4830228l3.75944706-2.362988L6.00672527 10.067941C6.34143087 9.9208341 6.74227866 10.0370907 6.94266635 10.3559019 7.06489956 10.5503715 7.09023646 10.7880768 7.01613393 11.0012262L6.97078427 11.1054407 5.76304763 13.3908405 5.69296688 13.535549C5.22026466 14.6064091 5.6502057 15.8760541 6.70109472 16.4314042c.62004594.327667900000002 1.35377136.3459419 1.98529061.0576805L8.85592161 16.4028701 10.6208022 15.4065583 10.7058795 15.3502913C10.9995312 15.1261343 11.0896473 14.7138755 10.9019246 14.3838314 10.7142019 14.0537874 10.3138032 13.920524 9.9710451 14.0583446L9.8791978 14.102709 8.12020755 15.0956881 8.02227723 15.1418514C7.82158817 15.2192865 7.59519714 15.2073288 7.4019376 15.1051994 7.06623814 14.9277965 6.92063051 14.5317212 7.04776029 14.1848549L7.08925622 14.0916763l1.20773289-2.2853927L8.37643726 11.6398047C8.66531956 10.9646696 8.60754263 10.1859534 8.21263533 9.55766707 7.58141412 8.55341199 6.2871711 8.21910595 5.25578275 8.76593103L5.11032966 8.8500658 1.99990142 10.805V7.25c0-1.73303146 1.35655335-3.14924593 3.06567467-3.24485521L5.25 4H15.9889014zm5.1865976-.45513877L21.3057053 3.66549405 21.4262125 3.79573486C22.1894032 4.68737541 22.1487912 6.0305334 21.3046801 6.87410524L17.0238193 11.1477533C16.760843 11.4102865 16.4369385 11.6036013 16.0810348 11.7104319l-2.3275683.6986601C13.224498 12.5678711 12.6669685 12.2677732 12.5081894 11.7388048 12.4499495 11.54478 12.4520104 11.3376424 12.5140993 11.1448148l.7389242-2.29485426C13.3626608 8.50946335 13.5519023 8.20001385 13.805051 7.94727999l4.290646-4.28361488c.8448134-.84342904 2.1883622-.88284974 3.079802-.11880388z" id="🎨-Color"/></g></g></svg>
-<span class=menu-item-text>TEACHING</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+<span class=menu-item-text>TEACHING</span></a></button></li><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../tags/ , class=menu-item , style=text-decoration:none><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tags" class="svg-inline--fa fa-tags fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentcolor" d="M497.941 225.941 286.059 14.059A48 48 0 00252.118.0H48C21.49.0.0 21.49.0 48v204.118a48 48 0 0014.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882.0l204.118-204.118c18.745-18.745 18.745-49.137.0-67.882zM112 160c-26.51.0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882.0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397.0h48.721a48 48 0 0133.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137.0 67.882z"></path></svg>
-<span class=menu-item-text>TAGS</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button id=darkmode-toggle , style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item , onclick=changetheme()>
+<span class=menu-item-text>TAGS</span></a></button></li><li class=nav-item><button id=darkmode-toggle , style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item , onclick=changetheme()>
 <a class=menu-item><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="adjust" class="svg-inline--fa fa-adjust fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705.0 184 82.311 184 184 0 101.705-82.311 184-184 184z"></path></svg>
 <span class=menu-item-text>DARKMODE</span>
-</a>
-</button>
-<script>function changetheme(){document.body.className.includes("darkmode")?(document.body.classList.replace("darkmode","lightmode"),localStorage.setItem("theme","lightmode")):(document.body.classList.replace("lightmode","darkmode"),localStorage.setItem("theme","darkmode")),document.activeElement.blur()}</script>
-</li>
-</ul>
-<div class=navbar-mobile>
-<div class=hamburg-btn tabindex=0><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentcolor" d="M16 132h416c8.837.0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163.0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837.0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837.0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837.0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837.0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg>
-</div>
-<div class=navbar-mobile-overlay>
-<a href=javascript:void(0) class=close-btn>&#215;</a>
-<ul class=navbar-hamburg-items>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+</a></button>
+<script>function changetheme(){document.body.className.includes("darkmode")?(document.body.classList.replace("darkmode","lightmode"),localStorage.setItem("theme","lightmode")):(document.body.classList.replace("lightmode","darkmode"),localStorage.setItem("theme","darkmode")),document.activeElement.blur()}</script></li></ul><div class=navbar-mobile><div class=hamburg-btn tabindex=0><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" class="svg-inline--fa fa-bars fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentcolor" d="M16 132h416c8.837.0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163.0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837.0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837.0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837.0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837.0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"></path></svg></div><div class=navbar-mobile-overlay><a href=javascript:void(0) class=close-btn>&#215;</a><ul class=navbar-hamburg-items><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../about/ , class=menu-item , style=text-decoration:none><svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="address-card" class="svg-inline--fa fa-address-card fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentcolor" d="M528 32H48C21.5 32 0 53.5.0 80v352c0 26.5 21.5 48 48 48h480c26.5.0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm0 4e2H48V80h480v352zM208 256c35.3.0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm-89.6 128h179.2c12.4.0 22.4-8.6 22.4-19.2v-19.2c0-31.8-30.1-57.6-67.2-57.6-10.8.0-18.7 8-44.8 8-26.9.0-33.4-8-44.8-8-37.1.0-67.2 25.8-67.2 57.6v19.2c0 10.6 10 19.2 22.4 19.2zM360 320h112c4.4.0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H360c-4.4.0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0-64h112c4.4.0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H360c-4.4.0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0-64h112c4.4.0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H360c-4.4.0-8 3.6-8 8v16c0 4.4 3.6 8 8 8z"></path></svg>
-<span class=menu-item-text>ABOUT</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+<span class=menu-item-text>ABOUT</span></a></button></li><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../essays/ , class=menu-item , style=text-decoration:none><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen" class="svg-inline--fa fa-pen fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06-60.11-60.11c-18.75-18.75-49.16-18.75-67.91.0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16.0-67.91z"></path></svg>
-<span class=menu-item-text>ESSAYS</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+<span class=menu-item-text>ESSAYS</span></a></button></li><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../projects/ , class=menu-item , style=text-decoration:none><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="robot" class="svg-inline--fa fa-robot fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentcolor" d="M32 224H64V416H32A31.96166 31.96166.0 010 384V256a31.96166 31.96166.0 0132-32zm512-48V448a64.06328 64.06328.0 01-64 64H160a64.06328 64.06328.0 01-64-64V176a79.974 79.974.0 0180-80H288V32a32 32 0 0164 0V96H464a79.974 79.974.0 0180 80zM264 256a40 40 0 10-40 40 39.997 39.997.0 0040-40zm-8 128H192v32h64zm96 0H288v32h64zM456 256a40 40 0 10-40 40 39.997 39.997.0 0040-40zm-8 128H384v32h64zM640 256V384a31.96166 31.96166.0 01-32 32H576V224h32a31.96166 31.96166.0 0132 32z"></path></svg>
-<span class=menu-item-text>PROJECTS</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+<span class=menu-item-text>PROJECTS</span></a></button></li><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../teaching/ , class=menu-item , style=text-decoration:none><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>ic_fluent_whiteboard_24_filled</title><desc>Created with Sketch.</desc><g id="🔍-Product-Icons" stroke="none" stroke-width="1" fill="currentcolor" fill-rule="evenodd"><g id="ic_fluent_whiteboard_24_filled" fill="currentcolor" fill-rule="nonzero"><path d="M15.9889014 4 12.9218926 7.062672C12.584361 7.39965048 12.3198662 7.80144684 12.1437848 8.24291696L12.0631831 8.46684175 11.324259 10.761696C11.184559 11.1955581 11.1799219 11.6616177 11.3109617 12.0981735 11.6526819 13.2366056 12.8152702 13.9038843 13.957309 13.6471052L14.1128352 13.6063197l2.3275683-.6986601C16.9149418 12.7652187 17.3529095 12.5239389 17.7259682 12.2007334L17.9069572 12.0323818 22 7.946v8.808591c0 1.7949254-1.4550746 3.25-3.25 3.25H5.25c-1.79492544.0-3.25009858-1.4550746-3.25009858-3.25L2.00028801 12.555215 2.07593132 12.5235888 2.1491174 12.4830228l3.75944706-2.362988L6.00672527 10.067941C6.34143087 9.9208341 6.74227866 10.0370907 6.94266635 10.3559019 7.06489956 10.5503715 7.09023646 10.7880768 7.01613393 11.0012262L6.97078427 11.1054407 5.76304763 13.3908405 5.69296688 13.535549C5.22026466 14.6064091 5.6502057 15.8760541 6.70109472 16.4314042c.62004594.327667900000002 1.35377136.3459419 1.98529061.0576805L8.85592161 16.4028701 10.6208022 15.4065583 10.7058795 15.3502913C10.9995312 15.1261343 11.0896473 14.7138755 10.9019246 14.3838314 10.7142019 14.0537874 10.3138032 13.920524 9.9710451 14.0583446L9.8791978 14.102709 8.12020755 15.0956881 8.02227723 15.1418514C7.82158817 15.2192865 7.59519714 15.2073288 7.4019376 15.1051994 7.06623814 14.9277965 6.92063051 14.5317212 7.04776029 14.1848549L7.08925622 14.0916763l1.20773289-2.2853927L8.37643726 11.6398047C8.66531956 10.9646696 8.60754263 10.1859534 8.21263533 9.55766707 7.58141412 8.55341199 6.2871711 8.21910595 5.25578275 8.76593103L5.11032966 8.8500658 1.99990142 10.805V7.25c0-1.73303146 1.35655335-3.14924593 3.06567467-3.24485521L5.25 4H15.9889014zm5.1865976-.45513877L21.3057053 3.66549405 21.4262125 3.79573486C22.1894032 4.68737541 22.1487912 6.0305334 21.3046801 6.87410524L17.0238193 11.1477533C16.760843 11.4102865 16.4369385 11.6036013 16.0810348 11.7104319l-2.3275683.6986601C13.224498 12.5678711 12.6669685 12.2677732 12.5081894 11.7388048 12.4499495 11.54478 12.4520104 11.3376424 12.5140993 11.1448148l.7389242-2.29485426C13.3626608 8.50946335 13.5519023 8.20001385 13.805051 7.94727999l4.290646-4.28361488c.8448134-.84342904 2.1883622-.88284974 3.079802-.11880388z" id="🎨-Color"/></g></g></svg>
-<span class=menu-item-text>TEACHING</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
+<span class=menu-item-text>TEACHING</span></a></button></li><li class=nav-item><button style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item>
 <a href=../../../tags/ , class=menu-item , style=text-decoration:none><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="tags" class="svg-inline--fa fa-tags fa-w-20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentcolor" d="M497.941 225.941 286.059 14.059A48 48 0 00252.118.0H48C21.49.0.0 21.49.0 48v204.118a48 48 0 0014.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882.0l204.118-204.118c18.745-18.745 18.745-49.137.0-67.882zM112 160c-26.51.0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882.0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397.0h48.721a48 48 0 0133.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137.0 67.882z"></path></svg>
-<span class=menu-item-text>TAGS</span>
-</a>
-</button>
-</li>
-<li class=nav-item>
-<button id=darkmode-toggle , style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item , onclick=changetheme()>
+<span class=menu-item-text>TAGS</span></a></button></li><li class=nav-item><button id=darkmode-toggle , style="cursor:pointer;padding:0;border:none;background:0 0" , class=menu-item , onclick=changetheme()>
 <a class=menu-item><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="adjust" class="svg-inline--fa fa-adjust fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentcolor" d="M8 256c0 136.966 111.033 248 248 248s248-111.034 248-248S392.966 8 256 8 8 119.033 8 256zm248 184V72c101.705.0 184 82.311 184 184 0 101.705-82.311 184-184 184z"></path></svg>
 <span class=menu-item-text>DARKMODE</span>
-</a>
-</button>
-<script>function changetheme(){document.body.className.includes("darkmode")?(document.body.classList.replace("darkmode","lightmode"),localStorage.setItem("theme","lightmode")):(document.body.classList.replace("lightmode","darkmode"),localStorage.setItem("theme","darkmode")),document.activeElement.blur()}</script>
-</li>
-</ul>
-</div>
-</div>
-</nav>
-<script>const button=document.querySelector('.hamburg-btn'),overlay=document.querySelector('.navbar-mobile-overlay'),menu=document.querySelector('.navbar-hamburg-items');button.addEventListener('click',a=>{overlay.classList.toggle('show'),menu.classList.toggle('show'),a.stopPropagation()}),document.addEventListener('click',a=>{!button.contains(a.target)&&!menu.contains(a.target)&&(menu.classList.remove('show'),overlay.classList.remove('show'))})</script>
-</body></div>
-<div class=bodycontainer>
-<main>
-<section class=section>
-<div class=frontmatter>
-<h1 class="title, listTitleLink">Yet another spinlock implementation</h1>
-<div class=subtitle>
-<p>
-<time>📆 June 3, 2025</time>
+</a></button>
+<script>function changetheme(){document.body.className.includes("darkmode")?(document.body.classList.replace("darkmode","lightmode"),localStorage.setItem("theme","lightmode")):(document.body.classList.replace("lightmode","darkmode"),localStorage.setItem("theme","darkmode")),document.activeElement.blur()}</script></li></ul></div></div></nav><script>const button=document.querySelector(".hamburg-btn"),overlay=document.querySelector(".navbar-mobile-overlay"),menu=document.querySelector(".navbar-hamburg-items");button.addEventListener("click",e=>{overlay.classList.toggle("show"),menu.classList.toggle("show"),e.stopPropagation()}),document.addEventListener("click",e=>{!button.contains(e.target)&&!menu.contains(e.target)&&(menu.classList.remove("show"),overlay.classList.remove("show"))})</script></body></div><div class=bodycontainer><main><section class=section><div class=frontmatter><h1 class="title, listTitleLink">Yet another spinlock implementation</h1><div class=subtitle><p><time>📆 June 3, 2025</time>
 |
-⌛ 5 minutes read
-</p>
-</div>
-<p class=tags style=width:fit-content>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/c/c++> C/C++</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io/tags/concurrency> Concurrency</a>
-</p>
-</div>
-<hr>
-<div class=content>
-<ul>
-<li><a href=#another-spinlock-question>Another Spinlock Question</a></li>
-<li><a href=#implementation>Implementation</a></li>
-<li><a href=#explanation>Explanation</a></li>
-<li><a href=#limitations--discussion>Limitations & Discussion</a></li>
-</ul>
-<h2 id=another-spinlock-question>Another Spinlock Question</h2>
-<p>This question is adapted from my year&rsquo;s Advanced Operating Systems finals. I didn&rsquo;t check the answer scheme / results for this, but I&rsquo;m fairly confident this is somewhat correct. I&rsquo;m writing this to scratch that concurrency itch.</p>
-<p>Consider this atomic instruction: <code>lock-xadd()</code>, where it has the side effects of the following C code:</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>lock_xadd</span>(<span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>src, <span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>dst)
-{ 
-    <span style=color:#75715e>// Atomically does the following
-</span><span style=color:#75715e></span>    temp <span style=color:#f92672>=</span> <span style=color:#f92672>*</span>src <span style=color:#f92672>+</span> <span style=color:#f92672>*</span>dst;
-    <span style=color:#f92672>*</span>src <span style=color:#f92672>=</span> <span style=color:#f92672>*</span>dst;
-    <span style=color:#f92672>*</span>dst <span style=color:#f92672>=</span> temp;
-}
-</code></pre></td></tr></table>
-</div>
-</div><p>Question: Implement <code>spin_lock()</code> and <code>spin_unlock()</code> in C using the <code>lock_xadd()</code> function.</p>
-<h2 id=implementation>Implementation</h2>
-<p>The insight: we can get the &lsquo;old&rsquo; state of the atomic operation, since <code>*src = *dst</code>. This means that we can implement this spinlock with a compare-and-swap pattern.</p>
-<div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>lock_xadd</span>(<span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>src, <span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>dst);
-
-<span style=color:#75715e>// Lock state: 
-</span><span style=color:#75715e>//   0 is unlocked
-</span><span style=color:#75715e>// &gt; 0 is locked
-</span><span style=color:#75715e>// &lt; 0 is undefined (should never happen)
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int64_t</span> lock <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#75715e>// i am an evil global lock :)
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>spin_lock</span>() {
-    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>){
-        <span style=color:#75715e>// attempt to acquire the lock 
-</span><span style=color:#75715e></span>        <span style=color:#66d9ef>int64_t</span> add <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-        lock_xadd(<span style=color:#f92672>&amp;</span>add, <span style=color:#f92672>&amp;</span>lock);
-
-        <span style=color:#66d9ef>if</span>(add <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) <span style=color:#75715e>// we acquired the lock! 
-</span><span style=color:#75715e></span>            <span style=color:#66d9ef>return</span>;
-        
-        <span style=color:#75715e>// we did not acquire the lock if test != 0.
-</span><span style=color:#75715e></span>        <span style=color:#75715e>// means that the lock was already acquired.
-</span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span>(add <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>) <span style=color:#75715e>// something terrible happened
-</span><span style=color:#75715e></span>            panic(); 
-
-        <span style=color:#75715e>// &#34;compare and swap&#34;
-</span><span style=color:#75715e></span>        <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>){
-            <span style=color:#75715e>// wait for tmp to return 0
-</span><span style=color:#75715e></span>            <span style=color:#75715e>// (implies that spin_unlock did its shit)
-</span><span style=color:#75715e></span>            <span style=color:#66d9ef>int64_t</span> tmp <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; 
-            lock_xadd(<span style=color:#f92672>&amp;</span>tmp, <span style=color:#f92672>&amp;</span>lock);
-
-            <span style=color:#66d9ef>if</span>(tmp <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>)
-                <span style=color:#66d9ef>break</span>;
-            
-            <span style=color:#66d9ef>if</span>(tmp <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>)
-                panic();
-            <span style=color:#75715e>// lock state &gt; 0, so just keep spinning~
-</span><span style=color:#75715e></span>        }
-        <span style=color:#75715e>// we still need to actually acquire the lock.
-</span><span style=color:#75715e></span>        <span style=color:#75715e>// so we re-try the acquire (add 1) operation!
-</span><span style=color:#75715e></span>    }
-}
-
-<span style=color:#66d9ef>void</span> <span style=color:#a6e22e>spin_unlock</span>(){
-    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>){
-        <span style=color:#66d9ef>int64_t</span> dec <span style=color:#f92672>=</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
-        lock_xadd(<span style=color:#f92672>&amp;</span>dec, <span style=color:#f92672>&amp;</span>lock);
-        <span style=color:#75715e>// == 1 implies that prev atomic op had
-</span><span style=color:#75715e></span>        <span style=color:#75715e>// decremented lock from 1 to 0 hence unlocked!
-</span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span>(dec <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>)
-            <span style=color:#66d9ef>break</span>; 
-    }
-}
-
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=explanation>Explanation</h2>
-<p>Remember that atomic instructions are <em>atomic</em>. We are guaranteed that each thread will indivisibly operate on lock.</p>
-<p>For <strong>spin_lock</strong>, we add 1 to the lock to try and acquire it. Since operations are atomic, the returned value <code>add</code> tells us the previous state of <code>lock</code>.</p>
-<p>If <code>add==0</code>, we know for sure the operation incremented lock from 0 -> 1. This means that we acquired the lock successfully, as we are the only lock acquirer that accessed the state of 0 for lock.</p>
-<p>Else, the operation worked on a positive nonzero value of lock (meaning it was locked by someone else already), so we spin.</p>
-<p>The spin operation is incredibly fun when I thought of the solution. Typically we would use some powerful <a href=https://en.cppreference.com/w/cpp/atomic/atomic/compare_exchange>compare exchange</a> atomic instruction to do compare-and-swap. We don&rsquo;t have the ability to do a CMP and SET atomically in this problem. The idea is to just separate both operations.</p>
-<p>We can exploit the <a href=https://stackoverflow.com/questions/1077412/what-is-an-idempotent-operation>idempotency</a> of 0 w.r.t. the addition operation. We can exploit this to atomically check the state of <code>lock</code> when we do <code>tmp = 0; lock_xadd(&tmp, &lock);</code>.</p>
-<p>Only an idempotent operation here will work. Why?</p>
-<p>If we increment, then our lock will starve or overflow. (acquire keeps adding, unlock keeps decrementing). We cannot decrement as it will conflict with the unlock operation.</p>
-<p>Once we are sure that the lock state is 0, then we try to acquire. This should keep all additions to <code>lock</code> finitely bounded.</p>
-<p>For <strong>spin_unlock</strong>, we just keep decrementing until <code>lock</code> is 0 (unlocked) 👍</p>
-<h2 id=limitations--discussion>Limitations & Discussion</h2>
-<p>We follow the pthread model, where <code>spin_unlock</code> can only be unlocked by the lock holding thread. See <a href=https://linux.die.net/man/3/pthread_spin_unlock>this docs</a> on <code>pthread_spin_unlock</code>. If this invariant does not hold, then exclusive access to the lock (for decrement) is violated. We get the funky lock &lt; 0 situation.</p>
-<p>If there are an unbounded number of lock acquirers, it could be theoretically possible to starve all acquirers since the unlocking thread can only decrement one at a time. One does not simply set <code>lock</code> to 0 with <code>lock_xadd()</code>. This shouldn&rsquo;t be possible (left as an exercise).</p>
-<p>Practically, unbounded acquires should not happen. Progress will eventually be made, since for a finite number of acquires <code>N</code>, it will just take O(<code>N</code>)<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> spins by the unlocker to eventually decrement <code>lock</code> to 0. No starvation!</p>
-<p>You also have the problem of data representation where we have more acquires than the <code>int64_t</code> can fit in the positive range. Then we get an overflow. But this is an unsolveable problem given the constraints, since we can either kick the can down the road by using <code>uint64_t</code> or a larger int representation (whatever this may be).</p>
-<p>Lastly, note that the implementation I provided is not as fast as the real spinlock/unlock due to the limitations of the atomic instruction we are given to implement.</p>
-<section class=footnotes role=doc-endnotes>
-<hr>
-<ol>
-<li id=fn:1 role=doc-endnote>
-<p>In the actual semantics of big O, where I mean the <strong>worst case</strong>.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
-</li>
-</ol>
-</section>
-</div>
-</div>
-</section>
-</main>
-</div>
-<footer class=footer>
-<div>
-<p class=footertext style=color:#f0f8ff;font-family:MainTitle;align-self:center>
-Built with &#x2764;&#xfe0f; &
-            <a href=https://gohugo.io/ target=_blank style=color:var(--color-link)><span>Hugo</span></a>
-</p>
-</div>
-<div class=footertext style=font-family:MainTitle;align-self:center>
-<a href=https://nichyjt.github.io/attributions/ style=color:var(--color-link)><span>Credits & Legal</span></a>
-</div>
-<div class=footertext style=color:#f0f8ff;font-family:MainTitle;align-self:center>
-© 2021 - 2025 Nicholas Yek
-</div>
-<div class=fontloader></div>
-</footer>
-</body>
-<script>document.body.classList.add(localStorage.getItem("theme"))</script>
-</html>
+⌛ 5 minutes read</p></div><p class=tags style=width:fit-content>📋 Tags: <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io//tags/c/c++>C/C++</a> <a style=color:var(--color-link);margin-inline:.2rem href=https://nichyjt.github.io//tags/concurrency>Concurrency</a></p></div><hr><div class=content><ul><li><a href=#another-spinlock-question>Another Spinlock Question</a></li><li><a href=#implementation>Implementation</a></li><li><a href=#explanation>Explanation</a></li><li><a href=#limitations--discussion>Limitations & Discussion</a></li></ul><h2 id=another-spinlock-question>Another Spinlock Question</h2><p>This question is adapted from my year&rsquo;s Advanced Operating Systems finals. I didn&rsquo;t check the answer scheme / results for this, but I&rsquo;m fairly confident this is somewhat correct. I&rsquo;m writing this to scratch that concurrency itch.</p><p>Consider this atomic instruction: <code>lock-xadd()</code>, where it has the side effects of the following C code:</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>lock_xadd</span>(<span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>src, <span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>dst)
+</span></span><span style=display:flex><span>{ 
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Atomically does the following
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    temp <span style=color:#f92672>=</span> <span style=color:#f92672>*</span>src <span style=color:#f92672>+</span> <span style=color:#f92672>*</span>dst;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>*</span>src <span style=color:#f92672>=</span> <span style=color:#f92672>*</span>dst;
+</span></span><span style=display:flex><span>    <span style=color:#f92672>*</span>dst <span style=color:#f92672>=</span> temp;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><p>Question: Implement <code>spin_lock()</code> and <code>spin_unlock()</code> in C using the <code>lock_xadd()</code> function.</p><h2 id=implementation>Implementation</h2><p>The insight: we can get the &lsquo;old&rsquo; state of the atomic operation, since <code>*src = *dst</code>. This means that we can implement this spinlock with a compare-and-swap pattern.</p><div class=highlight><div style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 0
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>lock_xadd</span>(<span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>src, <span style=color:#66d9ef>int</span> <span style=color:#f92672>*</span>dst);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Lock state: 
+</span></span></span><span style=display:flex><span><span style=color:#75715e>//   0 is unlocked
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// &gt; 0 is locked
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// &lt; 0 is undefined (should never happen)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int64_t</span> lock <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; <span style=color:#75715e>// i am an evil global lock :)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>spin_lock</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>){
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// attempt to acquire the lock 
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>int64_t</span> add <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>lock_xadd</span>(<span style=color:#f92672>&amp;</span>add, <span style=color:#f92672>&amp;</span>lock);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span>(add <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) <span style=color:#75715e>// we acquired the lock! 
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#66d9ef>return</span>;
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// we did not acquire the lock if test != 0.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// means that the lock was already acquired.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span>(add <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>) <span style=color:#75715e>// something terrible happened
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#a6e22e>panic</span>(); 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// &#34;compare and swap&#34;
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>){
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// wait for tmp to return 0
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#75715e>// (implies that spin_unlock did its shit)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#66d9ef>int64_t</span> tmp <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; 
+</span></span><span style=display:flex><span>            <span style=color:#a6e22e>lock_xadd</span>(<span style=color:#f92672>&amp;</span>tmp, <span style=color:#f92672>&amp;</span>lock);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span>(tmp <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>                <span style=color:#66d9ef>break</span>;
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span>(tmp <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>                <span style=color:#a6e22e>panic</span>();
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// lock state &gt; 0, so just keep spinning~
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        }
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// we still need to actually acquire the lock.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// so we re-try the acquire (add 1) operation!
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>spin_unlock</span>(){
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span>(<span style=color:#ae81ff>1</span>){
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>int64_t</span> dec <span style=color:#f92672>=</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>lock_xadd</span>(<span style=color:#f92672>&amp;</span>dec, <span style=color:#f92672>&amp;</span>lock);
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// == 1 implies that prev atomic op had
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#75715e>// decremented lock from 1 to 0 hence unlocked!
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span>(dec <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>break</span>; 
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=explanation>Explanation</h2><p>Remember that atomic instructions are <em>atomic</em>. We are guaranteed that each thread will indivisibly operate on lock.</p><p>For <strong>spin_lock</strong>, we add 1 to the lock to try and acquire it. Since operations are atomic, the returned value <code>add</code> tells us the previous state of <code>lock</code>.</p><p>If <code>add==0</code>, we know for sure the operation incremented lock from 0 -> 1. This means that we acquired the lock successfully, as we are the only lock acquirer that accessed the state of 0 for lock.</p><p>Else, the operation worked on a positive nonzero value of lock (meaning it was locked by someone else already), so we spin.</p><p>The spin operation is incredibly fun when I thought of the solution. Typically we would use some powerful <a href=https://en.cppreference.com/w/cpp/atomic/atomic/compare_exchange>compare exchange</a> atomic instruction to do compare-and-swap. We don&rsquo;t have the ability to do a CMP and SET atomically in this problem. The idea is to just separate both operations.</p><p>We can exploit the <a href=https://stackoverflow.com/questions/1077412/what-is-an-idempotent-operation>idempotency</a> of 0 w.r.t. the addition operation. We can exploit this to atomically check the state of <code>lock</code> when we do <code>tmp = 0; lock_xadd(&amp;tmp, &amp;lock);</code>.</p><p>Only an idempotent operation here will work. Why?</p><p>If we increment, then our lock will starve or overflow. (acquire keeps adding, unlock keeps decrementing). We cannot decrement as it will conflict with the unlock operation.</p><p>Once we are sure that the lock state is 0, then we try to acquire. This should keep all additions to <code>lock</code> finitely bounded.</p><p>For <strong>spin_unlock</strong>, we just keep decrementing until <code>lock</code> is 0 (unlocked) &#x1f44d;</p><h2 id=limitations--discussion>Limitations & Discussion</h2><p>We follow the pthread model, where <code>spin_unlock</code> can only be unlocked by the lock holding thread. See <a href=https://linux.die.net/man/3/pthread_spin_unlock>this docs</a> on <code>pthread_spin_unlock</code>. If this invariant does not hold, then exclusive access to the lock (for decrement) is violated. We get the funky lock &lt; 0 situation.</p><p>If there are an unbounded number of lock acquirers, it could be theoretically possible to starve all acquirers since the unlocking thread can only decrement one at a time. One does not simply set <code>lock</code> to 0 with <code>lock_xadd()</code>. This shouldn&rsquo;t be possible (left as an exercise).</p><p>Practically, unbounded acquires should not happen. Progress will eventually be made, since for a finite number of acquires <code>N</code>, it will just take O(<code>N</code>)<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> spins by the unlocker to eventually decrement <code>lock</code> to 0. No starvation!</p><p>You also have the problem of data representation where we have more acquires than the <code>int64_t</code> can fit in the positive range. Then we get an overflow. But this is an unsolveable problem given the constraints, since we can either kick the can down the road by using <code>uint64_t</code> or a larger int representation (whatever this may be).</p><p>Lastly, note that the implementation I provided is not as fast as the real spinlock/unlock due to the limitations of the atomic instruction we are given to implement.</p><div class=footnotes role=doc-endnotes><hr><ol><li id=fn:1><p>In the actual semantics of big O, where I mean the <strong>worst case</strong>.&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p></li></ol></div></div></div></section></main></div><footer class=footer><div><p class=footertext style=color:#f0f8ff;font-family:MainTitle;align-self:center>Built with &#x2764;&#xfe0f; &
+            <a href=https://gohugo.io/ target=_blank style=color:var(--color-link)><span>Hugo</span></a></p></div><div class=footertext style=font-family:MainTitle;align-self:center><a href=https://nichyjt.github.io//attributions/ style=color:var(--color-link)><span>Credits & Legal</span></a></div><div class=footertext style=color:#f0f8ff;font-family:MainTitle;align-self:center>© 2021 - 2025 Nicholas Yek</div><div class=fontloader></div></footer></body><script>document.body.classList.add(localStorage.getItem("theme"))</script></html>
