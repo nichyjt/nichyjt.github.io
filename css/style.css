@@ -1,30 +1,3 @@
-html{
-    scroll-behavior: smooth;
-}
-:root {
-  /*FFOX COMPAT*/
-  scrollbar-width: thin !important;
-  /* scrollbar-color: gray; */
-}
-*::-webkit-scrollbar{
-    width:0.25rem;
-    height: 4px;
-}
-*::-webkit-scrollbar-track{
-    background: none;
-}
-*::-webkit-scrollbar-thumb{
-    background: darkgray;
-}
-/* Styling the thumb of the horizontal scroll bar */
-::-moz-scrollbar-thumb-horizontal {
-  border-radius: 5px;
-  width: 4px;
-}
-/* Styling the buttons of the horizontal scroll bar */
-::-moz-scrollbar-button {
-  display: none; /* Hide the buttons */
-}
 summary{
     cursor: pointer;
     display: inline;
@@ -40,7 +13,8 @@ main {
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: clip;
     color: var(--color-text);
     margin: 0;
     padding: 0;
