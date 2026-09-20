@@ -4,11 +4,8 @@ CS Blogs My collection of CS/Math blogs. IN NO PARTICULAR ORDER:
 diff.blog aggregator Steve Yegge and the old version why I left Google to join Grab Scott Aaronson - the quantum computing guy eigenmorality A Euclidean theater of misery Eric S Raymond the OG hacker; see: jargon file how to become a hacker Paul Graham the ycombinator guy hackers and painters good writing idleword more space stuff dabblers &amp;amp; blowhards a critique of hackers &amp;amp; painters rachelbythebay sysadmin chronicler hope is not a strategy kalzumeus he is like the greatest pm i never had Don&amp;rsquo;t Call Yourself a Programmer artemis.</description></item><item><title>Papers worth reading</title><link>https://nichyjt.github.io/library/papers/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://nichyjt.github.io/library/papers/</guid><description>Okay, fine. I&amp;rsquo;m a nerd that likes reading fun papers.
 i should probably loosely organize them in the future and summarize/review them to actually make sure i remember what&amp;rsquo;s written. another time&amp;hellip;
 papers
-https://www.tomzahavy.com/files/llms-cant-jump.pdf
-- adbuctive thinking as a limitation
-https://www.scottaaronson.com/morality.pdf
+Attention is All You Need
+transformer architecture; yes i actually read it LLMs can&amp;rsquo;t jump - adbuctive thinking as a limitation
+Morality Metrics On Iterated Prisoner’s Dilemma Players
 - eigenmorality
-https://theoreticalminimum.com/
-- physics lecture series
-Building Production-Ready Probes for Gemini
-Gemini probes for safety</description></item></channel></rss>
+The Theoretical Minimum - physics video lecture series</description></item></channel></rss>
